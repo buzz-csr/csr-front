@@ -1,0 +1,67 @@
+body{
+	padding: 10px;
+}
+h3{
+	text-align: center;
+	border: 1px solid #cacaca;
+	border-radius: 5px;
+	background: linear-gradient(#b2d6ff, #ffffff);
+	padding: 5px;
+}
+.activities {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	padding: 2px 10px;
+	border: 1px solid #000000;
+	font-size: 12px;
+	min-width: 200px;
+	background-color: #8cb3d9;
+	opacity: 0.8;
+	border-radius: 5px;
+	color: #000000;
+}
+.activities:hover{
+	opacity: 0;
+}
+.carlist:hover{
+	background-color: grey;
+}
+
+.car-action{
+	padding: 0px 2px 0px 2px;
+}
+
+.garage{
+	border: 1px solid #cacaca;
+}
+.garage-top{
+	border-top-right-radius : 5px;
+	border-top-left-radius : 5px;
+	border-bottom: 0px;
+	margin-top: 5px;
+}
+.garage-middle{
+	border-bottom: 0px;
+	border-top: 0px;
+}
+.garage-bottom{
+	border-bottom-right-radius : 5px;
+	border-bottom-left-radius : 5px;
+	border-top: 0px;
+	margin-bottom: 5px;
+}
+.garage-head{
+	background: linear-gradient(#b2d6ff, #ffffff);
+	height: 30px;
+	text-align: center;
+}
+.car:hover{
+	background-color: #ededed;
+}
+.car img{
+	width: 20px;
+}
+.car img:hover{
+	cursor:pointer;
+}

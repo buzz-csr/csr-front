@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="upModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="upCtrl">
+    <input type='file' multiple ng-file='uploadfiles'><br/>
+    <input type='button' value='Upload' id='upload' ng-click='upload()' >
+    <BR/>
+    <a ng-show="response" ng-href="/csr-front/account.html?temp={{response}}">Afficher le compte</a>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script type="text/javascript" src="js/upload.js"></script>
+    <script type="text/javascript" src="js/jquery-3.5.1.js"></script>
+</body>
+</html>

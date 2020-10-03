@@ -1,0 +1,232 @@
+<html ng-app="modModule">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <base href="/csr-front/" />
+</head>
+<body ng-controller="modCtrl" class="container">
+
+<h3>User name : {{fileEdited.name}}</h3>
+
+<button type="button" class="btn btn-primary" ng-click="saveNsb()">nsb</button>
+<button type="button" class="btn btn-primary" ng-click="saveScb()">scb</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check" ng-click="checkCars()" ng-show="fileMax">Contrôle fichier</button>
+<button type="button" class="btn btn-primary" ng-click="testColor()">Test couleur</button>
+<a style="float:right;" href="#" ng-click="unban()">deban</a>
+<hr>
+<div class="row">
+    <div class="col-md-3">
+        <a href="#" ng-click="addFuel()">Essence</a>
+    </div>
+    <div class="col-md-6">
+        <select ng-options="legend as legend.name for legend in legendsCars track by legend.name" ng-model="legendCarSelected"></select>
+        <a href="#" ng-click="addRestoTokens()">Jetons restauration</a>
+    </div>
+
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-2">Fusions 3 couleurs</div>
+    <div class="col-md-5">
+        <select ng-options="brand as brand.name for brand in brands track by brand.name" ng-model="selectedBrand"></select>
+        <a href="#" ng-click="addFusionsGift()">Ajouter</a>
+    </div>
+    <div class="col-md-5">
+        <a href="#" ng-click="allColorsAllBrands()">Toutes</a>
+    </div>
+
+    <div class="col-md-2">Fusions rouges</div>
+    <div class="col-md-5">
+        <select ng-options="brand as brand.name for brand in brands track by brand.name" ng-model="selectedBrandRed"></select>
+        <a href="#" ng-click="addRedFusionsGift()">Ajouter</a>
+    </div>
+    <div class="col-md-5">
+        <a href="#" ng-click="specialChris()">Toutes</a>
+    </div>
+
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-6"><img height="28px" src="images/dollars.png"></img>{{scbFile.CashEarned-scbFile.CashSpent | number : fractionSize}} $</div>
+            <div class="col-md-6"><img height="28px" src="images/or.jpg"></img>{{scbFile.GoldEarned-scbFile.GoldSpent | number : fractionSize}}</div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <a href="#" ng-show="!hasCashGoldReset" ng-click="resetCashGold()">Reset</a>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-4"><img height="28px" src="images/bronze.png"></img>{{scbFile.GachaBronzeKeysEarned-scbFile.GachaBronzeKeysSpent | number : fractionSize}}</div>
+            <div class="col-md-4"><img height="28px" src="images/silver.png"></img>{{scbFile.GachaSilverKeysEarned-scbFile.GachaSilverKeysSpent | number : fractionSize}}</div>
+            <div class="col-md-4"><img height="28px" src="images/gold.png"></img>{{scbFile.GachaGoldKeysEarned-scbFile.GachaGoldKeysSpent | number : fractionSize}}</div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <a href="#" ng-show="!hasKeysReset" ng-click="resetKeys()">Reset</a>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-3">Composant vert</div>
+            <div class="col-md-3">Composant bleu</div>
+            <div class="col-md-3">Composant rouge</div>
+            <div class="col-md-3">Composant jaune</div>
+            <div class="col-md-3">{{scbFile.AMPartGreenEarned-scbFile.AMPartGreenSpent | number : fractionSize}}</div>
+            <div class="col-md-3">{{scbFile.AMPartBlueEarned-scbFile.AMPartBlueSpent | number : fractionSize}}</div>
+            <div class="col-md-3">{{scbFile.AMPartRedEarned-scbFile.AMPartRedSpent | number : fractionSize}}</div>
+            <div class="col-md-3">{{scbFile.AMPartYellowEarned-scbFile.AMPartYellowSpent | number : fractionSize}}</div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <a href="#" ng-show="!hasEliteReset && !hasEliteBlueReset && !hasEliteGreenReset && !hasEliteRedReset && !hasEliteYellowReset" ng-click="resetElites()">Reset</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-3"><a href="#" ng-show="!hasEliteReset && !hasEliteGreenReset" ng-click="resetGreenElites()">Ajout</a></div>
+            <div class="col-md-3"><a href="#" ng-show="!hasEliteReset && !hasEliteBlueReset" ng-click="resetBlueElites()">Ajout</a></div>
+            <div class="col-md-3"><a href="#" ng-show="!hasEliteReset && !hasEliteRedReset" ng-click="resetRedElites()">Ajout</a></div>
+            <div class="col-md-3"><a href="#" ng-show="!hasEliteReset && !hasEliteYellowReset" ng-click="resetYellowElites()">Ajout</a></div>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-2">
+        Trier
+    </div>
+    <div class="form-check col-md-4">
+        <input type="checkbox" class="form-check-input" id="legendFirst" ng-model="legendFirst">
+        <label class="form-check-label" for="legendFirst">Placer legend devant</label>
+    </div>
+    <div class="col-md-3">
+        <a href="#" ng-click="sortByBrand()">marque/dyno</a>
+    </div>
+    <div class="col-md-3">
+        <a href="#" ng-click="sortByTier()">tier/dyno</a>
+    </div>
+</div>
+<hr>
+<div class="row car" ng-repeat="carId in fileEdited.cgpi track by $index" ng-show="carId != -1" ng-class="getGarageClass($index)">
+    <div ng-show="isTop($index)" class="col-md-12 garage-head">{{getGarageNumber($index)}}</div>
+    <div class="col-md-6" title="{{getCarName(fileEdited.caow[carId].crdb)}}">{{fileEdited.caow[carId].crdb}}</div>
+    <div class="col-md-1">{{fileEdited.caow[carId].nupl.txt}}</div>
+    <div class="col-md-1">{{fileEdited.caow[carId].ctie}}</div>
+    <div class="col-md-1">({{fileEdited.caow[carId].cepi}})</div>
+
+    <div class="col-md-1"><img data-toggle="modal" data-target="#exampleModal" ng-click="saveEditedCar(fileEdited.caow[carId])" src="images/replace.png" /></div>
+    <div class="col-md-1"><img ng-click="fullCar(fileEdited.caow[carId])" src="images/full.png" /></div>
+    <div class="col-md-1"><img ng-show="fileEdited.caow[carId].elcl == 0" ng-click="elite(fileEdited.caow[carId])" src="images/permis.jpg" /></div>
+</div>
+
+<div class="activities">
+    <div class="activity" ng-repeat="a in activities track by $index">{{a}}</div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Liste des voitures full</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row carlist" ng-repeat="car in fileMax.caow">
+                        <div class="col-md-6" data-toggle="tooltip" data-html="true" title="<img src='{{getCarImg(car.crdb)}}' width='200px' />"><span width="100%">{{getCarName(car.crdb)}}</span><br><span width="100%" style="font-size: 10px; font-weight: italic;">{{car.crdb}}</span></div>
+                        <div class="col-md-1"><a href="{{getFusionsCarImg(car.crdb)}}" target="_blank"><img ng-show="car.cmlv != 0" src="images/legends.png" width="16" height="16"></img></a></div>
+                        <div class="col-md-2">{{car.ctie}}</div>
+                        <div class="col-md-2">{{car.csrc}}</div>
+                        <button type="button" class="btn btn-primary col-md-1" data-dismiss="modal" ng-click="replace(car)">
+                            <svg class="bi bi-caret-right-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="newNsb" tabindex="-1" role="dialog" aria-labelledby="New Nsb File" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Nsb</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{fileEdited}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="newScb" tabindex="-1" role="dialog" aria-labelledby="New Scb File" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Scb</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{scbFile}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="check" tabindex="-1" role="dialog" aria-labelledby="Contrôle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="controleId">Contrôle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body container">
+                <div ng-repeat="error in errors" class="row">
+                    <div class="col-md-5">{{error.car}}</div><div class="col-md-5">{{error.reason}}</div><div class="col-md-2"><a href="#" ng-click="correctCar(error)" ng-show="isCorrect(error)">correct</a></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+<script type="text/javascript" src="js/mod.js"></script>
+<script type="text/javascript" src="js/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="bootstrap/js/popper.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+</body>
+</html>
