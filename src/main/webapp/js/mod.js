@@ -133,18 +133,17 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	});
 	
 	$scope.fullCar = function(caowEdited){
-		if($scope.fileMax === undefined){
-			$http({
-				method: 'GET',
-				url: 'http://localhost:8080/nsb.full.txt',
-				headers : {'Content-type' : 'application/json; charset=UTF-8'}
-			}).then(function(response){
-				$scope.fileMax = response.data;
-				updateStages(caowEdited);
-			});
-		}else{
-			updateStages(caowEdited);	
-		}
+		$http({
+			method: 'POST',
+			url: 'http://localhost:8080/csr-front/car',
+			headers : {'Content-type' : 'application/json; charset=UTF-8'},
+			params :{
+			    id: caowEdited.unid,
+			    dir: directory,
+			}
+		}).then(function(response){
+		    caowEdited = response.data;
+		});
 		addActivity("Remplissage " + caowEdited.crdb);
 	}
 	

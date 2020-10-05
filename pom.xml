@@ -43,6 +43,11 @@
           <version>1.0-BETA</version>
       </dependency>
       <dependency>
+          <groupId>com.naturalmotion</groupId>
+          <artifactId>csr-api</artifactId>
+          <version>1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
           <groupId>javax.servlet</groupId>
           <artifactId>javax.servlet-api</artifactId>
           <version>4.0.1</version>
@@ -86,11 +91,5 @@
         <version>3.5.2</version>
         <scope>test</scope>
     </dependency>
-      <dependency>
-          <groupId>com.csr</groupId>
-          <artifactId>csr</artifactId>
-          <version>1.0-BETA</version>
-          <scope>compile</scope>
-      </dependency>
   </dependencies>
 </project>
