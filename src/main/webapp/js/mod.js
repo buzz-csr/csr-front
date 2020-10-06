@@ -6,6 +6,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	
 	$scope.activities = [];
 	$scope.collection;
+	$scope.collections;
 	$scope.fileMax;
 	$scope.fileEdited;
 	$scope.scbFile;
@@ -528,6 +529,14 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 		headers : {'Content-type' : 'application/json; charset=UTF-8'}
 	}).then(function(response){
 		$scope.collection = response.data.collection;
+	});
+
+	$http({
+		method: 'GET',
+		url: 'http://localhost:8080/csr-front/collections.json',
+		headers : {'Content-type' : 'application/json; charset=UTF-8'}
+	}).then(function(response){
+		$scope.collections = response.data;
 	});
 	
 	$scope.sortByBrand = function(){
