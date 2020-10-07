@@ -143,45 +143,12 @@
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <div class="row" ng-repeat="(folder, data) in collections">
-                        <div>{{folder}}</div>
+                    <div class="row" ng-repeat="content in collections.content" ng-include="'item_template'">
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Liste des voitures full</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="container-fluid">
-                    <div class="row carlist" ng-repeat="car in fileMax.caow">
-                        <div class="col-md-6" data-toggle="tooltip" data-html="true" title="<img src='{{getCarImg(car.crdb)}}' width='200px' />"><span width="100%">{{getCarName(car.crdb)}}</span><br><span width="100%" style="font-size: 10px; font-weight: italic;">{{car.crdb}}</span></div>
-                        <div class="col-md-1"><a href="{{getFusionsCarImg(car.crdb)}}" target="_blank"><img ng-show="car.cmlv != 0" src="images/legends.png" width="16" height="16"></img></a></div>
-                        <div class="col-md-2">{{car.ctie}}</div>
-                        <div class="col-md-2">{{car.csrc}}</div>
-                        <button type="button" class="btn btn-primary col-md-1" data-dismiss="modal" ng-click="replace(car)">
-                            <svg class="bi bi-caret-right-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="closeCollection(collections)">Close</button>
             </div>
         </div>
     </div>
@@ -252,5 +219,14 @@
 <script type="text/javascript" src="js/jquery-3.5.1.js"></script>
 <script type="text/javascript" src="bootstrap/js/popper.min.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+
+<script type="text/ng-template" id="item_template">
+        <div ng-click="displayDirectory(content)">{{content.directory}}</div> -> <BR/>
+        <div ng-show="content.show">
+            <div ng-repeat="content in content.content" ng-include="'item_template'"></div>
+        </div>
+        <div ng-show="content.show" ng-repeat="car in content.cars">{{car}}</div>
+</script>
+
 </body>
 </html>

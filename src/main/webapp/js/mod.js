@@ -787,4 +787,15 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 		downloadLink.setAttribute('href', window.URL.createObjectURL(blob));
 		downloadLink.click();
 	}
+	
+	$scope.displayDirectory = function(content){
+	    content.show=true;
+	}
+	
+	$scope.closeCollection = function(directory){
+	    directory.show = false;
+	    angular.forEach(directory.content, function(data){
+	        $scope.closeCollection(data);
+	    })
+	}
 }]);
