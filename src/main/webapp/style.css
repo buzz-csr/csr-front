@@ -65,3 +65,7 @@ h3{
 .car img:hover{
 	cursor:pointer;
 }
+.car-show {
+    margin: 4px;
+    text-align: center;
+}

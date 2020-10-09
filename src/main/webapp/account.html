@@ -132,29 +132,6 @@
     <div class="activity" ng-repeat="a in activities track by $index">{{a}}</div>
 </div>
 
-<div class="modal fade" id="collectionsModal" tabindex="-1" role="dialog" aria-labelledby="collectionsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="collectionsModalLabel">Liste des voitures full</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="container-fluid">
-                    <div class="row" ng-repeat="content in collections.content" ng-include="'item_template'">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="closeCollection(collections)">Close</button>
-            </div>
-        </div>
-    </div>
-
-</div>
-
 <div class="modal fade" id="newNsb" tabindex="-1" role="dialog" aria-labelledby="New Nsb File" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -214,19 +191,48 @@
     </div>
 </div>
 
+<div class="modal fade" id="collectionsModal" tabindex="-1" role="dialog" aria-labelledby="collectionsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="collectionsModalLabel">Liste des voitures full</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="collections">
+                <div class="container-fluid">
+                    <div class="row" ng-repeat="dir in collectionsDir">
+                        <div class="col-md-12">
+                            <select ng-model="selectDir" ng-change="addSelect(selectDir)">
+                                <option ng-repeat="subDir in dir" ng-value="subDir">{{subDir.directory}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-3 car-show" ng-repeat="car in selectDir.cars">
+                                    <img ng-src="{{getCarImg(selectDir.path,car)}}" width="200px" data-dismiss="modal" ng-click="replace(selectDir.path,car)" />
+                                    {{car}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="closeCollection()">Close</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
 <script type="text/javascript" src="js/mod.js"></script>
 <script type="text/javascript" src="js/jquery-3.5.1.js"></script>
 <script type="text/javascript" src="bootstrap/js/popper.min.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
-
-<script type="text/ng-template" id="item_template">
-        <div ng-click="displayDirectory(content)">{{content.directory}}</div> -> <BR/>
-        <div ng-show="content.show">
-            <div ng-repeat="content in content.content" ng-include="'item_template'"></div>
-        </div>
-        <div ng-show="content.show" ng-repeat="car in content.cars">{{car}}</div>
-</script>
 
 </body>
 </html>

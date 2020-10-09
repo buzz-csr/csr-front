@@ -20,7 +20,11 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	$scope.hasEliteYellowReset = false;
 	$scope.legendFirst = false;
 	$scope.errors = [];
-	
+	$scope.collections;
+	$scope.collectionsDir = [];
+	$scope.selectDir;
+    $scope.selectCars = [];
+
 	$scope.brands = [
 		{name: "id_abarth"},
 		{name: "id_alfaromeo"},
@@ -139,11 +143,18 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 			url: 'http://localhost:8080/csr-front/car',
 			headers : {'Content-type' : 'application/json; charset=UTF-8'},
 			params :{
-			    id: caowEdited.unid,
-			    dir: directory,
+			    id      : caowEdited.unid,
+			    dir     : directory,
+			    action  : 'full',
 			}
 		}).then(function(response){
 		    caowEdited = response.data;
+
+            $scope.fileEdited.caow.forEach(function(car,index){
+                if(car.unid == caowEdited.unid){
+                    $scope.fileEdited.caow[index] = caowEdited;
+                }
+            });
 		});
 		addActivity("Remplissage " + caowEdited.crdb);
 	}
@@ -156,58 +167,28 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 		});
 	}
 	
-	$scope.replace = function(carFull){
-		var unid = $scope.editedCar.unid;
-		
-		$scope.fileEdited.caow.forEach(function(car,index){
-			if(car.unid == unid){
-				$scope.fileEdited.caow[index] = carFull;
-				$scope.fileEdited.caow[index].unid = unid;
-			}
-		});
-		
-		var fundMaxcid2 = false;
-		$scope.fileMax.cid2.forEach(function(value){
-			if(value.id == carFull.crdb){
-				fundMaxcid2 = true;
-			}
-		});
-		
-		if(fundMaxcid2){
-			var fundcid2 = false;
-			$scope.fileEdited.cid2.forEach(function(value){
-				if(value.id == carFull.crdb){
-					fundcid2 = true;
-				}
-			});
-			if(!fundcid2){
-				$scope.fileEdited.cid2.push({
-					"id": carFull.crdb,
-					"ct": 1
-				});
-			}
-		}
+	$scope.replace = function(path,car){
+		$http({
+                method: 'POST',
+                url: 'http://localhost:8080/csr-front/car',
+                headers : {'Content-type' : 'application/json; charset=UTF-8'},
+                params :{
+                    id      : $scope.editedCar.unid,
+                    path      : path+"/"+car,
+                    dir     : directory,
+                    action  : 'replace',
+                }
+            }).then(function(response){
+                caowEdited = response.data;
 
-		var fundMaxcidc = false;
-		$scope.fileMax.cidc.forEach(function(value){
-			if(value == carFull.crdb){
-				fundMaxcidc = true;
-			}
-		});
-		
-		if(fundMaxcidc){
-			var fundcidc = false;
-			$scope.fileEdited.cidc.forEach(function(value){
-				if(value == carFull.crdb){
-					fundcidc = true;
-				}
-			});
-			if(!fundcidc){
-				$scope.fileEdited.cidc.push(carFull.crdb);
-			}
-		}
-		
-		addActivity("Ajout " + carFull.crdb);
+                $scope.fileEdited.caow.forEach(function(car,index){
+                    if(car.unid == caowEdited.unid){
+                        $scope.fileEdited.caow[index] = caowEdited;
+                    }
+                });
+
+                addActivity("Ajout " + caowEdited.crdb);
+            });
 	}
 	
 	$scope.saveEditedCar = function(editedCar){
@@ -218,32 +199,10 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	}
 
 	$scope.resetCashGold = function(){
-		$scope.hasCashGoldReset = true;
-		var resetCash = Math.floor($scope.scbFile.CashSpent*0.3);
-		$scope.fileEdited.casp = resetCash;
-		$scope.scbFile.CashSpent = resetCash;
-		
-		var resetGold = Math.floor($scope.scbFile.GoldSpent*0.3);
-		$scope.fileEdited.gosp = resetGold;
-		$scope.scbFile.GoldSpent = resetGold;
-		
 		addActivity("Reset cash et or" );
 	}
 	
 	$scope.resetKeys = function(){
-		$scope.hasKeysReset = true;
-		var resetBronze = Math.floor($scope.scbFile.GachaBronzeKeysSpent*0.3);
-		$scope.fileEdited.gbks = resetBronze;
-		$scope.scbFile.GachaBronzeKeysSpent = resetBronze;
-		
-		var resetSilver = Math.floor($scope.scbFile.GachaSilverKeysSpent*0.3);
-		$scope.fileEdited.gsks = resetSilver;
-		$scope.scbFile.GachaSilverKeysSpent = resetSilver;	
-		
-		var resetGold = Math.floor($scope.scbFile.GachaGoldKeysSpent*0.3);
-		$scope.fileEdited.ggks = resetGold;
-		$scope.scbFile.GachaGoldKeysSpent = resetGold;
-		
 		addActivity("Reset clés" );
 	}
 	
@@ -437,14 +396,8 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 		return name;
 	}
 	
-	$scope.getCarImg = function(id){
-		var img = "";
-		angular.forEach($scope.collection, function(value){
-			if(value.code == id){
-				img = value.img;
-			}
-		});
-		return "https://raw.githubusercontent.com/wear87/CSR2-Racing-Collection/master" + encodeURIComponent(img).replaceAll("'","%27");
+	$scope.getCarImg = function(path, id){
+		return "https://raw.githubusercontent.com/wear87/CSR2-Racing-Collection/master" + encodeURIComponent(path + "/" + id + ".png").replaceAll("'","%27");
 	}
 	
 	$scope.getFusionsCarImg = function(id){
@@ -536,7 +489,8 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 		url: 'http://localhost:8080/csr-front/collections.json',
 		headers : {'Content-type' : 'application/json; charset=UTF-8'}
 	}).then(function(response){
-		$scope.collections = response.data;
+	    $scope.collections = response.data;
+	    $scope.collectionsDir.push(response.data.content);
 	});
 	
 	$scope.sortByBrand = function(){
@@ -787,15 +741,19 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 		downloadLink.setAttribute('href', window.URL.createObjectURL(blob));
 		downloadLink.click();
 	}
-	
-	$scope.displayDirectory = function(content){
-	    content.show=true;
-	}
-	
-	$scope.closeCollection = function(directory){
-	    directory.show = false;
-	    angular.forEach(directory.content, function(data){
-	        $scope.closeCollection(data);
-	    })
-	}
+
+    $scope.addSelect = function(dir){
+        if(dir.content != undefined && dir.content.length > 0){
+            $scope.collectionsDir.push(dir.content);
+            if(dir.cars != undefined && dir.cars.length > 0){
+                $scope.selectCars = dir.cars;
+            }
+        }
+    }
+
+    $scope.closeCollection = function(){
+        $scope.collectionsDir = [];
+        $scope.collectionsDir.push($scope.collections.content);
+        $scope.selectDir = undefined;
+    }
 }]);
