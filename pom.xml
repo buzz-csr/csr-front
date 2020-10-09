@@ -86,11 +86,5 @@
         <version>3.5.2</version>
         <scope>test</scope>
     </dependency>
-      <dependency>
-          <groupId>com.csr</groupId>
-          <artifactId>csr</artifactId>
-          <version>1.0-BETA</version>
-          <scope>compile</scope>
-      </dependency>
   </dependencies>
 </project>
