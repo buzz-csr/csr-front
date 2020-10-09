@@ -1,8 +1,10 @@
 package com.naturalmotion.servlet;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.naturalmotion.Configuration;
-import csr.Extract;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -10,10 +12,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.io.*;
+
+import com.naturalmotion.Configuration;
+
+import csr.Extract;
 
 @MultipartConfig
 public class Upload extends HttpServlet {
+
+    private static final long serialVersionUID = -1637365817304780292L;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
