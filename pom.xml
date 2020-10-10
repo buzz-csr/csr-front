@@ -92,4 +92,19 @@
         <scope>test</scope>
     </dependency>
   </dependencies>
+
+    <profiles>
+        <profile>
+            <id>linux</id>
+            <properties>
+                <woring.directory>/home/jerome/Documents/backup</woring.directory>
+            </properties>
+        </profile>
+        <profile>
+            <id>windows</id>
+            <properties>
+                <woring.directory>C:/Dev/Git/perso/backup</woring.directory>
+            </properties>
+        </profile>
+    </profiles>
 </project>
