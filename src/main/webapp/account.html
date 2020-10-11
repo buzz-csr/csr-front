@@ -10,7 +10,9 @@
 <div class="row">
     <div class="col-md-12"><h3>User name : {{fileEdited.name}}</h3></div>
 </div>
-
+<div class="row">
+    <div class="col-md-12"><button ng-click="pack()">Appliquer</button></div>
+</div>
 <div class="row car" ng-repeat="carId in fileEdited.cgpi track by $index" ng-show="carId != -1" ng-class="getGarageClass($index)">
     <div ng-show="isTop($index)" class="col-md-12 garage-head">{{getGarageNumber($index)}}</div>
     <div class="col-md-6" title="{{getCarName(fileEdited.caow[carId].crdb)}}">{{fileEdited.caow[carId].crdb}}</div>

@@ -4,6 +4,10 @@
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
     <servlet>
+        <servlet-name>pack</servlet-name>
+        <servlet-class>com.naturalmotion.servlet.PackServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>car</servlet-name>
         <servlet-class>com.naturalmotion.servlet.CarServlet</servlet-class>
     </servlet>
@@ -15,6 +19,10 @@
         <servlet-name>GetFile</servlet-name>
         <servlet-class>com.naturalmotion.servlet.GetFile</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>pack</servlet-name>
+        <url-pattern>/pack</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>GetFile</servlet-name>
         <url-pattern>/GetFile</url-pattern>

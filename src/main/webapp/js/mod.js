@@ -146,4 +146,15 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
         $scope.collectionsDir.push($scope.collections.content);
         $scope.selectDir = undefined;
     }
+
+    $scope.pack = function(){
+        $http({
+            method: 'POST',
+            url: '/csr-front/pack',
+            params : {
+                  dir : directory,
+            }
+        }).then(function(response){
+        });
+    }
 }]);
