@@ -17,7 +17,13 @@ upModule.controller('upCtrl', ['$scope', '$http', function ($scope, $http) {
   $scope.upload = function(){
 
    var fd = new FormData();
-   angular.forEach($scope.uploadfiles,function(file){
+   angular.forEach($scope.uploadfiles1,function(file){
+     fd.append('file[]',file);
+   });
+    angular.forEach($scope.uploadfiles2,function(file){
+     fd.append('file[]',file);
+   });
+    angular.forEach($scope.uploadfiles3,function(file){
      fd.append('file[]',file);
    });
 

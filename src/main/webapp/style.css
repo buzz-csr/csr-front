@@ -1,11 +1,22 @@
-body{
-	padding: 10px;
+body.container{
+    width: 100%;
+    margin: 0;
+    max-width: 2048px;
+}
+.upload{
+    max-width: 512px;
+}
+.upload .row{
+    margin: 10px;
+}
+.right {
+    text-align: right;
+}
+.center {
+    text-align: center;
 }
 h3{
 	text-align: center;
-	border: 1px solid #cacaca;
-	border-radius: 5px;
-	background: linear-gradient(#b2d6ff, #ffffff);
 	padding: 5px;
 }
 .activities {
@@ -18,7 +29,6 @@ h3{
 	min-width: 200px;
 	background-color: #8cb3d9;
 	opacity: 0.8;
-	border-radius: 5px;
 	color: #000000;
 }
 .activities:hover{
@@ -36,20 +46,14 @@ h3{
 	border: 1px solid #cacaca;
 }
 .garage-top{
-	border-top-right-radius : 5px;
-	border-top-left-radius : 5px;
 	border-bottom: 0px;
-	margin-top: 5px;
 }
 .garage-middle{
 	border-bottom: 0px;
 	border-top: 0px;
 }
 .garage-bottom{
-	border-bottom-right-radius : 5px;
-	border-bottom-left-radius : 5px;
 	border-top: 0px;
-	margin-bottom: 5px;
 }
 .garage-head{
 	background: linear-gradient(#b2d6ff, #ffffff);

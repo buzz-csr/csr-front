@@ -29,7 +29,7 @@ public class Upload extends HttpServlet {
         String now = String.valueOf(System.currentTimeMillis());
         File backupDir = new File(configuration.getString("working.directory"));
         if (!backupDir.exists()) {
-            backupDir.mkdir();
+            backupDir.mkdirs();
         }
         File actualDir = new File(backupDir.getPath() + "/" + now + "/Original/");
         actualDir.mkdirs();
