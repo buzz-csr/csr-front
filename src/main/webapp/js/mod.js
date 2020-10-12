@@ -161,46 +161,9 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
         });
     }
 
-    $scope.nsb = function(){
-        $http({
-            method: 'POST',
-            url: '/csr-front/pack',
-            responseType: 'arraybuffer',
-            params : {
-                  dir : directory,
-                  type: 'nsb',
-            }
-        }).then(function(data){
-            var blob = new Blob([data], { type: 'application/zip' });
-            var downloadLink = document.createElement('a');
-            downloadLink.setAttribute('download', 'nsb');
-            downloadLink.setAttribute('href', window.URL.createObjectURL(blob));
-            downloadLink.click();
-        });
-    }
-
-    $scope.scb = function(){
-        $http({
-            method: 'POST',
-            url: '/csr-front/pack',
-            responseType: 'arraybuffer',
-            params : {
-                  dir : directory,
-                  type: 'scb',
-            }
-        }).then(function(data){
-            var blob = new Blob([data], { type: 'application/zip' });
-            var downloadLink = document.createElement('a');
-            downloadLink.setAttribute('download', 'scb');
-            downloadLink.setAttribute('href', window.URL.createObjectURL(blob));
-            downloadLink.click();
-        });
-    }
-    
-
     $scope.downloadFile = function(name){
         $http({
-            method: 'POST',
+            method: 'GET',
             url: '/csr-front/pack',
             responseType: 'arraybuffer',
             params : {
@@ -208,7 +171,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
                   type: name,
             }
         }).then(function(data){
-            var blob = new Blob([data], { type: 'application/zip' });
+            var blob = new Blob([data], { type: 'application/gzip' });
             var downloadLink = document.createElement('a');
             downloadLink.setAttribute('download', name);
             downloadLink.setAttribute('href', window.URL.createObjectURL(blob));

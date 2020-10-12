@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -49,31 +51,28 @@ public class PackServlet extends HttpServlet {
             Configuration configuration = new Configuration();
             File backupDir = new File(configuration.getString(WORKING_DIRECTORY));
             String type = req.getParameter("type");
-            if ("nsb".equals(type)) {
-                writeFile(resp, dir, backupDir, type);
-            } else if ("scb".equals(type)) {
-                writeFile(resp, dir, backupDir, type);
-            } else if ("android".equals(type)) {
-
-            }
+            writeFile(resp, dir, backupDir, type);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void writeFile(HttpServletResponse resp, String dir, File backupDir, String type) throws IOException {
-        resp.setContentType("application/zip");
-        resp.setHeader("Content-Disposition", "attachment;filename=\"nsb\"");
-        OutputStream out = resp.getOutputStream();
-
+        resp.setContentType("application/gzip");
+        resp.setHeader("Content-Disposition", "attachment;filename=\"" +
+                type +
+                "\"");
+        GZIPOutputStream zipStream = new GZIPOutputStream(resp.getOutputStream());
         try (FileInputStream fis = new FileInputStream(
-                backupDir.getPath() + SEPARATOR + dir + SEPARATOR + FINAL_FOLDER + SEPARATOR + type);) {
-            int bytes;
-            while ((bytes = fis.read()) != -1) {
-                System.out.println(bytes);
-                out.write(bytes);
+                backupDir.getPath() + SEPARATOR + dir + SEPARATOR + FINAL_FOLDER + SEPARATOR + type);
+             GZIPInputStream gis = new GZIPInputStream(fis);) {
+
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = gis.read(buffer)) != -1) {
+                zipStream.write(buffer, 0, len);
             }
-            out.flush();
+            zipStream.flush();
         }
         resp.flushBuffer();
     }
