@@ -11,9 +11,10 @@
     <div class="col-md-12"><h3>User name : {{fileEdited.name}}</h3></div>
 </div>
 <div class="row">
-    <div class="col-md-12"><button ng-click="pack()">Appliquer</button></div>
-    <div class="col-md-12"><button ng-click="nsb()">nsb</button></div>
-    <div class="col-md-12"><button ng-click="scb()">scb</button></div>
+    <button type="button" class="btn btn-success col-md-12" ng-click="pack()">Appliquer</button>
+</div>
+<div class="row">
+    <button ng-repeat="file in resultFiles" type="button" class="btn btn-success col-md-4" ng-click="downloadFile(file)">{{file}}</button>
 </div>
 <div class="row car" ng-repeat="carId in fileEdited.cgpi track by $index" ng-show="carId != -1" ng-class="getGarageClass($index)">
     <div ng-show="isTop($index)" class="col-md-12 garage-head">{{getGarageNumber($index)}}</div>
@@ -32,7 +33,7 @@
 </div>
 
 <div class="modal fade" id="collectionsModal" tabindex="-1" role="dialog" aria-labelledby="collectionsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lg modal-collections" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="collectionsModalLabel">Liste des voitures full</h5>
@@ -42,18 +43,23 @@
             </div>
             <div class="modal-body" id="collections">
                 <div class="container-fluid">
-                    <div class="row" ng-repeat="dir in collectionsDir">
-                        <div class="col-md-12">
-                            <select ng-model="selectDir" ng-change="addSelect(selectDir)">
-                                <option ng-repeat="subDir in dir" ng-value="subDir">{{subDir.directory}}</option>
-                            </select>
+                    <div class="row">
+                        <input type="text" ng-model="searchCar" ng-change="search()" />
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 car-show" ng-repeat="car in searchedCar">
+                            <img ng-src="{{getCarImg(car.path,car.carName)}}" data-dismiss="modal" ng-click="replace(car.path,car.carName)" />
+                            {{car.carName}} / {{car.path}}
                         </div>
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-3 car-show" ng-repeat="car in selectDir.cars">
-                                    <img ng-src="{{getCarImg(selectDir.path,car)}}" width="200px" data-dismiss="modal" ng-click="replace(selectDir.path,car)" />
-                                    {{car}}
-                                </div>
+                    </div>
+                    <div class="row" ng-repeat="dir in collectionsDir">
+                        <select class="col-md-12" ng-model="selectDir" ng-change="addSelect(selectDir)">
+                            <option ng-repeat="subDir in dir" ng-value="subDir">{{subDir.directory}}</option>
+                        </select>
+                        <div class="row">
+                            <div class="col-md-3 car-show" ng-repeat="car in selectDir.cars">
+                                <img ng-src="{{getCarImg(selectDir.path,car)}}" data-dismiss="modal" ng-click="replace(selectDir.path,car)" />
+                                {{car}}
                             </div>
                         </div>
                     </div>

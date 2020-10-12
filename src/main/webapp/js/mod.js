@@ -10,6 +10,8 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	$scope.collections;
 	$scope.collectionsDir = [];
 	$scope.selectDir;
+	$scope.resultFiles = [];
+	$scope.searchedCar = [];
 
 	function addActivity(text){
 		$scope.activities.push(text);
@@ -155,6 +157,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
                   dir : directory,
             }
         }).then(function(data){
+            $scope.resultFiles = data.data;
         });
     }
 
@@ -193,4 +196,57 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
             downloadLink.click();
         });
     }
+    
+
+    $scope.downloadFile = function(name){
+        $http({
+            method: 'POST',
+            url: '/csr-front/pack',
+            responseType: 'arraybuffer',
+            params : {
+                  dir : directory,
+                  type: name,
+            }
+        }).then(function(data){
+            var blob = new Blob([data], { type: 'application/zip' });
+            var downloadLink = document.createElement('a');
+            downloadLink.setAttribute('download', name);
+            downloadLink.setAttribute('href', window.URL.createObjectURL(blob));
+            downloadLink.click();
+        });
+    }
+    
+    $scope.search = function(){
+        $scope.searchedCar = [];
+        if($scope.searchCar != undefined && $scope.searchCar.length >= 3){
+            searchCar($scope.collections);
+        }
+    }
+    
+    var searchCar = function(content){
+        if(content.directory.toLowerCase().includes($scope.searchCar.toLowerCase()) && 
+                content.cars && content.cars.length > 0){
+            angular.forEach(content.cars, function(car){
+                $scope.searchedCar.push({
+                    path   : content.path,
+                    carName : car,
+                })
+            })
+        }
+        if(content.cars && content.cars.length > 0){
+            angular.forEach(content.cars, function(car){
+                if(car.toLowerCase().includes($scope.searchCar.toLowerCase())){
+                    $scope.searchedCar.push({
+                        path   : content.path,
+                        carName : car,
+                    })
+                }
+            })
+        }
+
+        angular.forEach(content.content, function(actual){
+            searchCar(actual)
+        })
+    }
+    
 }]);

@@ -37,7 +37,6 @@
         </testResources>
     </build>
   <dependencies>
-
       <dependency>
           <groupId>com.csr</groupId>
           <artifactId>csr</artifactId>
@@ -103,6 +102,12 @@
         </profile>
         <profile>
             <id>windows</id>
+            <properties>
+                <woring.directory>C:/Dev/Git/perso/backup</woring.directory>
+            </properties>
+        </profile>
+        <profile>
+            <id>bureao</id>
             <properties>
                 <woring.directory>C:/Dev/Git/perso/backup</woring.directory>
             </properties>
