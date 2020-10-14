@@ -1,6 +1,6 @@
 var modModule = angular.module('modModule', []).config(function($locationProvider) {
                                                        $locationProvider.html5Mode(true);
-                                                   });;
+                                                   });
 
 modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope,$http,$location){
 	
@@ -11,6 +11,11 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	$scope.collectionsDir = [];
 	$scope.selectDir;
 	$scope.searchedCar = [];
+	$scope.expectedCash;
+	$scope.expectedGold;
+	$scope.expectedKeyBronze;
+	$scope.expectedKeySilver;
+	$scope.expectedKeyGold;
 
 	function addActivity(text){
 		$scope.activities.push(text);
@@ -26,6 +31,11 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 		}
 	}).then(function(response){
 		$scope.fileEdited = response.data;
+		$scope.expectedCash = $scope.fileEdited.casp;
+		$scope.expectedGold = $scope.fileEdited.gosp;
+		$scope.expectedKeyBronze = $scope.fileEdited.gbks;
+		$scope.expectedKeySilver = $scope.fileEdited.gsks;
+		$scope.expectedKeyGold = $scope.fileEdited.ggks;
 	});	
 
 	$scope.fullCar = function(caowEdited){
@@ -48,6 +58,48 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
             });
 		});
 		addActivity("Remplissage " + caowEdited.crdb);
+	}
+	
+	$scope.resetCash = function(){
+	    $http({
+	        method: 'POST',
+	        url: '/csr-front/reset',
+	        headers : {'Content-type' : 'application/json; charset=UTF-8'},
+	        params :{
+	            cash       : $scope.expectedCash,
+	            gold       : $scope.expectedGold,
+	            dir        : directory,
+                type       : 'cash',
+	        }
+	    }).then(function(response){
+	        $scope.fileEdited = response.data;
+	        $scope.expectedCash = $scope.fileEdited.casp * 0.7;
+	        $scope.expectedGold = $scope.fileEdited.gosp * 0.7;
+	        $scope.expectedKeyBronze = $scope.fileEdited.gbks;
+	        $scope.expectedKeySilver = $scope.fileEdited.gsks;
+	        $scope.expectedKeyGold = $scope.fileEdited.ggks;
+	    });
+	    addActivity("Reset cash + or ");
+	}
+	
+	$scope.resetKeys = function(){
+	    $http({
+	        method: 'POST',
+	        url: '/csr-front/reset',
+	        headers : {'Content-type' : 'application/json; charset=UTF-8'},
+	        params :{
+	            bronze         : $scope.expectedKeyBronze,
+	            silver         : $scope.expectedKeySilver,
+	            gold           : $scope.expectedKeyGold,
+	            dir            : directory,
+                type           : 'key',
+	        }
+	    }).then(function(response){
+	        $scope.fileEdited = response.data;
+	        $scope.expectedCash = $scope.fileEdited.casp * 0.7;
+	        $scope.expectedGold = $scope.fileEdited.gosp * 0.7;
+	    });
+	    addActivity("Reset clés ");
 	}
 
 	$scope.replace = function(path,car){

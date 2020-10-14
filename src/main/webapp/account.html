@@ -10,9 +10,48 @@
 <div class="row">
     <div class="col-md-12"><h3>User name : {{fileEdited.name}}</h3></div>
 </div>
-<div class="row">
+<div class="row bottom">
     <button type="button" class="btn btn-success col-md-12" ng-click="downloadFile()">Télécharger fichiers</button>
 </div>
+
+<div class="row">
+    <div class="col-md-12">
+        <label for="cash">Cash : {{fileEdited.caea - fileEdited.casp | number:0}} + {{expectedCash | number:0}} =  {{fileEdited.caea - fileEdited.casp + expectedCash | number:0}}</label>
+        <input type="range" class="custom-range" min="0" max="{{fileEdited.casp}}" id="cash" ng-model="expectedCash">
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <label for="cash">Or : {{fileEdited.goea - fileEdited.gosp | number:0}} + {{expectedGold | number:0}} =  {{fileEdited.goea - fileEdited.gosp + expectedGold | number:0}}</label>
+        <input type="range" class="custom-range" min="0" max="{{fileEdited.gosp}}" id="cash" ng-model="expectedGold">
+    </div>
+</div>
+<div class="row bottom">
+    <button type="button" class="btn btn-secondary col-md-12" ng-click="resetCash()">Reset</button>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <label for="cash">Clés Bronze : {{fileEdited.gbke - fileEdited.gbks | number:0}} + {{expectedKeyBronze | number:0}} =  {{fileEdited.gbke - fileEdited.gbks + expectedKeyBronze | number:0}}</label>
+        <input type="range" class="custom-range" min="0" max="{{fileEdited.gbks}}" id="cash" ng-model="expectedKeyBronze">
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <label for="cash">Clés Argent : {{fileEdited.gske - fileEdited.gsks | number:0}} + {{expectedKeySilver | number:0}} =  {{fileEdited.gske - fileEdited.gsks + expectedKeySilver | number:0}}</label>
+        <input type="range" class="custom-range" min="0" max="{{fileEdited.gsks}}" id="cash" ng-model="expectedKeySilver">
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <label for="cash">Clés Or : {{fileEdited.ggke - fileEdited.ggks | number:0}} + {{expectedKeyGold | number:0}} =  {{fileEdited.ggke - fileEdited.ggks + expectedKeyGold | number:0}}</label>
+        <input type="range" class="custom-range" min="0" max="{{fileEdited.ggks}}" id="cash" ng-model="expectedKeyGold">
+    </div>
+</div>
+<div class="row bottom">
+    <button type="button" class="btn btn-secondary col-md-12" ng-click="resetKeys()">Reset</button>
+</div>
+
 <div class="row car" ng-repeat="carId in fileEdited.cgpi track by $index" ng-show="carId != -1" ng-class="getGarageClass($index)">
     <div ng-show="isTop($index)" class="col-md-12 garage-head">{{getGarageNumber($index)}}</div>
     <div class="col-md-6" title="{{getCarName(fileEdited.caow[carId].crdb)}}">{{fileEdited.caow[carId].crdb}}</div>
