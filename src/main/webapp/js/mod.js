@@ -10,7 +10,6 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	$scope.collections;
 	$scope.collectionsDir = [];
 	$scope.selectDir;
-	$scope.resultFiles = [];
 	$scope.searchedCar = [];
 
 	function addActivity(text){
@@ -125,18 +124,6 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	    $scope.collectionsDir.push(response.data.content);
 	});
 
-	$scope.saveNsb = function(){
-		$scope.save($scope.fileEdited, "nsb.json");
-	}
-
-	$scope.save = function(content, filename){
-		var blob = new Blob([angular.toJson(content, true)], { type: "text/plain;charset=utf-8" });
-		var downloadLink = document.createElement('a');
-		downloadLink.setAttribute('download', filename);
-		downloadLink.setAttribute('href', window.URL.createObjectURL(blob));
-		downloadLink.click();
-	}
-
     $scope.addSelect = function(dir){
         if(dir.content != undefined && dir.content.length > 0){
             $scope.collectionsDir.push(dir.content);
@@ -149,31 +136,18 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
         $scope.selectDir = undefined;
     }
 
-    $scope.pack = function(){
-        $http({
-            method: 'POST',
-            url: '/csr-front/pack',
-            params : {
-                  dir : directory,
-            }
-        }).then(function(data){
-            $scope.resultFiles = data.data;
-        });
-    }
-
-    $scope.downloadFile = function(name){
+    $scope.downloadFile = function(){
         $http({
             method: 'GET',
             url: '/csr-front/pack',
             responseType: 'arraybuffer',
             params : {
                   dir : directory,
-                  type: name,
             }
         }).then(function(data){
-            var blob = new Blob([data], { type: 'application/gzip' });
+            var blob = new Blob([data.data], { type: 'application/octet-stream' });
             var downloadLink = document.createElement('a');
-            downloadLink.setAttribute('download', name);
+            downloadLink.setAttribute('download', 'files.zip');
             downloadLink.setAttribute('href', window.URL.createObjectURL(blob));
             downloadLink.click();
         });

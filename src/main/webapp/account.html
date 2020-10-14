@@ -11,10 +11,7 @@
     <div class="col-md-12"><h3>User name : {{fileEdited.name}}</h3></div>
 </div>
 <div class="row">
-    <button type="button" class="btn btn-success col-md-12" ng-click="pack()">Appliquer</button>
-</div>
-<div class="row">
-    <button ng-repeat="file in resultFiles" type="button" class="btn btn-success col-md-4" ng-click="downloadFile(file)">{{file}}</button>
+    <button type="button" class="btn btn-success col-md-12" ng-click="downloadFile()">Télécharger fichiers</button>
 </div>
 <div class="row car" ng-repeat="carId in fileEdited.cgpi track by $index" ng-show="carId != -1" ng-class="getGarageClass($index)">
     <div ng-show="isTop($index)" class="col-md-12 garage-head">{{getGarageNumber($index)}}</div>
