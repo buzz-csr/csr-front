@@ -23,23 +23,46 @@ public class CarServlet extends HttpServlet {
         if ("full".equals(action)) {
             fullCar(req, resp);
         } else if ("add".equals(action)) {
-            try {
-                String dir = req.getParameter("dir");
-                String pathNewCar = req.getParameter("path");
-
-                Configuration configuration = new Configuration();
-                String path = configuration.getString("working.directory");
-                new CarServiceFileImpl(path + "/" + dir).add(pathNewCar + ".txt");
-
-                String content = new NsbFormatter().getFileContent(configuration, dir);
-                resp.getWriter().write(content);
-            } catch (IOException
-                    | CarException e) {
-                // TODO Add logger
-                e.printStackTrace();
-            }
+            addCar(req, resp);
+        } else if ("elite".equals(action)) {
+            eliteCar(req, resp);
         } else {
             replaceCar(req, resp);
+        }
+    }
+
+    private void eliteCar(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+            int id = Integer.parseInt(req.getParameter("id"));
+            String dir = req.getParameter("dir");
+
+            Configuration configuration = new Configuration();
+            String path = configuration.getString("working.directory");
+            JsonObject json = new CarServiceFileImpl(path + "/" + dir).elite(id);
+
+            resp.getWriter().write(json.toString());
+        } catch (IOException
+                | CarException e) {
+            // TODO Add logger
+            e.printStackTrace();
+        }
+    }
+
+    public void addCar(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+            String dir = req.getParameter("dir");
+            String pathNewCar = req.getParameter("path");
+
+            Configuration configuration = new Configuration();
+            String path = configuration.getString("working.directory");
+            new CarServiceFileImpl(path + "/" + dir).add(pathNewCar + ".txt");
+
+            String content = new NsbFormatter().getFileContent(configuration, dir);
+            resp.getWriter().write(content);
+        } catch (IOException
+                | CarException e) {
+            // TODO Add logger
+            e.printStackTrace();
         }
     }
 

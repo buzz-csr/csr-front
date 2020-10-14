@@ -206,4 +206,27 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
     $scope.addCar = function(){
         $scope.editedCar = undefined;
     }
+    
+    $scope.elite = function(caowEdited){
+        $http({
+            method: 'POST',
+            url: '/csr-front/car',
+            headers : {'Content-type' : 'application/json; charset=UTF-8'},
+            params :{
+                id      : caowEdited.unid,
+                dir     : directory,
+                action  : 'elite',
+            }
+        }).then(function(response){
+            caowEdited = response.data;
+
+            $scope.fileEdited.caow.forEach(function(car,index){
+                if(car.unid == caowEdited.unid){
+                    $scope.fileEdited.caow[index] = caowEdited;
+                }
+            });
+
+            addActivity("Elite " + caowEdited.crdb);
+        });
+    }
 }]);
