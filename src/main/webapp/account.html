@@ -25,6 +25,10 @@
     <div class="col-md-1"><img ng-show="fileEdited.caow[carId].elcl == 0" ng-click="elite(fileEdited.caow[carId])" src="images/permis.jpg" /></div>
 </div>
 
+<div class="row">
+    <button type="button" data-toggle="modal" data-target="#collectionsModal" class="btn btn-secondary col-md-12" ng-click="addCar()">Ajouter voiture</button>
+</div>
+
 <div class="activities">
     <div class="activity" ng-repeat="a in activities track by $index">{{a}}</div>
 </div>

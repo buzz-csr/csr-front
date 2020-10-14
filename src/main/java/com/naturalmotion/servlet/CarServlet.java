@@ -22,6 +22,22 @@ public class CarServlet extends HttpServlet {
         String action = req.getParameter("action");
         if ("full".equals(action)) {
             fullCar(req, resp);
+        } else if ("add".equals(action)) {
+            try {
+                String dir = req.getParameter("dir");
+                String pathNewCar = req.getParameter("path");
+
+                Configuration configuration = new Configuration();
+                String path = configuration.getString("working.directory");
+                new CarServiceFileImpl(path + "/" + dir).add(pathNewCar + ".txt");
+
+                String content = new NsbFormatter().getFileContent(configuration, dir);
+                resp.getWriter().write(content);
+            } catch (IOException
+                    | CarException e) {
+                // TODO Add logger
+                e.printStackTrace();
+            }
         } else {
             replaceCar(req, resp);
         }

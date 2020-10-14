@@ -51,7 +51,23 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	}
 
 	$scope.replace = function(path,car){
-		$http({
+	    if($scope.editedCar == undefined){
+	        $http({
+                method: 'POST',
+                url: '/csr-front/car',
+                headers : {'Content-type' : 'application/json; charset=UTF-8'},
+                params :{
+                    path      : path+"/"+car,
+                    dir     : directory,
+                    action  : 'add',
+                }
+            }).then(function(response){
+                $scope.fileEdited = response.data;
+
+                addActivity("Ajout " + $scope.fileEdited.caow[$scope.fileEdited.caow.length-1].crdb);
+            });
+	    }else{
+	        $http({
                 method: 'POST',
                 url: '/csr-front/car',
                 headers : {'Content-type' : 'application/json; charset=UTF-8'},
@@ -72,6 +88,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 
                 addActivity("Ajout " + caowEdited.crdb);
             });
+	    }
 	}
 	
 	$scope.saveEditedCar = function(editedCar){
@@ -186,4 +203,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
         })
     }
     
+    $scope.addCar = function(){
+        $scope.editedCar = undefined;
+    }
 }]);
