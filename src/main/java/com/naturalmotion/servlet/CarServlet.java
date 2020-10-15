@@ -38,11 +38,11 @@ public class CarServlet extends HttpServlet {
 
             Configuration configuration = new Configuration();
             String path = configuration.getString("working.directory");
-            JsonObject json = new CarServiceFileImpl(path + "/" + dir).elite(id);
+            // JsonObject json = new CarServiceFileImpl(path + "/" + dir).elite(id);
 
-            resp.getWriter().write(json.toString());
-        } catch (IOException
-                | CarException e) {
+            // resp.getWriter().write(json.toString());
+            resp.getWriter().write("{'status': 'ok'}");
+        } catch (IOException e) {
             // TODO Add logger
             e.printStackTrace();
         }

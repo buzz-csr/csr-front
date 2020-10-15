@@ -88,3 +88,7 @@ h3{
 .bottom {
     margin-bottom: 20px;
 }
+.v-center{
+    margin-top: auto;
+    margin-bottom: auto;
+}

@@ -16,6 +16,11 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	$scope.expectedKeyBronze;
 	$scope.expectedKeySilver;
 	$scope.expectedKeyGold;
+    $scope.localSearch;
+
+    $scope.matchSearch = function(carId){
+        return carId != -1 && ($scope.localSearch == undefined || $scope.fileEdited.caow[carId].crdb.toLowerCase().includes($scope.localSearch.toLowerCase()));
+    }
 
 	function addActivity(text){
 		$scope.activities.push(text);
