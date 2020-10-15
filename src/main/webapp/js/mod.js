@@ -235,29 +235,31 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
     }
     
     var searchCar = function(content){
-        if(content.directory.toLowerCase().includes($scope.searchCar.toLowerCase()) && 
-                content.cars && content.cars.length > 0){
-            angular.forEach(content.cars, function(car){
-                $scope.searchedCar.push({
-                    path   : content.path,
-                    carName : car,
-                })
-            })
-        }
-        if(content.cars && content.cars.length > 0){
-            angular.forEach(content.cars, function(car){
-                if(car.toLowerCase().includes($scope.searchCar.toLowerCase())){
+        if($scope.searchCar != undefined && $scope.searchCar.length >= 3){
+            if(content.directory.toLowerCase().includes($scope.searchCar.toLowerCase()) &&
+                    content.cars && content.cars.length > 0){
+                angular.forEach(content.cars, function(car){
                     $scope.searchedCar.push({
                         path   : content.path,
                         carName : car,
                     })
-                }
+                })
+            }
+            if(content.cars && content.cars.length > 0){
+                angular.forEach(content.cars, function(car){
+                    if(car.toLowerCase().includes($scope.searchCar.toLowerCase())){
+                        $scope.searchedCar.push({
+                            path   : content.path,
+                            carName : car,
+                        })
+                    }
+                })
+            }
+
+            angular.forEach(content.content, function(actual){
+                searchCar(actual)
             })
         }
-
-        angular.forEach(content.content, function(actual){
-            searchCar(actual)
-        })
     }
     
     $scope.addCar = function(){
