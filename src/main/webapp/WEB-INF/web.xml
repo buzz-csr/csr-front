@@ -8,6 +8,10 @@
         <servlet-class>com.naturalmotion.servlet.ResourceServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>gift</servlet-name>
+        <servlet-class>com.naturalmotion.servlet.GiftServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>pack</servlet-name>
         <servlet-class>com.naturalmotion.servlet.PackServlet</servlet-class>
     </servlet>
@@ -23,6 +27,10 @@
         <servlet-name>GetFile</servlet-name>
         <servlet-class>com.naturalmotion.servlet.GetFile</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>gift</servlet-name>
+        <url-pattern>/gift</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>reset</servlet-name>
         <url-pattern>/reset</url-pattern>

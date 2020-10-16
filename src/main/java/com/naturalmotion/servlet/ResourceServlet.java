@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.naturalmotion.Configuration;
 import com.naturalmotion.csr_api.api.ResourceType;
+import com.naturalmotion.csr_api.service.io.NsbException;
 import com.naturalmotion.csr_api.service.updater.ProfileUpdater;
 import com.naturalmotion.csr_api.service.updater.ProfileUpdaterFileImpl;
 import com.naturalmotion.csr_api.service.updater.UpdaterException;
@@ -37,8 +38,7 @@ public class ResourceServlet extends HttpServlet {
                 profileUpdater.updateResource(ResourceType.GOLD, new BigDecimal(gold));
 
                 resp.getWriter().write(new NsbFormatter().getFileContent(configuration, dir));
-            } catch (IOException
-                    | UpdaterException e) {
+            } catch (IOException | UpdaterException | NsbException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
@@ -58,8 +58,7 @@ public class ResourceServlet extends HttpServlet {
                 profileUpdater.updateResource(ResourceType.SILVER_KEY, new BigDecimal(silver));
 
                 resp.getWriter().write(new NsbFormatter().getFileContent(configuration, dir));
-            } catch (IOException
-                    | UpdaterException e) {
+            } catch (IOException | UpdaterException | NsbException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }

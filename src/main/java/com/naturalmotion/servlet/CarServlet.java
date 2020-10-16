@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.naturalmotion.Configuration;
 import com.naturalmotion.csr_api.service.car.CarException;
 import com.naturalmotion.csr_api.service.car.CarServiceFileImpl;
+import com.naturalmotion.csr_api.service.io.NsbException;
 
 public class CarServlet extends HttpServlet {
 
@@ -58,8 +59,7 @@ public class CarServlet extends HttpServlet {
             new CarServiceFileImpl(path + "/" + dir).add(pathNewCar + ".txt");
 
             resp.getWriter().write(new NsbFormatter().getFileContent(configuration, dir));
-        } catch (IOException
-                | CarException e) {
+        } catch (IOException | CarException | NsbException e) {
             // TODO Add logger
             e.printStackTrace();
         }
@@ -75,8 +75,7 @@ public class CarServlet extends HttpServlet {
             String path = configuration.getString("working.directory");
             JsonObject json = new CarServiceFileImpl(path + "/" + dir).replace(id, pathNewCar + ".txt");
             resp.getWriter().write(json.toString());
-        } catch (IOException
-                | CarException e) {
+        } catch (IOException | CarException | NsbException e) {
             // TODO Add logger
             e.printStackTrace();
         }
@@ -92,8 +91,7 @@ public class CarServlet extends HttpServlet {
             JsonObject json = new CarServiceFileImpl(path + "/" + dir).full(id);
 
             resp.getWriter().write(json.toString());
-        } catch (IOException
-                | CarException e) {
+        } catch (IOException | CarException | NsbException e) {
             // TODO Add logger
             e.printStackTrace();
         }

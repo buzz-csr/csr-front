@@ -288,4 +288,17 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
             addActivity("Elite " + caowEdited.crdb);
         });
     }
+
+    $scope.full = function(){
+        $http({
+            method: 'POST',
+            url: '/csr-front/gift',
+            headers : {'Content-type' : 'application/json; charset=UTF-8'},
+            params :{
+                dir     : directory,
+            }
+        }).then(function(response){
+            addActivity("Ajout Essence");
+        });
+    }
 }]);

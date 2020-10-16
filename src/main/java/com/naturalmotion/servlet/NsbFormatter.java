@@ -17,6 +17,10 @@ import javax.json.JsonReader;
 import javax.json.JsonValue;
 
 import com.naturalmotion.Configuration;
+import com.naturalmotion.csr_api.service.car.CarService;
+import com.naturalmotion.csr_api.service.io.NsbException;
+import com.naturalmotion.csr_api.service.reader.ProfileReader;
+import com.naturalmotion.csr_api.service.reader.ProfileReaderFileImpl;
 
 public class NsbFormatter {
 
@@ -25,7 +29,7 @@ public class NsbFormatter {
 
     private static final List<String> CAOW_ALLOW = Arrays.asList("crdb", "nupl", "ctie", "cepi", "elcl", "unid");
 
-    public String getFileContent(Configuration configuration, String directory) throws IOException {
+    public String getFileContent(Configuration configuration, String directory) throws IOException, NsbException {
         String content = null;
         String path = configuration.getString("working.directory");
         File file = new File(path + "/" + directory + "/Edited/nsb.json");
@@ -40,9 +44,16 @@ public class NsbFormatter {
             JsonArrayBuilder newCaows = filteredCaow(jsonObject.getJsonArray("caow"));
             objectBuilder.add("caow", newCaows);
 
+            objectBuilder.add("brands", getBrands(path, directory));
             content = objectBuilder.build().toString();
         }
         return content;
+    }
+
+    private JsonArray getBrands(String path, String directory) throws NsbException {
+        ProfileReader reader = new ProfileReaderFileImpl(path + "/" + directory);
+        List<String> brands = reader.getBrands();
+        return Json.createArrayBuilder(brands).build();
     }
 
     private JsonArrayBuilder filteredCaow(JsonArray caow) {
