@@ -6,6 +6,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.naturalmotion.Configuration;
 import com.naturalmotion.csr_api.service.car.CarException;
 import com.naturalmotion.csr_api.service.gift.GiftService;
@@ -16,6 +19,8 @@ public class GiftServlet extends HttpServlet {
 
     private static final long serialVersionUID = 6868517541785832236L;
     private static final String SEPARATOR = "/";
+
+    private final Logger log = LoggerFactory.getLogger(CarServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
@@ -30,7 +35,7 @@ public class GiftServlet extends HttpServlet {
         } catch (IOException
                 | CarException
                 | NsbException e) {
-            e.printStackTrace();
+            log.error("Error adding fuel gift", e);
         }
     }
 }

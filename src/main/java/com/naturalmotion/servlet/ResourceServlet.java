@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.naturalmotion.Configuration;
 import com.naturalmotion.csr_api.api.ResourceType;
 import com.naturalmotion.csr_api.service.io.NsbException;
@@ -17,6 +20,8 @@ import com.naturalmotion.csr_api.service.updater.UpdaterException;
 public class ResourceServlet extends HttpServlet {
 
     private static final long serialVersionUID = -2698675847367966977L;
+
+    private final Logger log = LoggerFactory.getLogger(ResourceServlet.class);
 
     private static final String SEPARATOR = "/";
 
@@ -51,8 +56,7 @@ public class ResourceServlet extends HttpServlet {
         } catch (IOException
                 | UpdaterException
                 | NsbException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error("Error adding keys", e);
         }
     }
 
@@ -74,8 +78,7 @@ public class ResourceServlet extends HttpServlet {
         } catch (IOException
                 | UpdaterException
                 | NsbException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error("Error adding cash/or", e);
         }
     }
 

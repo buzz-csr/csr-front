@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.naturalmotion.Configuration;
 
 import csr.Compress;
@@ -21,6 +24,8 @@ import csr.Compress;
 public class PackServlet extends HttpServlet {
 
     private static final long serialVersionUID = 4444625786109757396L;
+
+    private final Logger log = LoggerFactory.getLogger(PackServlet.class);
 
     private static final String WORKING_DIRECTORY = "working.directory";
 
@@ -48,7 +53,7 @@ public class PackServlet extends HttpServlet {
             sos.flush();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Error packing files", e);
         }
     }
 

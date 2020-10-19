@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.naturalmotion.Configuration;
 import com.naturalmotion.csr_api.service.car.CarException;
 import com.naturalmotion.csr_api.service.car.CarServiceFileImpl;
@@ -16,6 +19,8 @@ public class CarServlet extends HttpServlet {
 
     private static final String SEPARATOR = "/";
     private static final long serialVersionUID = -7980787428623402843L;
+
+    private final Logger log = LoggerFactory.getLogger(CarServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
@@ -47,8 +52,7 @@ public class CarServlet extends HttpServlet {
         } catch (IOException
                 | CarException
                 | NsbException e) {
-            // TODO Add logger
-            e.printStackTrace();
+            log.error("Error adding elite on car", e);
         }
     }
 
@@ -66,8 +70,7 @@ public class CarServlet extends HttpServlet {
         } catch (IOException
                 | CarException
                 | NsbException e) {
-            // TODO Add logger
-            e.printStackTrace();
+            log.error("Error adding car", e);
         }
     }
 
@@ -86,8 +89,7 @@ public class CarServlet extends HttpServlet {
         } catch (IOException
                 | CarException
                 | NsbException e) {
-            // TODO Add logger
-            e.printStackTrace();
+            log.error("Error replacing car", e);
         }
     }
 
@@ -105,8 +107,7 @@ public class CarServlet extends HttpServlet {
         } catch (IOException
                 | CarException
                 | NsbException e) {
-            // TODO Add logger
-            e.printStackTrace();
+            log.error("Error max car", e);
         }
     }
 
