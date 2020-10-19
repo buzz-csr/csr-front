@@ -7,6 +7,14 @@
     <link rel="stylesheet" type="text/css" href="css/upload.css">
 </head>
 <body ng-controller="upCtrl" class="container upload">
+
+<div class="row" ng-show="error">
+    <div class="col-md-12 col-sm-12">
+        <div class="alert alert-danger" role="alert">
+            {{error}}
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <input class="form-control" type="text" placeholder="Pseudo" ng-model="user" />
