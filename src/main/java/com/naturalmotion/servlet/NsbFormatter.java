@@ -61,17 +61,21 @@ public class NsbFormatter {
 
     private JsonArrayBuilder filteredCaow(JsonArray caow) {
         JsonArrayBuilder newCaows = Json.createArrayBuilder();
-        JsonObjectBuilder newCaow = null;
         for (int i = 0; i < caow.size(); i++) {
             JsonObject jsonCaow = caow.get(i).asJsonObject();
-            newCaow = Json.createObjectBuilder();
-            for (Map.Entry<String, JsonValue> entry : jsonCaow.entrySet()) {
-                if (CAOW_ALLOW.contains(entry.getKey())) {
-                    newCaow.add(entry.getKey(), entry.getValue());
-                }
-            }
-            newCaows.add(newCaow.build());
+            JsonObject json = filteredCar(jsonCaow);
+            newCaows.add(json);
         }
         return newCaows;
+    }
+
+    public JsonObject filteredCar(JsonObject jsonCaow) {
+        JsonObjectBuilder newCaow = Json.createObjectBuilder();
+        for (Map.Entry<String, JsonValue> entry : jsonCaow.entrySet()) {
+            if (CAOW_ALLOW.contains(entry.getKey())) {
+                newCaow.add(entry.getKey(), entry.getValue());
+            }
+        }
+        return newCaow.build();
     }
 }

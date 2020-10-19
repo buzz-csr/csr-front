@@ -43,7 +43,7 @@ public class CarServlet extends HttpServlet {
             String path = configuration.getString("working.directory");
             JsonObject json = new CarServiceFileImpl(path + SEPARATOR + user + SEPARATOR + dir).elite(id);
 
-            resp.getWriter().write(json.toString());
+            resp.getWriter().write(new NsbFormatter().filteredCar(json).toString());
         } catch (IOException
                 | CarException
                 | NsbException e) {
@@ -82,7 +82,7 @@ public class CarServlet extends HttpServlet {
             String path = configuration.getString("working.directory");
             JsonObject json = new CarServiceFileImpl(path + SEPARATOR + user + SEPARATOR + dir).replace(id,
                     pathNewCar + ".txt");
-            resp.getWriter().write(json.toString());
+            resp.getWriter().write(new NsbFormatter().filteredCar(json).toString());
         } catch (IOException
                 | CarException
                 | NsbException e) {
@@ -101,7 +101,7 @@ public class CarServlet extends HttpServlet {
             String path = configuration.getString("working.directory");
             JsonObject json = new CarServiceFileImpl(path + SEPARATOR + user + SEPARATOR + dir).full(id);
 
-            resp.getWriter().write(json.toString());
+            resp.getWriter().write(new NsbFormatter().filteredCar(json).toString());
         } catch (IOException
                 | CarException
                 | NsbException e) {
