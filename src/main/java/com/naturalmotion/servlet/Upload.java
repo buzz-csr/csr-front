@@ -20,25 +20,22 @@ import csr.Extract;
 @MultipartConfig
 public class Upload extends HttpServlet {
 
+    private static final String SEPARATOR = "/";
     private static final long serialVersionUID = -1637365817304780292L;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Configuration configuration = new Configuration();
-
+        String user = req.getParameter("user");
         String now = String.valueOf(System.currentTimeMillis());
-        File backupDir = new File(configuration.getString("working.directory"));
-        if (!backupDir.exists()) {
-            backupDir.mkdirs();
-        }
-        File actualDir = new File(backupDir.getPath() + "/" + now + "/Original/");
+        String backupPath = getBackupPath(user, now);
+        File actualDir = new File(backupPath + "Original" + SEPARATOR);
         actualDir.mkdirs();
 
         for (Part part : req.getParts()) {
             try (InputStream stream = part.getInputStream()) {
                 byte[] buffer = new byte[stream.available()];
                 if (stream.read(buffer) > 0) {
-                    File target = new File(actualDir.getPath() + "/" + getFileName(part));
+                    File target = new File(actualDir.getPath() + SEPARATOR + getFileName(part));
                     try (OutputStream outStream = new FileOutputStream(target)) {
                         outStream.write(buffer);
                     }
@@ -46,8 +43,14 @@ public class Upload extends HttpServlet {
             }
         }
 
-        new Extract().unzipAll(backupDir.getPath() + "/" + now + "/");
-        resp.getWriter().write(now);
+        new Extract().unzipAll(backupPath);
+        resp.getWriter().write("{\"user\": \"" + user + "\", \"timestamp\": \"" + now + "\"}");
+    }
+
+    public String getBackupPath(String user, String now) throws IOException {
+        Configuration configuration = new Configuration();
+        File backupDir = new File(configuration.getString("working.directory"));
+        return backupDir.getPath() + SEPARATOR + user + SEPARATOR + now + SEPARATOR;
     }
 
     private String getFileName(Part part) {

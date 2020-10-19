@@ -31,12 +31,14 @@ public class PackServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String dir = req.getParameter("dir");
+        String user = req.getParameter("user");
         try {
             Configuration configuration = new Configuration();
-            new Compress().zipAll(configuration.getString(WORKING_DIRECTORY) + SEPARATOR + dir + SEPARATOR);
+            new Compress().zipAll(
+                    configuration.getString(WORKING_DIRECTORY) + SEPARATOR + user + SEPARATOR + dir + SEPARATOR);
 
-            File finalFolder = new File(
-                    configuration.getString(WORKING_DIRECTORY) + SEPARATOR + dir + SEPARATOR + FINAL_FOLDER);
+            File finalFolder = new File(configuration.getString(WORKING_DIRECTORY) + SEPARATOR + user + SEPARATOR
+                    + dir + SEPARATOR + FINAL_FOLDER);
 
             byte[] zip = zipFiles(finalFolder);
             ServletOutputStream sos = resp.getOutputStream();

@@ -103,13 +103,13 @@
         <profile>
             <id>windows</id>
             <properties>
-                <woring.directory>C:/Dev/Git/perso/backup</woring.directory>
+                <working.directory>C:/Dev/Git/perso/backup</working.directory>
             </properties>
         </profile>
         <profile>
-            <id>bureao</id>
+            <id>bureau</id>
             <properties>
-                <woring.directory>C:/Dev/Git/perso/backup</woring.directory>
+                <working.directory>C:/Dev/Git/perso/backup</working.directory>
             </properties>
         </profile>
     </profiles>

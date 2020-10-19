@@ -14,6 +14,7 @@ import com.naturalmotion.csr_api.service.io.NsbException;
 
 public class CarServlet extends HttpServlet {
 
+    private static final String SEPARATOR = "/";
     private static final long serialVersionUID = -7980787428623402843L;
 
     @Override
@@ -36,14 +37,16 @@ public class CarServlet extends HttpServlet {
         try {
             int id = Integer.parseInt(req.getParameter("id"));
             String dir = req.getParameter("dir");
+            String user = req.getParameter("user");
 
             Configuration configuration = new Configuration();
             String path = configuration.getString("working.directory");
-            // JsonObject json = new CarServiceFileImpl(path + "/" + dir).elite(id);
+            JsonObject json = new CarServiceFileImpl(path + SEPARATOR + user + SEPARATOR + dir).elite(id);
 
-            // resp.getWriter().write(json.toString());
-            resp.getWriter().write("{'status': 'ok'}");
-        } catch (IOException e) {
+            resp.getWriter().write(json.toString());
+        } catch (IOException
+                | CarException
+                | NsbException e) {
             // TODO Add logger
             e.printStackTrace();
         }
@@ -52,14 +55,17 @@ public class CarServlet extends HttpServlet {
     public void addCar(HttpServletRequest req, HttpServletResponse resp) {
         try {
             String dir = req.getParameter("dir");
+            String user = req.getParameter("user");
             String pathNewCar = req.getParameter("path");
 
             Configuration configuration = new Configuration();
             String path = configuration.getString("working.directory");
-            new CarServiceFileImpl(path + "/" + dir).add(pathNewCar + ".txt");
+            new CarServiceFileImpl(path + SEPARATOR + user + SEPARATOR + dir).add(pathNewCar + ".txt");
 
-            resp.getWriter().write(new NsbFormatter().getFileContent(configuration, dir));
-        } catch (IOException | CarException | NsbException e) {
+            resp.getWriter().write(new NsbFormatter().getFileContent(configuration, dir, user));
+        } catch (IOException
+                | CarException
+                | NsbException e) {
             // TODO Add logger
             e.printStackTrace();
         }
@@ -69,13 +75,17 @@ public class CarServlet extends HttpServlet {
         try {
             int id = Integer.parseInt(req.getParameter("id"));
             String dir = req.getParameter("dir");
+            String user = req.getParameter("user");
             String pathNewCar = req.getParameter("path");
 
             Configuration configuration = new Configuration();
             String path = configuration.getString("working.directory");
-            JsonObject json = new CarServiceFileImpl(path + "/" + dir).replace(id, pathNewCar + ".txt");
+            JsonObject json = new CarServiceFileImpl(path + SEPARATOR + user + SEPARATOR + dir).replace(id,
+                    pathNewCar + ".txt");
             resp.getWriter().write(json.toString());
-        } catch (IOException | CarException | NsbException e) {
+        } catch (IOException
+                | CarException
+                | NsbException e) {
             // TODO Add logger
             e.printStackTrace();
         }
@@ -85,13 +95,16 @@ public class CarServlet extends HttpServlet {
         try {
             int id = Integer.parseInt(req.getParameter("id"));
             String dir = req.getParameter("dir");
+            String user = req.getParameter("user");
 
             Configuration configuration = new Configuration();
             String path = configuration.getString("working.directory");
-            JsonObject json = new CarServiceFileImpl(path + "/" + dir).full(id);
+            JsonObject json = new CarServiceFileImpl(path + SEPARATOR + user + SEPARATOR + dir).full(id);
 
             resp.getWriter().write(json.toString());
-        } catch (IOException | CarException | NsbException e) {
+        } catch (IOException
+                | CarException
+                | NsbException e) {
             // TODO Add logger
             e.printStackTrace();
         }

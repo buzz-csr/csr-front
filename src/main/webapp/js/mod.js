@@ -27,12 +27,15 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	}
 
 	var directory = $location.search().temp;
+	var user = $location.search().user;
+	
 	$http({
 		method: 'GET',
 		url: '/csr-front/GetFile',
 		headers : {'Content-type' : 'application/json; charset=UTF-8'},
 		params : {
             dir : directory,
+            user : user,
 		}
 	}).then(function(response){
 		$scope.fileEdited = response.data;
@@ -51,6 +54,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 			params :{
 			    id      : caowEdited.unid,
 			    dir     : directory,
+	            user : user,
 			    action  : 'full',
 			}
 		}).then(function(response){
@@ -74,6 +78,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	            cash       : $scope.expectedCash,
 	            gold       : $scope.expectedGold,
 	            dir        : directory,
+	            user : user,
                 type       : 'cash',
 	        }
 	    }).then(function(response){
@@ -97,6 +102,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	            silver         : $scope.expectedKeySilver,
 	            gold           : $scope.expectedKeyGold,
 	            dir            : directory,
+	            user : user,
                 type           : 'key',
 	        }
 	    }).then(function(response){
@@ -116,6 +122,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
                 params :{
                     path      : path+"/"+car,
                     dir     : directory,
+                    user : user,
                     action  : 'add',
                 }
             }).then(function(response){
@@ -132,6 +139,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
                     id      : $scope.editedCar.unid,
                     path      : path+"/"+car,
                     dir     : directory,
+                    user : user,
                     action  : 'replace',
                 }
             }).then(function(response){
@@ -217,6 +225,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
             responseType: 'arraybuffer',
             params : {
                   dir : directory,
+                  user : user,
             }
         }).then(function(data){
             var blob = new Blob([data.data], { type: 'application/octet-stream' });
@@ -274,6 +283,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
             params :{
                 id      : caowEdited.unid,
                 dir     : directory,
+                user : user,
                 action  : 'elite',
             }
         }).then(function(response){
@@ -289,13 +299,14 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
         });
     }
 
-    $scope.full = function(){
+    $scope.fuel = function(){
         $http({
             method: 'POST',
             url: '/csr-front/gift',
             headers : {'Content-type' : 'application/json; charset=UTF-8'},
             params :{
                 dir     : directory,
+                user : user,
             }
         }).then(function(response){
             addActivity("Ajout Essence");

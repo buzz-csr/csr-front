@@ -3,8 +3,8 @@ body.container{
     margin: 0;
     max-width: 2048px;
 }
-.upload{
-    max-width: 512px;
+body.container .upload{
+    max-width: 512px !important;
 }
 .upload .row{
     margin: 10px;

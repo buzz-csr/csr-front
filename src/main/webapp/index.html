@@ -4,23 +4,28 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="css/upload.css">
 </head>
 <body ng-controller="upCtrl" class="container upload">
 <div class="row">
-    <div class="col-md-4 right col-sm-1">Nsb</div>
+    <div class="col-md-12 col-sm-12">
+        <input class="form-control" type="text" placeholder="Pseudo" ng-model="user" />
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 col-sm-1">Nsb</div>
     <div class="col-md-6 col-sm-11">
         <input type='file' ng-file='uploadfiles1'>
     </div>
 </div>
 <div class="row">
-    <div class="col-md-4 right col-sm-1">Scb</div>
+    <div class="col-md-4 col-sm-1">Scb</div>
     <div class="col-md-6 col-sm-11">
         <input type='file' ng-file='uploadfiles2'>
     </div>
 </div>
 <div class="row">
-    <div class="col-md-4 right col-sm-1">Long file (Android)</div>
+    <div class="col-md-4 col-sm-1">Long file (Android)</div>
     <div class="col-md-6 col-sm-11">
         <input type='file' ng-file='uploadfiles3'>
     </div>
@@ -31,7 +36,7 @@
     </div>
 </div>
 <BR/>
-    <a ng-show="response" ng-href="/csr-front/account.html?temp={{response}}" type="button" class="btn btn-success col-md-12" ng-click="pack()">Garage</a>
+    <a ng-show="response" ng-href="/csr-front/account.html?temp={{response.timestamp}}&user={{response.user}}" type="button" class="btn btn-success col-md-12" ng-click="pack()">Garage</a>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <script type="text/javascript" src="js/upload.js"></script>

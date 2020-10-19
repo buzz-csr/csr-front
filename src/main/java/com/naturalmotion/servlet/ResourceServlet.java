@@ -25,44 +25,57 @@ public class ResourceServlet extends HttpServlet {
 
         String type = req.getParameter("type");
         if ("cash".equals(type)) {
-            try {
-                String cash = req.getParameter("cash");
-                String gold = req.getParameter("gold");
-                String dir = req.getParameter("dir");
-
-                Configuration configuration = new Configuration();
-                String path = configuration.getString("working.directory");
-
-                ProfileUpdater profileUpdater = new ProfileUpdaterFileImpl(path + SEPARATOR + dir);
-                profileUpdater.updateResource(ResourceType.CASH, new BigDecimal(cash));
-                profileUpdater.updateResource(ResourceType.GOLD, new BigDecimal(gold));
-
-                resp.getWriter().write(new NsbFormatter().getFileContent(configuration, dir));
-            } catch (IOException | UpdaterException | NsbException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            addCashOr(req, resp);
         } else {
-            try {
-                String bronze = req.getParameter("bronze");
-                String gold = req.getParameter("gold");
-                String silver = req.getParameter("silver");
-                String dir = req.getParameter("dir");
+            addKeys(req, resp);
+        }
+    }
 
-                Configuration configuration = new Configuration();
-                String path = configuration.getString("working.directory");
+    public void addKeys(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+            String bronze = req.getParameter("bronze");
+            String gold = req.getParameter("gold");
+            String silver = req.getParameter("silver");
+            String dir = req.getParameter("dir");
+            String user = req.getParameter("user");
 
-                ProfileUpdater profileUpdater = new ProfileUpdaterFileImpl(path + SEPARATOR + dir);
-                profileUpdater.updateResource(ResourceType.BRONZE_KEY, new BigDecimal(bronze));
-                profileUpdater.updateResource(ResourceType.GOLD_KEY, new BigDecimal(gold));
-                profileUpdater.updateResource(ResourceType.SILVER_KEY, new BigDecimal(silver));
+            Configuration configuration = new Configuration();
+            String path = configuration.getString("working.directory");
 
-                resp.getWriter().write(new NsbFormatter().getFileContent(configuration, dir));
-            } catch (IOException | UpdaterException | NsbException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            ProfileUpdater profileUpdater = new ProfileUpdaterFileImpl(path + SEPARATOR + user + SEPARATOR + dir);
+            profileUpdater.updateResource(ResourceType.BRONZE_KEY, new BigDecimal(bronze));
+            profileUpdater.updateResource(ResourceType.GOLD_KEY, new BigDecimal(gold));
+            profileUpdater.updateResource(ResourceType.SILVER_KEY, new BigDecimal(silver));
 
+            resp.getWriter().write(new NsbFormatter().getFileContent(configuration, dir, user));
+        } catch (IOException
+                | UpdaterException
+                | NsbException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public void addCashOr(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+            String cash = req.getParameter("cash");
+            String gold = req.getParameter("gold");
+            String dir = req.getParameter("dir");
+            String user = req.getParameter("user");
+
+            Configuration configuration = new Configuration();
+            String path = configuration.getString("working.directory");
+
+            ProfileUpdater profileUpdater = new ProfileUpdaterFileImpl(path + SEPARATOR + user + SEPARATOR + dir);
+            profileUpdater.updateResource(ResourceType.CASH, new BigDecimal(cash));
+            profileUpdater.updateResource(ResourceType.GOLD, new BigDecimal(gold));
+
+            resp.getWriter().write(new NsbFormatter().getFileContent(configuration, dir, user));
+        } catch (IOException
+                | UpdaterException
+                | NsbException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 

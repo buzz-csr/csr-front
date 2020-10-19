@@ -1,0 +1,9 @@
+body.container{
+    max-width: 1024px;
+}
+.upload .row{
+    margin: 10px;
+}
+.center {
+    text-align: center;
+}

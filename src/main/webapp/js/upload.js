@@ -14,8 +14,10 @@ upModule.directive('ngFile', ['$parse', function ($parse) {
 }]);
 
 upModule.controller('upCtrl', ['$scope', '$http', function ($scope, $http) {
-  $scope.upload = function(){
-
+  $scope.user;
+  
+    $scope.upload = function(){
+  
    var fd = new FormData();
    angular.forEach($scope.uploadfiles1,function(file){
      fd.append('file[]',file);
@@ -31,6 +33,9 @@ upModule.controller('upCtrl', ['$scope', '$http', function ($scope, $http) {
      method: 'post',
      url: '/csr-front/upload',
      data: fd,
+     params :{
+         user      : $scope.user,
+     },
      headers: {'Content-Type': undefined},
    }).then(function successCallback(response) {
      // Store response data

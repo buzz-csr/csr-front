@@ -18,8 +18,9 @@ public class GetFile extends HttpServlet {
         try (PrintWriter writer = resp.getWriter();) {
             Configuration configuration = new Configuration();
             String directory = req.getParameter("dir");
+            String user = req.getParameter("user");
 
-            String content = new NsbFormatter().getFileContent(configuration, directory);
+            String content = new NsbFormatter().getFileContent(configuration, directory, user);
             writer.write(content);
         } catch (Exception e) {
             // TODO add logger
