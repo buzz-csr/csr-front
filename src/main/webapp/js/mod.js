@@ -6,6 +6,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	
 	$scope.activities = [];
 	$scope.fileEdited;
+	$scope.userId;
 	$scope.editedCar;
 	$scope.collections;
 	$scope.collectionsDir = [];
@@ -34,8 +35,9 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 		url: '/csr-front/GetFile',
 		headers : {'Content-type' : 'application/json; charset=UTF-8'},
 		params : {
-            dir : directory,
-            user : user,
+            dir     : directory,
+            user    : user,
+            type    : 'profile', 
 		}
 	}).then(function(response){
 		$scope.fileEdited = response.data;
@@ -44,6 +46,19 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 		$scope.expectedKeyBronze = $scope.fileEdited.gbks;
 		$scope.expectedKeySilver = $scope.fileEdited.gsks;
 		$scope.expectedKeyGold = $scope.fileEdited.ggks;
+	});	
+	
+	$http({
+	    method: 'GET',
+	    url: '/csr-front/GetFile',
+	    headers : {'Content-type' : 'application/json; charset=UTF-8'},
+	    params : {
+	        dir     : directory,
+	        user    : user,
+	        type    : 'id', 
+	    }
+	}).then(function(response){
+	    $scope.userId = response.data;
 	});	
 
 	$scope.fullCar = function(caowEdited){

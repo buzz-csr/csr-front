@@ -78,4 +78,22 @@ public class NsbFormatter {
         }
         return newCaow.build();
     }
+
+    public String getId(Configuration configuration, String directory, String user) throws IOException {
+        String content = null;
+        String path = configuration.getString("working.directory");
+        File file = new File(path + SEPARATOR + user + SEPARATOR + directory + SEPARATOR + "Edited");
+        String androidFileName = Arrays.stream(file.list())
+                .filter(x -> !"nsb.json".equals(x) && !"scb.json".equals(x))
+                .findFirst()
+                .orElse(null);
+        if (androidFileName != null) {
+            File androidFile = new File(file.getPath() + SEPARATOR + androidFileName);
+            try (InputStream fis = new FileInputStream(androidFile); JsonReader reader = Json.createReader(fis);) {
+                JsonObject jsonObject = reader.readObject();
+                content = jsonObject.getString("userid");
+            }
+        }
+        return content;
+    }
 }

@@ -19,8 +19,14 @@ public class GetFile extends HttpServlet {
             Configuration configuration = new Configuration();
             String directory = req.getParameter("dir");
             String user = req.getParameter("user");
+            String type = req.getParameter("type");
 
-            String content = new NsbFormatter().getFileContent(configuration, directory, user);
+            String content = null;
+            if ("profile".equals(type)) {
+                content = new NsbFormatter().getFileContent(configuration, directory, user);
+            } else {
+                content = new NsbFormatter().getId(configuration, directory, user);
+            }
             writer.write(content);
         } catch (Exception e) {
             // TODO add logger
