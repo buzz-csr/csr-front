@@ -40,7 +40,7 @@
       <dependency>
           <groupId>com.csr</groupId>
           <artifactId>csr</artifactId>
-          <version>1.0-BETA</version>
+          <version>1.1</version>
       </dependency>
       <dependency>
           <groupId>com.naturalmotion</groupId>
@@ -103,7 +103,7 @@
         <profile>
             <id>windows</id>
             <properties>
-                <working.directory>C:/Dev/Git/perso/backup</working.directory>
+                <working.directory>C:/Users/stephanie/Documents/Projets/backup</working.directory>
             </properties>
         </profile>
         <profile>

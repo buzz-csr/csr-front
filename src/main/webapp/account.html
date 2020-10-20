@@ -11,13 +11,121 @@
     <div class="col-md-12"><h3>{{fileEdited.name}} <span ng-show="userId" class="userid"> - {{userId}}</span></h3></div>
 </div>
 <div class="row bottom">
-    <button type="button" class="btn btn-success col-md-12" ng-click="downloadFile()">Télécharger fichiers</button>
+    <button type="button" class="btn btn-outline-success col-md-12 btn-lg" ng-click="downloadFile()">Télécharger fichiers</button>
 </div>
 
 <div class="row bottom">
-    <button type="button" class="btn btn-secondary col-md-3" ng-click="fuel()">Essence</button>
+    <button type="button" class="btn btn-secondary col-md-12 btn-lg" ng-click="fuel()">Essence</button>
 </div>
 
+<div class="row">
+    <div class="col-md-2">Fusions (3 couleurs)</div>
+    <div class="col-md-2 form-group">
+        <form>
+            <select class="form-control" ng-model="brand">
+                <option ng-repeat="brand in fileEdited.brands">{{brand}}</option>
+            </select>
+        </form>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="greenFusion">Verte</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Verte</div>
+            </div>
+            <input type="text" class="form-control" id="greenFusion" ng-model="greenFusion">
+        </div>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="blueFusion">Bleue</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Bleue</div>
+            </div>
+            <input type="text" class="form-control" id="blueFusion" ng-model="blueFusion">
+        </div>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="redFusion">Rouge</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Rouge</div>
+            </div>
+            <input type="text" class="form-control" id="redFusion" ng-model="redFusion">
+        </div>
+    </div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-secondary add-fusion" ng-click="fusionsThree()">Ajouter</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">Fusions rouge</div>
+    <div class="col-md-2 form-group">
+        <form>
+            <select class="form-control" ng-model="brand">
+                <option ng-repeat="brand in fileEdited.brands">{{brand}}</option>
+            </select>
+        </form>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="onlyRedFusion">Rouge</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Rouge</div>
+            </div>
+            <input type="text" class="form-control" id="onlyRedFusion" ng-model="onlyRedFusion">
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+    <div class="col-md-2"></div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-secondary add-fusion" ng-click="fusionsRed()">Ajouter</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">Composants élite</div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="eliteGreen">Vert</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Vert</div>
+            </div>
+            <input type="text" class="form-control" id="eliteGreen" ng-model="eliteGreen">
+        </div>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="eliteBlue">Bleu</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Bleu</div>
+            </div>
+            <input type="text" class="form-control" id="eliteBlue" ng-model="eliteBlue">
+        </div>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="eliteRed">Rouge</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Rouge</div>
+            </div>
+            <input type="text" class="form-control" id="eliteRed" ng-model="eliteRed">
+        </div>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="eliteYellow">Jaune</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Jaune</div>
+            </div>
+            <input type="text" class="form-control" id="eliteYellow" ng-model="eliteYellow">
+        </div>
+    </div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-secondary add-fusion" ng-click="eliteTokens()">Ajouter</button>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-3 v-center">
         <img src="/csr-front/images/dollars.png" width="40px">
@@ -57,7 +165,7 @@
     </div>
 </div>
 <div class="row bottom">
-    <button type="button" class="btn btn-secondary col-md-12" ng-click="resetCash()">Reset</button>
+    <button type="button" class="btn btn-secondary col-md-12 btn-lg" ng-click="resetCash()">Reset Cash et Or</button>
 </div>
 
 <div class="row">
@@ -118,7 +226,7 @@
     </div>
 </div>
 <div class="row bottom">
-    <button type="button" class="btn btn-secondary col-md-12" ng-click="resetKeys()">Reset</button>
+    <button type="button" class="btn btn-secondary col-md-12 btn-lg" ng-click="resetKeys()">Reset Clés</button>
 </div>
 <form>
     <div class="form-group">
@@ -139,7 +247,7 @@
 </div>
 
 <div class="row">
-    <button type="button" data-toggle="modal" data-target="#collectionsModal" class="btn btn-secondary col-md-12" ng-click="addCar()">Ajouter voiture</button>
+    <button type="button" data-toggle="modal" data-target="#collectionsModal" class="btn btn-secondary col-md-12 btn-lg" ng-click="addCar()">Ajouter voiture</button>
 </div>
 
 <div class="activities">
@@ -157,8 +265,9 @@
             </div>
             <div class="modal-body" id="collections">
                 <div class="container-fluid">
-                    <div class="row">
-                        <input type="text" ng-model="searchCar" ng-change="search()" />
+                    <div class="row bottom form-group">
+                        <label for="searchCar">Rechercher une voiture</label>
+                        <input id="searchCar" class="form-control" type="text" ng-model="searchCar" ng-change="search()" />
                     </div>
                     <div class="row">
                         <div class="col-md-3 car-show" ng-repeat="car in searchedCar">
@@ -166,6 +275,7 @@
                             {{car.carName}} / {{car.path}}
                         </div>
                     </div>
+                    <div class="row"><div class="col-md-12">Ou naviguer</div></div>
                     <div class="row" ng-repeat="dir in collectionsDir">
                         <select class="col-md-12" ng-model="selectDir" ng-change="addSelect(selectDir)">
                             <option ng-repeat="subDir in dir" ng-value="subDir">{{subDir.directory}}</option>

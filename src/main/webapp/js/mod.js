@@ -18,6 +18,14 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	$scope.expectedKeySilver;
 	$scope.expectedKeyGold;
     $scope.localSearch;
+    $scope.greenFusion = 10;
+    $scope.blueFusion = 8;
+    $scope.redFusion = 6;
+    $scope.onlyRedFusion = 20;
+    $scope.eliteGreen   = 10000;
+    $scope.eliteBlue    = 10000;
+    $scope.eliteRed     = 5000;
+    $scope.eliteYellow  = 500;
 
     $scope.matchSearch = function(carId){
         return carId != -1 && ($scope.localSearch == undefined || $scope.fileEdited.caow[carId].crdb.toLowerCase().includes($scope.localSearch.toLowerCase()));
@@ -41,6 +49,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 		}
 	}).then(function(response){
 		$scope.fileEdited = response.data;
+		$scope.brand = $scope.fileEdited.brands[0];
 		$scope.expectedCash = $scope.fileEdited.casp;
 		$scope.expectedGold = $scope.fileEdited.gosp;
 		$scope.expectedKeyBronze = $scope.fileEdited.gbks;
@@ -93,7 +102,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	            cash       : $scope.expectedCash,
 	            gold       : $scope.expectedGold,
 	            dir        : directory,
-	            user : user,
+	            user        : user,
                 type       : 'cash',
 	        }
 	    }).then(function(response){
@@ -117,7 +126,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	            silver         : $scope.expectedKeySilver,
 	            gold           : $scope.expectedKeyGold,
 	            dir            : directory,
-	            user : user,
+	            user            : user,
                 type           : 'key',
 	        }
 	    }).then(function(response){
@@ -321,10 +330,57 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
             headers : {'Content-type' : 'application/json; charset=UTF-8'},
             params :{
                 dir     : directory,
-                user : user,
+                user    : user,
+                action  : 'fuel',
             }
         }).then(function(response){
             addActivity("Ajout Essence");
+        });
+    }
+
+    $scope.fusionsThree = function(){
+        fusions($scope.greenFusion, $scope.blueFusion, $scope.redFusion);
+    }
+
+    $scope.fusionsRed = function(){
+        fusions(null, null, $scope.onlyRedFusion);
+    }
+
+    function fusions(green, blue, red){
+        $http({
+            method: 'POST',
+            url: '/csr-front/gift',
+            headers : {'Content-type' : 'application/json; charset=UTF-8'},
+            params :{
+                dir     : directory,
+                user    : user,
+                action  : 'fusions',
+                green   : green,
+                blue    : blue,
+                red     : red,
+                brand   : $scope.brand,
+            }
+        }).then(function(response){
+            addActivity("Ajout Fusions " + green + " - " + blue + " - " + red);
+        });
+    }
+
+    $scope.eliteTokens = function(){
+        $http({
+            method: 'POST',
+            url: '/csr-front/gift',
+            headers : {'Content-type' : 'application/json; charset=UTF-8'},
+            params :{
+                dir     : directory,
+                user    : user,
+                action  : 'elite',
+                green   : $scope.eliteGreen,
+                blue    : $scope.eliteBlue,
+                red     : $scope.eliteRed,
+                yellow  : $scope.eliteYellow,
+            }
+        }).then(function(response){
+            addActivity("Ajout Composants élite " + $scope.eliteGreen + " - " + $scope.eliteBlue + " - " + $scope.eliteRed  + " - " + $scope.eliteYellow);
         });
     }
 }]);

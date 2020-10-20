@@ -56,6 +56,7 @@ public class NsbFormatter {
     private JsonArray getBrands(String path, String directory, String user) throws NsbException {
         ProfileReader reader = new ProfileReaderFileImpl(path + SEPARATOR + user + SEPARATOR + directory);
         List<String> brands = reader.getBrands();
+        brands.add("-- TOUTES --");
         return Json.createArrayBuilder(brands).build();
     }
 
@@ -80,7 +81,7 @@ public class NsbFormatter {
     }
 
     public String getId(Configuration configuration, String directory, String user) throws IOException {
-        String content = null;
+        String content = "";
         String path = configuration.getString("working.directory");
         File file = new File(path + SEPARATOR + user + SEPARATOR + directory + SEPARATOR + "Edited");
         String androidFileName = Arrays.stream(file.list())
