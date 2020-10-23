@@ -16,8 +16,8 @@ import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 import javax.json.JsonValue;
 
-import com.naturalmotion.Configuration;
 import com.naturalmotion.csr_api.service.io.NsbException;
+import com.naturalmotion.csr_api.service.io.NsbReader;
 import com.naturalmotion.csr_api.service.reader.ProfileReader;
 import com.naturalmotion.csr_api.service.reader.ProfileReaderFileImpl;
 
@@ -30,31 +30,32 @@ public class NsbFormatter {
 
     private static final List<String> CAOW_ALLOW = Arrays.asList("crdb", "nupl", "ctie", "cepi", "elcl", "unid");
 
-    public String getFileContent(Configuration configuration, String directory, String user)
-            throws IOException, NsbException {
+    public String getFileContent(String path) throws IOException, NsbException {
         String content = null;
-        String path = configuration.getString("working.directory");
-        File file = new File(
-                path + SEPARATOR + user + SEPARATOR + directory + SEPARATOR + "Edited" + SEPARATOR + "nsb.json");
+        File file = new NsbReader().getNsbFile(path);
         try (InputStream fis = new FileInputStream(file); JsonReader reader = Json.createReader(fis);) {
             JsonObject jsonObject = reader.readObject();
-            JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
-            for (Map.Entry<String, JsonValue> entry : jsonObject.entrySet()) {
-                if (ALLOW.contains(entry.getKey())) {
-                    objectBuilder.add(entry.getKey(), entry.getValue());
-                }
-            }
-            JsonArrayBuilder newCaows = filteredCaow(jsonObject.getJsonArray("caow"));
-            objectBuilder.add("caow", newCaows);
-
-            objectBuilder.add("brands", getBrands(path, directory, user));
-            content = objectBuilder.build().toString();
+            content = filterNsb(jsonObject, path);
         }
         return content;
     }
 
-    private JsonArray getBrands(String path, String directory, String user) throws NsbException {
-        ProfileReader reader = new ProfileReaderFileImpl(path + SEPARATOR + user + SEPARATOR + directory);
+    public String filterNsb(JsonObject jsonObject, String path) throws NsbException {
+        JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+        for (Map.Entry<String, JsonValue> entry : jsonObject.entrySet()) {
+            if (ALLOW.contains(entry.getKey())) {
+                objectBuilder.add(entry.getKey(), entry.getValue());
+            }
+        }
+        JsonArrayBuilder newCaows = filteredCaow(jsonObject.getJsonArray("caow"));
+        objectBuilder.add("caow", newCaows);
+
+        objectBuilder.add("brands", getBrands(path));
+        return objectBuilder.build().toString();
+    }
+
+    private JsonArray getBrands(String path) throws NsbException {
+        ProfileReader reader = new ProfileReaderFileImpl(path);
         List<String> brands = reader.getBrands();
         brands.add("-- TOUTES --");
         return Json.createArrayBuilder(brands).build();
@@ -80,10 +81,9 @@ public class NsbFormatter {
         return newCaow.build();
     }
 
-    public String getId(Configuration configuration, String directory, String user) throws IOException {
+    public String getId(String path) throws IOException {
         String content = "";
-        String path = configuration.getString("working.directory");
-        File file = new File(path + SEPARATOR + user + SEPARATOR + directory + SEPARATOR + "Edited");
+        File file = new File(path + SEPARATOR + "Edited");
         String androidFileName = Arrays.stream(file.list())
                 .filter(x -> !"nsb.json".equals(x) && !"scb.json".equals(x))
                 .findFirst()

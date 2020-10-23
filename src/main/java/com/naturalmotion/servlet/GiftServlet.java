@@ -10,15 +10,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.naturalmotion.csr_api.api.EliteToken;
-import com.naturalmotion.csr_api.api.EliteTokenParam;
-import com.naturalmotion.csr_api.api.FusionParam;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.naturalmotion.Configuration;
+import com.naturalmotion.csr_api.api.EliteToken;
+import com.naturalmotion.csr_api.api.EliteTokenParam;
 import com.naturalmotion.csr_api.api.FusionColor;
+import com.naturalmotion.csr_api.api.FusionParam;
 import com.naturalmotion.csr_api.service.car.CarException;
 import com.naturalmotion.csr_api.service.gift.GiftService;
 import com.naturalmotion.csr_api.service.gift.GiftServiceFileImpl;
@@ -38,7 +38,7 @@ public class GiftServlet extends HttpServlet {
         if ("fuel".equals(action)) {
             addFuel(req);
         } else if ("fusions".equals(action)) {
-            addFusions(req, req);
+            addFusions(req);
         } else if ("elite".equals(action)) {
             addEliteTokens(req);
         }
@@ -58,7 +58,8 @@ public class GiftServlet extends HttpServlet {
             addEliteParam(tokens, req.getParameter("red"), EliteToken.RED);
             addEliteParam(tokens, req.getParameter("yellow"), EliteToken.YELLOW);
             service.addEliteToken(tokens);
-        } catch (NsbException | IOException e) {
+        } catch (NsbException
+                | IOException e) {
             log.error("Error adding elite tokens", e);
         }
     }
@@ -75,7 +76,7 @@ public class GiftServlet extends HttpServlet {
         }
     }
 
-    private void addFusions(HttpServletRequest req, HttpServletRequest fusions) {
+    private void addFusions(HttpServletRequest req) {
         List<FusionParam> params = new ArrayList<>();
         addFusionParam(params, req.getParameter("green"), FusionColor.GREEN);
         addFusionParam(params, req.getParameter("blue"), FusionColor.BLUE);
@@ -96,7 +97,8 @@ public class GiftServlet extends HttpServlet {
                 brands = Arrays.asList(brand);
             }
             service.addFusions(params, brands);
-        } catch (IOException | NsbException e) {
+        } catch (IOException
+                | NsbException e) {
             log.error("Error adding fusions", e);
         }
     }

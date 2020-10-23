@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.naturalmotion.Configuration;
-
 public class GetFile extends HttpServlet {
 
     private static final long serialVersionUID = 5739502846788943953L;
@@ -21,16 +19,14 @@ public class GetFile extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         resp.setContentType("application/json; charset=UTF-8");
         try (PrintWriter writer = resp.getWriter();) {
-            Configuration configuration = new Configuration();
-            String directory = req.getParameter("dir");
-            String user = req.getParameter("user");
             String type = req.getParameter("type");
+            String path = new PathBuilder().build(req);
 
             String content = null;
             if ("profile".equals(type)) {
-                content = new NsbFormatter().getFileContent(configuration, directory, user);
+                content = new NsbFormatter().getFileContent(path);
             } else {
-                content = new NsbFormatter().getId(configuration, directory, user);
+                content = new NsbFormatter().getId(path);
             }
             writer.write(content);
         } catch (Exception e) {

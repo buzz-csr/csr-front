@@ -4,6 +4,10 @@
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
     <servlet>
+        <servlet-name>deban</servlet-name>
+        <servlet-class>com.naturalmotion.servlet.DebanServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>reset</servlet-name>
         <servlet-class>com.naturalmotion.servlet.ResourceServlet</servlet-class>
     </servlet>
@@ -27,6 +31,10 @@
         <servlet-name>GetFile</servlet-name>
         <servlet-class>com.naturalmotion.servlet.GetFile</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>deban</servlet-name>
+        <url-pattern>/deban</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>gift</servlet-name>
         <url-pattern>/gift</url-pattern>

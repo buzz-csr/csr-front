@@ -44,7 +44,12 @@
     </div>
 </div>
 <BR/>
-    <a ng-show="response" ng-href="/csr-front/account.html?temp={{response.timestamp}}&user={{response.user}}" type="button" class="btn btn-success col-md-12" ng-click="pack()">Garage</a>
+<div class="row">
+    <a ng-show="response" ng-href="/csr-front/account.html?temp={{response.timestamp}}&user={{response.user}}" type="button" class="btn btn-success btn-lg col-md-12">Garage</a>
+</div>
+<div class="row">
+    <a ng-show="response" ng-href="#" type="button" class="btn btn-warning btn-lg col-md-12" ng-click="deban()">Deban/Clone</a>
+</div>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <script type="text/javascript" src="js/upload.js"></script>

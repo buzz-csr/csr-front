@@ -53,4 +53,35 @@ upModule.controller('upCtrl', [ '$scope', '$http', function($scope, $http) {
         }
     }
 
+    $scope.deban = function(){
+        $http({
+            method : 'post',
+            url : '/csr-front/deban',
+            params : {
+                user    : $scope.response.user,
+                dir     : $scope.response.timestamp,
+            },
+            headers : {'Content-type' : 'application/json; charset=UTF-8'},
+        }).then(function successCallback(response) {
+            download();
+        });
+    }
+    
+    function download(){
+        $http({
+            method: 'GET',
+            url: '/csr-front/pack',
+            responseType: 'arraybuffer',
+            params : {
+                user    : $scope.response.user,
+                dir     : $scope.response.timestamp,
+            }
+        }).then(function(data){
+            var blob = new Blob([data.data], { type: 'application/octet-stream' });
+            var downloadLink = document.createElement('a');
+            downloadLink.setAttribute('download', 'files.zip');
+            downloadLink.setAttribute('href', window.URL.createObjectURL(blob));
+            downloadLink.click();
+        });
+    }
 } ]);

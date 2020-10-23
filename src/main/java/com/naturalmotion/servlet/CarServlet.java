@@ -66,7 +66,7 @@ public class CarServlet extends HttpServlet {
             String path = configuration.getString("working.directory");
             new CarServiceFileImpl(path + SEPARATOR + user + SEPARATOR + dir).add(pathNewCar + ".txt");
 
-            resp.getWriter().write(new NsbFormatter().getFileContent(configuration, dir, user));
+            resp.getWriter().write(new NsbFormatter().getFileContent(path));
         } catch (IOException
                 | CarException
                 | NsbException e) {

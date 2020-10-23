@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.naturalmotion.Configuration;
 import com.naturalmotion.csr_api.api.ResourceType;
 import com.naturalmotion.csr_api.service.io.NsbException;
 import com.naturalmotion.csr_api.service.updater.ProfileUpdater;
@@ -22,8 +21,6 @@ public class ResourceServlet extends HttpServlet {
     private static final long serialVersionUID = -2698675847367966977L;
 
     private final Logger log = LoggerFactory.getLogger(ResourceServlet.class);
-
-    private static final String SEPARATOR = "/";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
@@ -41,18 +38,14 @@ public class ResourceServlet extends HttpServlet {
             String bronze = req.getParameter("bronze");
             String gold = req.getParameter("gold");
             String silver = req.getParameter("silver");
-            String dir = req.getParameter("dir");
-            String user = req.getParameter("user");
+            String path = new PathBuilder().build(req);
 
-            Configuration configuration = new Configuration();
-            String path = configuration.getString("working.directory");
-
-            ProfileUpdater profileUpdater = new ProfileUpdaterFileImpl(path + SEPARATOR + user + SEPARATOR + dir);
+            ProfileUpdater profileUpdater = new ProfileUpdaterFileImpl(path);
             profileUpdater.updateResource(ResourceType.BRONZE_KEY, new BigDecimal(bronze));
             profileUpdater.updateResource(ResourceType.GOLD_KEY, new BigDecimal(gold));
             profileUpdater.updateResource(ResourceType.SILVER_KEY, new BigDecimal(silver));
 
-            resp.getWriter().write(new NsbFormatter().getFileContent(configuration, dir, user));
+            resp.getWriter().write(new NsbFormatter().getFileContent(path));
         } catch (IOException
                 | UpdaterException
                 | NsbException e) {
@@ -64,17 +57,13 @@ public class ResourceServlet extends HttpServlet {
         try {
             String cash = req.getParameter("cash");
             String gold = req.getParameter("gold");
-            String dir = req.getParameter("dir");
-            String user = req.getParameter("user");
+            String path = new PathBuilder().build(req);
 
-            Configuration configuration = new Configuration();
-            String path = configuration.getString("working.directory");
-
-            ProfileUpdater profileUpdater = new ProfileUpdaterFileImpl(path + SEPARATOR + user + SEPARATOR + dir);
+            ProfileUpdater profileUpdater = new ProfileUpdaterFileImpl(path);
             profileUpdater.updateResource(ResourceType.CASH, new BigDecimal(cash));
             profileUpdater.updateResource(ResourceType.GOLD, new BigDecimal(gold));
 
-            resp.getWriter().write(new NsbFormatter().getFileContent(configuration, dir, user));
+            resp.getWriter().write(new NsbFormatter().getFileContent(path));
         } catch (IOException
                 | UpdaterException
                 | NsbException e) {
