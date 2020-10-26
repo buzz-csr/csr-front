@@ -8,49 +8,113 @@
 </head>
 <body ng-controller="upCtrl" class="container upload">
 
-<div class="row" ng-show="error">
-    <div class="col-md-12 col-sm-12">
-        <div class="alert alert-danger" role="alert">
-            {{error}}
+<div ng-show="spentTokens == undefined">
+    <div class="row" ng-show="error">
+        <div class="col-md-12 col-sm-12">
+            <div class="alert alert-danger" role="alert">
+                {{error}}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <input class="form-control" type="text" placeholder="Pseudo" ng-model="user" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-1">Nsb</div>
+        <div class="col-md-6 col-sm-11">
+            <input type='file' ng-file='uploadfiles1'>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-1">Scb</div>
+        <div class="col-md-6 col-sm-11">
+            <input type='file' ng-file='uploadfiles2'>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-1">Long file (Android)</div>
+        <div class="col-md-6 col-sm-11">
+            <input type='file' ng-file='uploadfiles3'>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 center">
+            <input type='button' value='Upload' id='upload' ng-click='upload()' >
+        </div>
+    </div>
+    <BR/>
+    <div class="row">
+        <a ng-show="response" ng-href="/csr-front/account.html?temp={{response.timestamp}}&user={{response.user}}" type="button" class="btn btn-success btn-lg col-md-6">Garage</a>
+        <a ng-show="response" ng-href="#" type="button" class="btn btn-warning btn-lg col-md-6" ng-click="deban()">Deban/Clone</a>
+    </div>
+</div>
+
+<div ng-show="spentTokens">
+    <div class="row"><div class="col-md-12 center"><h2>Composants elites dépensé</h2></div></div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header elite-vert">&nbsp;</div>
+                <div class="card-body">
+                    <div class="card-text">{{spentTokens.Green}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header elite-bleu">&nbsp;</div>
+                <div class="card-body">
+                    <div class="card-text">{{spentTokens.Blue}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header elite-rouge">&nbsp;</div>
+                <div class="card-body">
+                    <div class="card-text">{{spentTokens.Red}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header elite-jaune">&nbsp;</div>
+                <div class="card-body">
+                    <div class="card-text">{{spentTokens.Yellow}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-4 col-sm-1">Nsb</div>
+        <div class="col-md-6 col-sm-11">
+            <input type='file' ng-file='uploadfiles4'>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-1">Scb</div>
+        <div class="col-md-6 col-sm-11">
+            <input type='file' ng-file='uploadfiles5'>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-1">Long file (Android)</div>
+        <div class="col-md-6 col-sm-11">
+            <input type='file' ng-file='uploadfiles6'>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 center">
+            <input type='button' value='Upload' id='upload' ng-click='uploadDeban()' >
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-        <input class="form-control" type="text" placeholder="Pseudo" ng-model="user" />
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4 col-sm-1">Nsb</div>
-    <div class="col-md-6 col-sm-11">
-        <input type='file' ng-file='uploadfiles1'>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4 col-sm-1">Scb</div>
-    <div class="col-md-6 col-sm-11">
-        <input type='file' ng-file='uploadfiles2'>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4 col-sm-1">Long file (Android)</div>
-    <div class="col-md-6 col-sm-11">
-        <input type='file' ng-file='uploadfiles3'>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12 center">
-        <input type='button' value='Upload' id='upload' ng-click='upload()' >
-    </div>
-</div>
-<BR/>
-<div class="row">
-    <a ng-show="response" ng-href="/csr-front/account.html?temp={{response.timestamp}}&user={{response.user}}" type="button" class="btn btn-success btn-lg col-md-12">Garage</a>
-</div>
-<div class="row">
-    <a ng-show="response" ng-href="#" type="button" class="btn btn-warning btn-lg col-md-12" ng-click="deban()">Deban/Clone</a>
-</div>
-
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <script type="text/javascript" src="js/upload.js"></script>
     <script type="text/javascript" src="js/jquery-3.5.1.js"></script>

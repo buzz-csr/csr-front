@@ -24,10 +24,10 @@ public class DebanServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         try {
             String path = new PathBuilder().build(req);
-            new ProfileUpdaterFileImpl(path).deban();
-            JsonObject json = new CarServiceFileImpl(path).removeEliteLevel();
+            JsonObject spent = new ProfileUpdaterFileImpl(path).deban();
+            new CarServiceFileImpl(path).removeEliteLevel();
 
-            resp.getWriter().write(new NsbFormatter().filterNsb(json, path));
+            resp.getWriter().write(spent.toString());
         } catch (IOException
                 | NsbException e) {
             log.error("Error deban profile", e);

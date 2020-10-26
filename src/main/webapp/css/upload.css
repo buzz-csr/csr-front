@@ -7,3 +7,23 @@ body.container{
 .center {
     text-align: center;
 }
+.elite-vert{
+    background-image: url('../images/elite_vert.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.elite-bleu{
+    background-image: url('../images/elite_bleu.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.elite-rouge{
+    background-image: url('../images/elite_rouge.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.elite-jaune{
+    background-image: url('../images/elite_jaune.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}

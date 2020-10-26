@@ -16,6 +16,7 @@ upModule.directive('ngFile', [ '$parse', function($parse) {
 upModule.controller('upCtrl', [ '$scope', '$http', function($scope, $http) {
     $scope.user;
     $scope.error;
+    $scope.spentTokens;
 
     $scope.upload = function() {
         $scope.error = undefined;
@@ -63,6 +64,7 @@ upModule.controller('upCtrl', [ '$scope', '$http', function($scope, $http) {
             },
             headers : {'Content-type' : 'application/json; charset=UTF-8'},
         }).then(function successCallback(response) {
+            $scope.spentTokens = response.data;
             download();
         });
     }
@@ -84,4 +86,36 @@ upModule.controller('upCtrl', [ '$scope', '$http', function($scope, $http) {
             downloadLink.click();
         });
     }
+    
+
+    $scope.uploadDeban = function() {
+        $scope.error = undefined;
+        
+        var fd = new FormData();
+        angular.forEach($scope.uploadfiles4, function(file) {
+            fd.append('file[]', file);
+        });
+        angular.forEach($scope.uploadfiles5, function(file) {
+            fd.append('file[]', file);
+        });
+        angular.forEach($scope.uploadfiles6, function(file) {
+            fd.append('file[]', file);
+        });
+
+        $http({
+            method : 'post',
+            url : '/csr-front/upload',
+            data : fd,
+            params : {
+                dir     : $scope.response.timestamp,
+                user    : $scope.user,
+                tokens  : $scope.spentTokens,
+            },
+            headers : {
+                'Content-Type' : undefined
+            },
+        }).then(function successCallback(response) {
+            download();
+        });
+    }    
 } ]);
