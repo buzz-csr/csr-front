@@ -58,13 +58,10 @@ public class CarServlet extends HttpServlet {
 
     public void addCar(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            String dir = req.getParameter("dir");
-            String user = req.getParameter("user");
             String pathNewCar = req.getParameter("path");
 
-            Configuration configuration = new Configuration();
-            String path = configuration.getString("working.directory");
-            new CarServiceFileImpl(path + SEPARATOR + user + SEPARATOR + dir).add(pathNewCar + ".txt");
+            String path = new PathBuilder().build(req);
+            new CarServiceFileImpl(path).add(pathNewCar + ".txt");
 
             resp.getWriter().write(new NsbFormatter().getFileContent(path));
         } catch (IOException
