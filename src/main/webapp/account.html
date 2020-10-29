@@ -55,7 +55,7 @@
         </div>
     </div>
     <div class="col-md-2">
-        <button type="button" class="btn btn-secondary add-fusion" ng-click="fusionsThree()">Ajouter</button>
+        <button type="button" class="btn btn-secondary add-fusion" ng-click="fusionsThree()">Cadeau</button>
     </div>
 </div>
 
@@ -80,7 +80,7 @@
     <div class="col-md-2"></div>
     <div class="col-md-2"></div>
     <div class="col-md-2">
-        <button type="button" class="btn btn-secondary add-fusion" ng-click="fusionsRed()">Ajouter</button>
+        <button type="button" class="btn btn-secondary add-fusion" ng-click="fusionsRed()">Cadeau</button>
     </div>
 </div>
 
@@ -123,9 +123,53 @@
         </div>
     </div>
     <div class="col-md-2">
-        <button type="button" class="btn btn-secondary add-fusion" ng-click="eliteTokens()">Ajouter</button>
+        <button type="button" class="btn btn-secondary add-fusion" ng-click="eliteTokensGift()">Cadeau</button>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-md-2">Composants élite</div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="eliteGreen">Vert</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Vert</div>
+            </div>
+            <input type="text" class="form-control" id="eliteGreenReset" ng-model="eliteTokens.Green">
+        </div>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="eliteBlue">Bleu</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Bleu</div>
+            </div>
+            <input type="text" class="form-control" id="eliteBlueReset" ng-model="eliteTokens.Blue">
+        </div>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="eliteRed">Rouge</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Rouge</div>
+            </div>
+            <input type="text" class="form-control" id="eliteRedReset" ng-model="eliteTokens.Red">
+        </div>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="eliteYellow">Jaune</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Jaune</div>
+            </div>
+            <input type="text" class="form-control" id="eliteYellowReset" ng-model="eliteTokens.Yellow">
+        </div>
+    </div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-secondary add-fusion" ng-click="eliteTokensReset()">Reset</button>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-3 v-center">
         <img src="/csr-front/images/dollars.png" width="40px">

@@ -26,7 +26,7 @@ public class NsbFormatter {
     private static final String SEPARATOR = "/";
 
     private static final List<String> ALLOW = Arrays.asList("name", "caow", "cgpi", "caea", "casp", "goea", "gosp",
-            "gbke", "gbks", "gske", "gsks", "ggke", "ggks");
+            "gbke", "gbks", "gske", "gsks", "ggke", "ggks", "afms");
 
     private static final List<String> CAOW_ALLOW = Arrays.asList("crdb", "nupl", "ctie", "cepi", "elcl", "unid");
 

@@ -71,7 +71,7 @@ public class GiftServlet extends HttpServlet {
     }
 
     private void addEliteParam(List<EliteTokenParam> params, String qty, EliteToken token) {
-        if (StringUtils.isNotBlank(qty)) {
+        if (StringUtils.isNotBlank(qty) && new BigDecimal(qty).compareTo(BigDecimal.ZERO) > 0) {
             params.add(new EliteTokenParam(token, new BigDecimal(qty)));
         }
     }

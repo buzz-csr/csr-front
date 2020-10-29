@@ -26,6 +26,12 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
     $scope.eliteBlue    = 10000;
     $scope.eliteRed     = 5000;
     $scope.eliteYellow  = 500;
+    $scope.eliteTokens = {
+        Green : 0,
+        Blue : 0,
+        Red : 0,
+        Yellow : 0,
+    }
 
     $scope.matchSearch = function(carId){
         return carId != -1 && ($scope.localSearch == undefined || $scope.fileEdited.caow[carId].crdb.toLowerCase().includes($scope.localSearch.toLowerCase()));
@@ -50,11 +56,12 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	}).then(function(response){
 		$scope.fileEdited = response.data;
 		$scope.brand = $scope.fileEdited.brands[0];
-		$scope.expectedCash = $scope.fileEdited.casp;
-		$scope.expectedGold = $scope.fileEdited.gosp;
-		$scope.expectedKeyBronze = $scope.fileEdited.gbks;
-		$scope.expectedKeySilver = $scope.fileEdited.gsks;
-		$scope.expectedKeyGold = $scope.fileEdited.ggks;
+		$scope.expectedCash = $scope.fileEdited.casp*0.7;
+		$scope.expectedGold = $scope.fileEdited.gosp*0.7;
+		$scope.expectedKeyBronze = $scope.fileEdited.gbks*0.7;
+		$scope.expectedKeySilver = $scope.fileEdited.gsks*0.7;
+		$scope.expectedKeyGold = $scope.fileEdited.ggks*0.7;
+		$scope.$apply();
 	});	
 	
 	$http({
@@ -365,7 +372,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
         });
     }
 
-    $scope.eliteTokens = function(){
+    $scope.eliteTokensGift = function(){
         $http({
             method: 'POST',
             url: '/csr-front/gift',
@@ -383,4 +390,26 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
             addActivity("Ajout Composants élite " + $scope.eliteGreen + " - " + $scope.eliteBlue + " - " + $scope.eliteRed  + " - " + $scope.eliteYellow);
         });
     }
+
+	$scope.eliteTokensReset = function(){
+	    $http({
+	        method: 'POST',
+	        url: '/csr-front/reset',
+	        headers : {'Content-type' : 'application/json; charset=UTF-8'},
+	        params : {
+	            dir         : directory,
+	            user        : user,
+	            type        : 'elite',
+                tokens      : {
+                                Green   : $scope.fileEdited.afms.Green - $scope.eliteTokens.Green,
+                                Blue    : $scope.fileEdited.afms.Blue - $scope.eliteTokens.Blue,
+                                Red     : $scope.fileEdited.afms.Red - $scope.eliteTokens.Red,
+                                Yellow  : $scope.fileEdited.afms.Yellow - $scope.eliteTokens.Yellow,
+                            },
+	        }
+	    }).then(function(response){
+	        $scope.fileEdited = response.data;
+	    addActivity("Reset Composants elites");
+	    });
+	}
 }]);

@@ -55,22 +55,12 @@ public class Upload extends HttpServlet {
     public void uploadForDeban(HttpServletRequest req, String tokens) {
         try (JsonReader jsonReader = Json.createReader(new StringReader(tokens));) {
             JsonObject object = jsonReader.readObject();
-            List<EliteTokenParam> params = createEliteParams(object);
+            List<EliteTokenParam> params = new EliteTokenParamFactory().build(req);
             new ProfileUpdaterFileImpl(new PathBuilder().build(req)).updateResourceAfterBan(params);
-        } catch (UpdaterException
-                | NsbException
+        } catch (NsbException
                 | IOException e) {
             log.error("Error updating elite token after deban", e);
         }
-    }
-
-    public List<EliteTokenParam> createEliteParams(JsonObject object) {
-        List<EliteTokenParam> params = new ArrayList<>();
-        params.add(new EliteTokenParam(EliteToken.GREEN, BigDecimal.valueOf(object.getInt("Green"))));
-        params.add(new EliteTokenParam(EliteToken.BLUE, BigDecimal.valueOf(object.getInt("Blue"))));
-        params.add(new EliteTokenParam(EliteToken.RED, BigDecimal.valueOf(object.getInt("Red"))));
-        params.add(new EliteTokenParam(EliteToken.YELLOW, BigDecimal.valueOf(object.getInt("Yellow"))));
-        return params;
     }
 
     public void uploadNewFile(HttpServletRequest req, HttpServletResponse resp) {

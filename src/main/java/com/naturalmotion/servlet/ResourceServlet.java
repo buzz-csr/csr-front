@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.naturalmotion.csr_api.service.reader.ProfileReaderFileImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,8 +29,22 @@ public class ResourceServlet extends HttpServlet {
         String type = req.getParameter("type");
         if ("cash".equals(type)) {
             addCashOr(req, resp);
+        } else if ("elite".equals(type)) {
+            addEliteTokens(req, resp);
         } else {
             addKeys(req, resp);
+        }
+    }
+
+    private void addEliteTokens(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+            String path = new PathBuilder().build(req);
+            new ProfileUpdaterFileImpl(path).
+                    updateEliteTokens(new EliteTokenParamFactory().build(req));
+
+            resp.getWriter().write(new NsbFormatter().getFileContent(path));
+        } catch (IOException | NsbException e) {
+            log.error("Error updating elite tokens", e);
         }
     }
 
