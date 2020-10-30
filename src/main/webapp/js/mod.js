@@ -31,6 +31,11 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
         Blue : 0,
         Red : 0,
         Yellow : 0,
+    };
+    $scope.template = 'garage.html';
+
+    $scope.tab = function(templateToSwitch){
+        $scope.template = templateToSwitch;
     }
 
     $scope.matchSearch = function(carId){
@@ -56,13 +61,12 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	}).then(function(response){
 		$scope.fileEdited = response.data;
 		$scope.brand = $scope.fileEdited.brands[0];
-		$scope.expectedCash = $scope.fileEdited.casp*0.7;
-		$scope.expectedGold = $scope.fileEdited.gosp*0.7;
-		$scope.expectedKeyBronze = $scope.fileEdited.gbks*0.7;
-		$scope.expectedKeySilver = $scope.fileEdited.gsks*0.7;
-		$scope.expectedKeyGold = $scope.fileEdited.ggks*0.7;
-		$scope.$apply();
-	});	
+		$scope.expectedCash = Math.floor($scope.fileEdited.casp*0.7);
+		$scope.expectedGold = Math.floor($scope.fileEdited.gosp*0.7);
+		$scope.expectedKeyBronze = Math.floor($scope.fileEdited.gbks*0.7);
+		$scope.expectedKeySilver = Math.floor($scope.fileEdited.gsks*0.7);
+		$scope.expectedKeyGold = Math.floor($scope.fileEdited.ggks*0.7);
+	});
 	
 	$http({
 	    method: 'GET',
