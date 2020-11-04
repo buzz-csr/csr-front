@@ -227,7 +227,15 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 		}
 		return style;
 	}
-	
+
+	$http({
+		method: 'GET',
+		url: '/csr-front/carNames.json',
+		headers : {'Content-type' : 'application/json; charset=UTF-8'}
+	}).then(function(response){
+	    $scope.carNames = response.data;
+	});
+
 	$http({
 		method: 'GET',
 		url: '/csr-front/collections.json',

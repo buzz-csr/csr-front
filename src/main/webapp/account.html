@@ -280,14 +280,14 @@
 </form>
 <div class="row car" ng-repeat="carId in fileEdited.cgpi track by $index" ng-show="matchSearch(carId)" ng-class="getGarageClass($index)">
     <div ng-show="isTop($index)" class="col-md-12 garage-head">{{getGarageNumber($index)}}</div>
-    <div class="col-md-6" title="{{getCarName(fileEdited.caow[carId].crdb)}}">{{fileEdited.caow[carId].crdb}}</div>
-    <div class="col-md-1">{{fileEdited.caow[carId].nupl.txt}}</div>
-    <div class="col-md-1">{{fileEdited.caow[carId].ctie}}</div>
-    <div class="col-md-1">({{fileEdited.caow[carId].cepi}})</div>
+    <div class="col-md-3 col-sm-3" title="{{getCarName(fileEdited.caow[carId].crdb)}}">{{carNames[fileEdited.caow[carId].crdb]}}</div>
+    <div class="col-md-1 col-sm-3">{{fileEdited.caow[carId].nupl.txt}}</div>
+    <div class="col-md-1 col-sm-3">{{fileEdited.caow[carId].ctie}}</div>
+    <div class="col-md-1 col-sm-3">({{fileEdited.caow[carId].cepi}})</div>
 
-    <div class="col-md-1"><img data-toggle="modal" data-target="#collectionsModal" ng-click="saveEditedCar(fileEdited.caow[carId])" src="images/replace.png" /></div>
-    <div class="col-md-1"><img ng-click="fullCar(fileEdited.caow[carId])" src="images/full.png" /></div>
-    <div class="col-md-1"><img ng-show="fileEdited.caow[carId].elcl == 0" ng-click="elite(fileEdited.caow[carId])" src="images/permis.jpg" /></div>
+    <button type="button" data-toggle="modal" data-target="#collectionsModal" ng-click="saveEditedCar(fileEdited.caow[carId])" class="btn btn btn-outline-secondary col-md-2 col-sm-4 btn-lg">Remplacer</button>
+    <button type="button" ng-click="fullCar(fileEdited.caow[carId])" class="btn btn btn-outline-secondary col-md-2 col-sm-4 btn-lg">Remplir</button>
+    <button type="button" ng-show="fileEdited.caow[carId].elcl == 0" ng-click="elite(fileEdited.caow[carId])" class="btn btn btn-outline-secondary col-md-2 col-sm-4 btn-lg">Permis</button>
 </div>
 
 <div class="row">
