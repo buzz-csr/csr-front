@@ -34,7 +34,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
     }
 
     $scope.matchSearch = function(carId){
-        return carId != -1 && ($scope.localSearch == undefined || $scope.fileEdited.caow[carId].crdb.toLowerCase().includes($scope.localSearch.toLowerCase()));
+        return carId != -1 && ($scope.localSearch == undefined || $scope.carNames[$scope.fileEdited.caow[carId].crdb].toLowerCase().includes($scope.localSearch.toLowerCase()));
     }
 
 	function addActivity(text){
