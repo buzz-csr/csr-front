@@ -32,6 +32,25 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
         Red : 0,
         Yellow : 0,
     }
+    $scope.legendsCars = [
+        { name: "Ford_Mustang302_1970" },
+        { name: "AstonMartin_DB5Classic_1964" },
+        { name: "Ferrari_250GTOClassic_1962" },
+        { name: "MercedesBenz_300SLClassic_1954" },
+        { name: "Chevrolet_CorvetteZR1Classic_1970" },
+        { name: "Shelby_Cobra427SCClassic_1965" },
+        { name: "Pontiac_GTOTheJudgeClassic_1969" },
+        { name: "Honda_NSXRClassic_1992" },
+        { name: "Plymouth_HemiCudaClassic_1971" },
+        { name: "Ford_GT40MkII_1966" },
+        { name: "Lamborghini_CountachClassic_1988" },
+        { name: "Bugatti_EB110SSClassic_1992" },
+        { name: "Porsche_CarreraGTClassic_2003" },
+        { name: "Jaguar_XJ220Classic_1993" },
+        { name: "Saleen_S7Classic_2004" }
+    ];
+    $scope.legendsCarSelected;
+    $scope.legendsRestorationQty = 10000;
 
     $scope.matchSearch = function(carId){
         return carId != -1 && ($scope.localSearch == undefined || $scope.carNames[$scope.fileEdited.caow[carId].crdb].toLowerCase().includes($scope.localSearch.toLowerCase()));
@@ -350,6 +369,23 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
             }
         }).then(function(response){
             addActivity("Ajout Essence");
+        });
+    }
+
+    $scope.restoToken = function(){
+        $http({
+            method: 'POST',
+            url: '/csr-front/gift',
+            headers : {'Content-type' : 'application/json; charset=UTF-8'},
+            params :{
+                dir     : directory,
+                user    : user,
+                action  : 'restoration',
+                carId   : $scope.legendsCarSelected,
+                qty     : $scope.legendsRestorationQty,
+            }
+        }).then(function(response){
+            addActivity("Ajout " + $scope.legendsRestorationQty + " jetons restauration pour " + $scope.carNames[$scope.legendsCarSelected]);
         });
     }
 

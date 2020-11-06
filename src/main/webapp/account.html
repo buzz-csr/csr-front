@@ -19,6 +19,30 @@
 </div>
 
 <div class="row">
+    <div class="col-md-2">Jetons restauration</div>
+    <div class="col-md-2 form-group">
+        <form>
+            <select class="form-control" ng-model="legendsCarSelected">
+                <option ng-repeat="car in legendsCars" ng-value="car.name">{{carNames[car.name]}}</option>
+            </select>
+        </form>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="restoToken">Quantité</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Quantité</div>
+            </div>
+            <input type="text" class="form-control" id="restoToken" ng-model="legendsRestorationQty">
+        </div>
+    </div>
+    <div class="col-md-4">&nbsp;</div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-secondary add-fusion" ng-click="restoToken()">Cadeau</button>
+    </div>
+</div>
+
+<div class="row">
     <div class="col-md-2">Fusions (3 couleurs)</div>
     <div class="col-md-2 form-group">
         <form>

@@ -41,8 +41,20 @@ public class GiftServlet extends HttpServlet {
             addFusions(req);
         } else if ("elite".equals(action)) {
             addEliteTokens(req);
+        } else if ("restoration".equals(action)) {
+            addRestorationTokens(req);
         }
     }
+
+    private void addRestorationTokens(HttpServletRequest req) {
+        try {
+            GiftService service = new GiftServiceFileImpl(new PathBuilder().build(req));
+            service.addRestorationToken(req.getParameter("carId"), new BigDecimal(req.getParameter("qty")));
+        } catch (IOException | NsbException e) {
+            log.error("Error adding restoration tokens", e);
+        }
+    }
+
 
     private void addEliteTokens(HttpServletRequest req) {
         try {
