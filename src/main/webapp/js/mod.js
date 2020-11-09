@@ -3,7 +3,8 @@ var modModule = angular.module('modModule', []).config(function($locationProvide
                                                    });
 
 modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope,$http,$location){
-	
+
+	$scope.loading = "load";
 	$scope.activities = [];
 	$scope.fileEdited;
 	$scope.userId;
@@ -80,7 +81,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 		$scope.expectedKeyBronze = $scope.fileEdited.gbks*0.7;
 		$scope.expectedKeySilver = $scope.fileEdited.gsks*0.7;
 		$scope.expectedKeyGold = $scope.fileEdited.ggks*0.7;
-		$scope.$apply();
+		$scope.loading = "hidden";
 	});	
 	
 	$http({
@@ -97,6 +98,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	});	
 
 	$scope.fullCar = function(caowEdited){
+	    $scope.loading = "load";
 		$http({
 			method: 'POST',
 			url: '/csr-front/car',
@@ -115,11 +117,13 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
                     $scope.fileEdited.caow[index] = caowEdited;
                 }
             });
+	    	addActivity("Remplissage " + caowEdited.crdb);
+	    	$scope.loading = "hidden";
 		});
-		addActivity("Remplissage " + caowEdited.crdb);
 	}
 	
 	$scope.resetCash = function(){
+	    $scope.loading = "load";
 	    $http({
 	        method: 'POST',
 	        url: '/csr-front/reset',
@@ -138,11 +142,13 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	        $scope.expectedKeyBronze = $scope.fileEdited.gbks;
 	        $scope.expectedKeySilver = $scope.fileEdited.gsks;
 	        $scope.expectedKeyGold = $scope.fileEdited.ggks;
+	        addActivity("Reset cash + or ");
+	        $scope.loading = "hidden";
 	    });
-	    addActivity("Reset cash + or ");
 	}
 	
 	$scope.resetKeys = function(){
+	    $scope.loading = "load";
 	    $http({
 	        method: 'POST',
 	        url: '/csr-front/reset',
@@ -159,11 +165,13 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	        $scope.fileEdited = response.data;
 	        $scope.expectedCash = $scope.fileEdited.casp * 0.7;
 	        $scope.expectedGold = $scope.fileEdited.gosp * 0.7;
+	        addActivity("Reset clés ");
+	        $scope.loading = "hidden";
 	    });
-	    addActivity("Reset clés ");
 	}
 
 	$scope.replace = function(path,car){
+	    $scope.loading = "load";
 	    if($scope.editedCar == undefined){
 	        $http({
                 method: 'POST',
@@ -179,6 +187,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
                 $scope.fileEdited = response.data;
 
                 addActivity("Ajout " + $scope.fileEdited.caow[$scope.fileEdited.caow.length-1].crdb);
+                $scope.loading = "hidden";
             });
 	    }else{
 	        $http({
@@ -202,6 +211,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
                 });
 
                 addActivity("Ajout " + caowEdited.crdb);
+                $scope.loading = "hidden";
             });
 	    }
 	}
@@ -334,6 +344,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
     }
 
     $scope.sort = function(){
+	    $scope.loading = "load";
         $http({
             method: 'POST',
             url: '/csr-front/car',
@@ -346,11 +357,13 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
         }).then(function(response){
             $scope.fileEdited = response.data;
             addActivity("Trie du garage");
+            $scope.loading = "hidden";
         });
     }
 
     $scope.elite = function(caowEdited){
-        $http({
+       $scope.loading = "load";
+       $http({
             method: 'POST',
             url: '/csr-front/car',
             headers : {'Content-type' : 'application/json; charset=UTF-8'},
@@ -370,10 +383,12 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
             });
 
             addActivity("Elite " + caowEdited.crdb);
+            $scope.loading = "hidden";
         });
     }
 
     $scope.fuel = function(){
+	    $scope.loading = "load";
         $http({
             method: 'POST',
             url: '/csr-front/gift',
@@ -385,10 +400,12 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
             }
         }).then(function(response){
             addActivity("Ajout Essence");
+            $scope.loading = "hidden";
         });
     }
 
     $scope.restoToken = function(){
+	    $scope.loading = "load";
         $http({
             method: 'POST',
             url: '/csr-front/gift',
@@ -402,6 +419,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
             }
         }).then(function(response){
             addActivity("Ajout " + $scope.legendsRestorationQty + " jetons restauration pour " + $scope.carNames[$scope.legendsCarSelected]);
+            $scope.loading = "hidden";
         });
     }
 
@@ -414,6 +432,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
     }
 
     function fusions(green, blue, red){
+	    $scope.loading = "load";
         $http({
             method: 'POST',
             url: '/csr-front/gift',
@@ -429,10 +448,12 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
             }
         }).then(function(response){
             addActivity("Ajout Fusions " + green + " - " + blue + " - " + red);
+            $scope.loading = "hidden";
         });
     }
 
     $scope.eliteTokensGift = function(){
+	    $scope.loading = "load";
         $http({
             method: 'POST',
             url: '/csr-front/gift',
@@ -447,11 +468,13 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
                 yellow  : $scope.eliteYellow,
             }
         }).then(function(response){
+            $scope.loading = "hidden";
             addActivity("Ajout Composants élite " + $scope.eliteGreen + " - " + $scope.eliteBlue + " - " + $scope.eliteRed  + " - " + $scope.eliteYellow);
         });
     }
 
 	$scope.eliteTokensReset = function(){
+	    $scope.loading = "load";
 	    $http({
 	        method: 'POST',
 	        url: '/csr-front/reset',
@@ -469,7 +492,8 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 	        }
 	    }).then(function(response){
 	        $scope.fileEdited = response.data;
-	    addActivity("Reset Composants elites");
+	        $scope.loading = "hidden";
+	        addActivity("Reset Composants elites");
 	    });
 	}
 }]);

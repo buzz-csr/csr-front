@@ -98,3 +98,18 @@ h3{
 .add-fusion{
     width: 100%;
 }
+.load{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    opacity: 0.8;
+    background-image: url('../images/load.gif');
+    background-position : center;
+    background-repeat: no-repeat;
+}
+.hidden{
+    display: none;
+}
