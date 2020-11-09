@@ -332,7 +332,23 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
     $scope.addCar = function(){
         $scope.editedCar = undefined;
     }
-    
+
+    $scope.sort = function(){
+        $http({
+            method: 'POST',
+            url: '/csr-front/car',
+            headers : {'Content-type' : 'application/json; charset=UTF-8'},
+            params :{
+                dir     : directory,
+                user    : user,
+                action  : 'sort',
+            }
+        }).then(function(response){
+            $scope.fileEdited = response.data;
+            addActivity("Trie du garage");
+        });
+    }
+
     $scope.elite = function(caowEdited){
         $http({
             method: 'POST',

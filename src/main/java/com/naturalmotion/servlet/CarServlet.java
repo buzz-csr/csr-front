@@ -33,8 +33,20 @@ public class CarServlet extends HttpServlet {
             addCar(req, resp);
         } else if ("elite".equals(action)) {
             eliteCar(req, resp);
+        } else if ("sort".equals(action)) {
+            sort(req, resp);
         } else {
             replaceCar(req, resp);
+        }
+    }
+
+    private void sort(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+            String path = new PathBuilder().build(req);
+            new CarServiceFileImpl(path).sort();
+            resp.getWriter().write(new NsbFormatter().getFileContent(path));
+        } catch (IOException | NsbException e) {
+            log.error("Error sorting cars", e);
         }
     }
 
