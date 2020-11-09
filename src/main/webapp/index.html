@@ -22,20 +22,20 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4 col-sm-1">Nsb</div>
-        <div class="col-md-6 col-sm-11">
+        <div class="col-md-2 col-sm-1">Nsb</div>
+        <div class="col-md-10 col-sm-11">
             <input type='file' ng-file='uploadfiles1'>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4 col-sm-1">Scb</div>
-        <div class="col-md-6 col-sm-11">
+        <div class="col-md-2 col-sm-1">Scb</div>
+        <div class="col-md-10 col-sm-11">
             <input type='file' ng-file='uploadfiles2'>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4 col-sm-1">Long file (Android)</div>
-        <div class="col-md-6 col-sm-11">
+        <div class="col-md-2 col-sm-1">Long file (Android)</div>
+        <div class="col-md-10 col-sm-11">
             <input type='file' ng-file='uploadfiles3'>
         </div>
     </div>
@@ -46,8 +46,10 @@
     </div>
     <BR/>
     <div class="row">
-        <a ng-show="response" ng-href="/csr-front/account.html?temp={{response.timestamp}}&user={{response.user}}" type="button" class="btn btn-success btn-lg col-md-6">Garage</a>
-        <a ng-show="response" ng-href="#" type="button" class="btn btn-warning btn-lg col-md-6" ng-click="deban()">Deban/Clone</a>
+        <a ng-show="response" ng-href="/csr-front/account.html?temp={{response.timestamp}}&user={{response.user}}" type="button" class="btn btn-success btn-lg col-md-12">Garage</a>
+    </div>
+    <div class="row">
+        <a ng-show="response" ng-href="#" type="button" class="btn btn-warning btn-lg col-md-12" ng-click="deban()">Deban/Clone</a>
     </div>
 </div>
 
