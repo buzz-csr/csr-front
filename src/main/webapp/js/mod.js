@@ -52,7 +52,8 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
     ];
     $scope.legendsCarSelected;
     $scope.legendsRestorationQty = 10000;
-
+    $scope.stage6car;
+    
     $scope.matchSearch = function(carId){
         return carId != -1 && ($scope.localSearch == undefined || $scope.carNames[$scope.fileEdited.caow[carId].crdb].toLowerCase().includes($scope.localSearch.toLowerCase()));
     }
@@ -82,6 +83,8 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 		$scope.expectedKeySilver = $scope.fileEdited.gsks*0.7;
 		$scope.expectedKeyGold = $scope.fileEdited.ggks*0.7;
 		$scope.loading = "hidden";
+		
+		
 	});	
 	
 	$http({
@@ -263,6 +266,9 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 		headers : {'Content-type' : 'application/json; charset=UTF-8'}
 	}).then(function(response){
 	    $scope.carNames = response.data;
+	    angular.element(document).ready(function () { 
+	       $('.stage6cars').selectpicker();
+       });
 	});
 
 	$http({
@@ -452,6 +458,24 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
         });
     }
 
+    $scope.stage6Gift = function(){
+        $scope.loading = "load";
+        $http({
+            method: 'POST',
+            url: '/csr-front/gift',
+            headers : {'Content-type' : 'application/json; charset=UTF-8'},
+            params :{
+                dir     : directory,
+                user    : user,
+                action  : 'stage6',
+                carId   : $scope.stage6car,
+            }
+        }).then(function(response){
+            $scope.loading = "hidden";
+            addActivity("Ajout n6 " + $scope.carNames[$scope.stage6car]);
+        });
+    }
+    
     $scope.eliteTokensGift = function(){
 	    $scope.loading = "load";
         $http({

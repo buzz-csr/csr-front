@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-select.min.css">
     <base href="/csr-front/" />
 </head>
 <body ng-controller="modCtrl" class="container">
@@ -16,6 +17,21 @@
 
 <div class="row bottom">
     <button type="button" class="btn btn-secondary col-md-12 btn-lg" ng-click="fuel()">Essence</button>
+</div>
+
+<div class="row">
+    <div class="col-md-2">Amélioration n6</div>
+    <div class="col-md-4 form-group">
+        <form>
+            <select class="form-control stage6cars" data-live-search="true" ng-model="stage6car">
+                <option ng-repeat="(key, value) in carNames" ng-value="key">{{value}}</option>
+            </select>
+        </form>
+    </div>
+    <div class="col-md-4">&nbsp;</div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-secondary add-fusion" ng-click="stage6Gift()">Cadeau</button>
+    </div>    
 </div>
 
 <div class="row">
@@ -375,6 +391,7 @@
 <script type="text/javascript" src="js/jquery-3.5.1.js"></script>
 <script type="text/javascript" src="bootstrap/js/popper.min.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
-
+<script type="text/javascript" src="js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="js/i18n/defaults-fr_FR.min.js"></script>
 </body>
 </html>
