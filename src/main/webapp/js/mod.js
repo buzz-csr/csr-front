@@ -27,6 +27,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
     $scope.eliteBlue    = 10000;
     $scope.eliteRed     = 5000;
     $scope.eliteYellow  = 500;
+    $scope.fuelNb       = 2000;
     $scope.eliteTokens = {
         Green : 0,
         Blue : 0,
@@ -403,6 +404,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
                 dir     : directory,
                 user    : user,
                 action  : 'fuel',
+                qty     : $scope.fuelNb,
             }
         }).then(function(response){
             addActivity("Ajout Essence");

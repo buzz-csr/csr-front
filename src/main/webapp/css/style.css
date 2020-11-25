@@ -98,6 +98,9 @@ h3{
 .add-fusion{
     width: 100%;
 }
+.height100{
+	height: 100%;
+}
 .load{
     position: fixed;
     top: 0px;

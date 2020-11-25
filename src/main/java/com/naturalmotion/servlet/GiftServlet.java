@@ -125,13 +125,9 @@ public class GiftServlet extends HttpServlet {
 
 	private void addFuel(HttpServletRequest req) {
 		try {
-			String dir = req.getParameter("dir");
-			String user = req.getParameter("user");
-			Configuration configuration = new Configuration();
-			String path = configuration.getString("working.directory");
-
-			GiftService service = new GiftServiceFileImpl(path + SEPARATOR + user + SEPARATOR + dir);
-			service.addEssence();
+			GiftService service = new GiftServiceFileImpl(new PathBuilder().build(req));
+			BigDecimal qty = new BigDecimal(req.getParameter("qty"));
+			service.addEssence(qty);
 		} catch (IOException | CarException | NsbException e) {
 			log.error("Error adding fuel gift", e);
 		}

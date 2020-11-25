@@ -22,7 +22,7 @@
 		        <configuration>
 		            <url>http://localhost:8080/manager/text</url>
 		            <server>TomcatServer</server>
-		            <path>/csr</path>
+		            <path>/csr-front</path>
 		        </configuration>
 		    </plugin>
             <plugin>
