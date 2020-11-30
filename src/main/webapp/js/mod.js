@@ -84,8 +84,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 		$scope.expectedKeySilver = $scope.fileEdited.gsks*0.7;
 		$scope.expectedKeyGold = $scope.fileEdited.ggks*0.7;
 		$scope.loading = "hidden";
-		
-		
+        $scope.eliteTokens = response.data.afms;		
 	});	
 	
 	$http({
