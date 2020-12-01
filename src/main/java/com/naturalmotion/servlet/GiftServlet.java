@@ -14,7 +14,6 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.naturalmotion.Configuration;
 import com.naturalmotion.csr_api.api.EliteToken;
 import com.naturalmotion.csr_api.api.EliteTokenParam;
 import com.naturalmotion.csr_api.api.FusionColor;
@@ -28,7 +27,6 @@ import com.naturalmotion.csr_api.service.reader.ProfileReaderFileImpl;
 public class GiftServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 6868517541785832236L;
-	private static final String SEPARATOR = "/";
 
 	private final Logger log = LoggerFactory.getLogger(CarServlet.class);
 
@@ -68,12 +66,7 @@ public class GiftServlet extends HttpServlet {
 
 	private void addEliteTokens(HttpServletRequest req) {
 		try {
-			String dir = req.getParameter("dir");
-			String user = req.getParameter("user");
-			Configuration configuration = new Configuration();
-			String path = configuration.getString("working.directory");
-
-			GiftService service = new GiftServiceFileImpl(path + SEPARATOR + user + SEPARATOR + dir);
+			GiftService service = new GiftServiceFileImpl(new PathBuilder().build(req));
 			List<EliteTokenParam> tokens = new ArrayList<>();
 			addEliteParam(tokens, req.getParameter("green"), EliteToken.GREEN);
 			addEliteParam(tokens, req.getParameter("blue"), EliteToken.BLUE);
@@ -104,16 +97,12 @@ public class GiftServlet extends HttpServlet {
 		addFusionParam(params, req.getParameter("red"), FusionColor.RED);
 
 		try {
-			String dir = req.getParameter("dir");
-			String user = req.getParameter("user");
 			String brand = req.getParameter("brand");
-			Configuration configuration = new Configuration();
-			String path = configuration.getString("working.directory");
-
-			GiftService service = new GiftServiceFileImpl(path + SEPARATOR + user + SEPARATOR + dir);
+			String path = new PathBuilder().build(req);
+			GiftService service = new GiftServiceFileImpl(path);
 			List<String> brands = null;
 			if ("-- TOUTES --".equals(brand)) {
-				brands = new ProfileReaderFileImpl(path + SEPARATOR + user + SEPARATOR + dir).getBrands();
+				brands = new ProfileReaderFileImpl(path).getBrands();
 			} else {
 				brands = Arrays.asList(brand);
 			}

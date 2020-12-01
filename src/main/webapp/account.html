@@ -259,7 +259,7 @@
 		</div>    
     </div>
     <div class="col-md-2">
-        <button type="button" class="btn btn-secondary col-md-12 height100" ng-click="resetCash()">Reset Cash et Or</button>
+        <button type="button" class="btn btn-secondary col-md-12" ng-click="resetCash()">Reset Cash et Or</button>
     </div>    
 </div>
 
@@ -324,7 +324,7 @@
 		</div>        
     </div>
     <div class="col-md-2">
-        <button type="button" class="btn btn-secondary col-md-12 height100" ng-click="resetKeys()">Reset Clés</button>
+        <button type="button" class="btn btn-secondary col-md-12" ng-click="resetKeys()">Reset Clés</button>
     </div>
 </div>
 
@@ -356,7 +356,8 @@
 
     <button type="button" data-toggle="modal" data-target="#collectionsModal" ng-click="saveEditedCar(fileEdited.caow[carId])" class="btn btn btn-outline-secondary col-md-2 col-sm-4 btn-lg">Remplacer</button>
     <button type="button" ng-click="fullCar(fileEdited.caow[carId])" class="btn btn btn-outline-secondary col-md-2 col-sm-4 btn-lg">Remplir</button>
-    <button type="button" ng-show="fileEdited.caow[carId].elcl == 0" ng-click="elite(fileEdited.caow[carId])" class="btn btn btn-outline-secondary col-md-2 col-sm-4 btn-lg">Permis</button>
+    <button type="button" ng-show="allowLicense(fileEdited.caow[carId])" ng-click="elite(fileEdited.caow[carId])" class="btn btn btn-outline-secondary col-md-2 col-sm-4 btn-lg">Permis</button>
+    <button type="button" ng-show="fileEdited.caow[carId].elcl != 0" ng-click="removeElite(fileEdited.caow[carId])" class="btn btn btn-outline-danger col-md-2 col-sm-4 btn-lg">Permis {{fileEdited.caow[carId].elcl}} X</button>
 </div>
 
 <div class="activities">

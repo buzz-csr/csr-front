@@ -6,12 +6,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
-import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.json.Json;
-import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -23,87 +22,77 @@ import javax.servlet.http.Part;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.naturalmotion.Configuration;
-import com.naturalmotion.csr_api.api.EliteToken;
 import com.naturalmotion.csr_api.api.EliteTokenParam;
 import com.naturalmotion.csr_api.service.io.NsbException;
 import com.naturalmotion.csr_api.service.updater.ProfileUpdaterFileImpl;
-import com.naturalmotion.csr_api.service.updater.UpdaterException;
+import com.naturalmotion.token.TokenManager;
 
 import csr.Extract;
 
 @MultipartConfig
 public class Upload extends HttpServlet {
 
-    private static final long serialVersionUID = -1637365817304780292L;
+	private static final String ORIGINAL = "Original";
 
-    private final Logger log = LoggerFactory.getLogger(Upload.class);
+	private static final long serialVersionUID = -1637365817304780292L;
 
-    private static final String SEPARATOR = "/";
+	private final Logger log = LoggerFactory.getLogger(Upload.class);
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+	private static final String SEPARATOR = "/";
 
-        String tokens = req.getParameter("tokens");
-        if (tokens != null) {
-            uploadForDeban(req, tokens);
-        } else {
-            uploadNewFile(req, resp);
-        }
-    }
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 
-    public void uploadForDeban(HttpServletRequest req, String tokens) {
-        try (JsonReader jsonReader = Json.createReader(new StringReader(tokens));) {
-            JsonObject object = jsonReader.readObject();
-            List<EliteTokenParam> params = new EliteTokenParamFactory().build(req);
-            new ProfileUpdaterFileImpl(new PathBuilder().build(req)).updateResourceAfterBan(params);
-        } catch (NsbException
-                | IOException e) {
-            log.error("Error updating elite token after deban", e);
-        }
-    }
+		String tokens = req.getParameter("tokens");
+		if (tokens != null) {
+			uploadForDeban(req, tokens);
+		} else {
+			uploadNewFile(req, resp);
+		}
+	}
 
-    public void uploadNewFile(HttpServletRequest req, HttpServletResponse resp) {
-        try {
-            String user = req.getParameter("user");
-            String now = String.valueOf(System.currentTimeMillis());
-            String backupPath;
-            backupPath = getBackupPath(user, now);
-            File actualDir = new File(backupPath + "Original" + SEPARATOR);
-            actualDir.mkdirs();
+	public void uploadForDeban(HttpServletRequest req, String tokens) {
+		try (JsonReader jsonReader = Json.createReader(new StringReader(tokens));) {
+			List<EliteTokenParam> params = new EliteTokenParamFactory().build(req);
+			new ProfileUpdaterFileImpl(new PathBuilder().build(req)).updateResourceAfterBan(params);
+		} catch (NsbException | IOException e) {
+			log.error("Error updating elite token after deban", e);
+		}
+	}
 
-            for (Part part : req.getParts()) {
-                try (InputStream stream = part.getInputStream()) {
-                    byte[] buffer = new byte[stream.available()];
-                    if (stream.read(buffer) > 0) {
-                        File target = new File(actualDir.getPath() + SEPARATOR + getFileName(part));
-                        try (OutputStream outStream = new FileOutputStream(target)) {
-                            outStream.write(buffer);
-                        }
-                    }
-                }
-            }
+	public void uploadNewFile(HttpServletRequest req, HttpServletResponse resp) {
+		try {
+			String user = req.getParameter("user");
+			String token = new TokenManager().create(user);
+			String path = new PathBuilder().buildFromToken(token);
+			File actualDir = new File(path + SEPARATOR + ORIGINAL + SEPARATOR);
+			actualDir.mkdirs();
 
-            new Extract().unzipAll(backupPath);
-            resp.getWriter().write("{\"user\": \"" + user + "\", \"timestamp\": \"" + now + "\"}");
-        } catch (IOException
-                | ServletException e) {
-            log.error("Error uploading files", e);
-        }
-    }
+			for (Part part : req.getParts()) {
+				try (InputStream stream = part.getInputStream()) {
+					byte[] buffer = new byte[stream.available()];
+					if (stream.read(buffer) > 0) {
+						File target = new File(actualDir.getPath() + SEPARATOR + getFileName(part));
+						try (OutputStream outStream = new FileOutputStream(target)) {
+							outStream.write(buffer);
+						}
+					}
+				}
+			}
 
-    public String getBackupPath(String user, String now) throws IOException {
-        Configuration configuration = new Configuration();
-        File backupDir = new File(configuration.getString("working.directory"));
-        return backupDir.getPath() + SEPARATOR + user + SEPARATOR + now + SEPARATOR;
-    }
+			new Extract().unzipAll(path + SEPARATOR);
+			resp.getWriter().write("{\"token\": \"" + token + "\"}");
+		} catch (IOException | ServletException | InvalidKeyException | NoSuchAlgorithmException e) {
+			log.error("Error uploading files", e);
+		}
+	}
 
-    private String getFileName(Part part) {
-        for (String content : part.getHeader("content-disposition").split(";")) {
-            if (content.trim().startsWith("filename"))
-                return content.substring(content.indexOf("=") + 2, content.length() - 1);
-        }
-        return "Default.file";
-    }
+	private String getFileName(Part part) {
+		for (String content : part.getHeader("content-disposition").split(";")) {
+			if (content.trim().startsWith("filename"))
+				return content.substring(content.indexOf("=") + 2, content.length() - 1);
+		}
+		return "Default.file";
+	}
 
 }

@@ -17,107 +17,98 @@ import com.naturalmotion.csr_api.service.io.NsbException;
 
 public class CarServlet extends HttpServlet {
 
-    private static final String SEPARATOR = "/";
-    private static final long serialVersionUID = -7980787428623402843L;
+	private static final long serialVersionUID = -7980787428623402843L;
 
-    private final Logger log = LoggerFactory.getLogger(CarServlet.class);
+	private final Logger log = LoggerFactory.getLogger(CarServlet.class);
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        resp.setContentType("application/json; charset=UTF-8");
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+		resp.setContentType("application/json; charset=UTF-8");
 
-        String action = req.getParameter("action");
-        if ("full".equals(action)) {
-            fullCar(req, resp);
-        } else if ("add".equals(action)) {
-            addCar(req, resp);
-        } else if ("elite".equals(action)) {
-            eliteCar(req, resp);
-        } else if ("sort".equals(action)) {
-            sort(req, resp);
-        } else {
-            replaceCar(req, resp);
-        }
-    }
+		String action = req.getParameter("action");
+		if ("full".equals(action)) {
+			fullCar(req, resp);
+		} else if ("add".equals(action)) {
+			addCar(req, resp);
+		} else if ("elite".equals(action)) {
+			eliteCar(req, resp);
+		} else if ("remove-elite".equals(action)) {
+			removeEliteCar(req, resp);
+		} else if ("sort".equals(action)) {
+			sort(req, resp);
+		} else {
+			replaceCar(req, resp);
+		}
+	}
 
-    private void sort(HttpServletRequest req, HttpServletResponse resp) {
-        try {
-            String path = new PathBuilder().build(req);
-            new CarServiceFileImpl(path).sort();
-            resp.getWriter().write(new NsbFormatter().getFileContent(path));
-        } catch (IOException | NsbException e) {
-            log.error("Error sorting cars", e);
-        }
-    }
+	private void removeEliteCar(HttpServletRequest req, HttpServletResponse resp) {
+		try {
+			int id = Integer.parseInt(req.getParameter("id"));
 
-    private void eliteCar(HttpServletRequest req, HttpServletResponse resp) {
-        try {
-            int id = Integer.parseInt(req.getParameter("id"));
-            String dir = req.getParameter("dir");
-            String user = req.getParameter("user");
+			JsonObject json = new CarServiceFileImpl(new PathBuilder().build(req)).removeElite(id);
 
-            Configuration configuration = new Configuration();
-            String path = configuration.getString("working.directory");
-            JsonObject json = new CarServiceFileImpl(path + SEPARATOR + user + SEPARATOR + dir).elite(id);
+			resp.getWriter().write(new NsbFormatter().filteredCar(json).toString());
+		} catch (IOException | CarException | NsbException e) {
+			log.error("Error removing elite on car", e);
+		}
+	}
 
-            resp.getWriter().write(new NsbFormatter().filteredCar(json).toString());
-        } catch (IOException
-                | CarException
-                | NsbException e) {
-            log.error("Error adding elite on car", e);
-        }
-    }
+	private void sort(HttpServletRequest req, HttpServletResponse resp) {
+		try {
+			String path = new PathBuilder().build(req);
+			new CarServiceFileImpl(path).sort();
+			resp.getWriter().write(new NsbFormatter().getFileContent(path));
+		} catch (IOException | NsbException e) {
+			log.error("Error sorting cars", e);
+		}
+	}
 
-    public void addCar(HttpServletRequest req, HttpServletResponse resp) {
-        try {
-            String pathNewCar = req.getParameter("path");
+	private void eliteCar(HttpServletRequest req, HttpServletResponse resp) {
+		try {
+			int id = Integer.parseInt(req.getParameter("id"));
 
-            String path = new PathBuilder().build(req);
-            new CarServiceFileImpl(path).add(pathNewCar + ".txt");
+			JsonObject json = new CarServiceFileImpl(new PathBuilder().build(req)).elite(id);
 
-            resp.getWriter().write(new NsbFormatter().getFileContent(path));
-        } catch (IOException
-                | CarException
-                | NsbException e) {
-            log.error("Error adding car", e);
-        }
-    }
+			resp.getWriter().write(new NsbFormatter().filteredCar(json).toString());
+		} catch (IOException | CarException | NsbException e) {
+			log.error("Error adding elite on car", e);
+		}
+	}
 
-    private void replaceCar(HttpServletRequest req, HttpServletResponse resp) {
-        try {
-            int id = Integer.parseInt(req.getParameter("id"));
-            String dir = req.getParameter("dir");
-            String user = req.getParameter("user");
-            String pathNewCar = req.getParameter("path");
+	public void addCar(HttpServletRequest req, HttpServletResponse resp) {
+		try {
+			String pathNewCar = req.getParameter("path");
 
-            Configuration configuration = new Configuration();
-            String path = configuration.getString("working.directory");
-            JsonObject json = new CarServiceFileImpl(path + SEPARATOR + user + SEPARATOR + dir).replace(id,
-                    pathNewCar + ".txt");
-            resp.getWriter().write(new NsbFormatter().filteredCar(json).toString());
-        } catch (IOException
-                | CarException
-                | NsbException e) {
-            log.error("Error replacing car", e);
-        }
-    }
+			String path = new PathBuilder().build(req);
+			new CarServiceFileImpl(path).add(pathNewCar + ".txt");
 
-    private void fullCar(HttpServletRequest req, HttpServletResponse resp) {
-        try {
-            int id = Integer.parseInt(req.getParameter("id"));
-            String dir = req.getParameter("dir");
-            String user = req.getParameter("user");
+			resp.getWriter().write(new NsbFormatter().getFileContent(path));
+		} catch (IOException | CarException | NsbException e) {
+			log.error("Error adding car", e);
+		}
+	}
 
-            Configuration configuration = new Configuration();
-            String path = configuration.getString("working.directory");
-            JsonObject json = new CarServiceFileImpl(path + SEPARATOR + user + SEPARATOR + dir).full(id);
+	private void replaceCar(HttpServletRequest req, HttpServletResponse resp) {
+		try {
+			int id = Integer.parseInt(req.getParameter("id"));
+			String pathNewCar = req.getParameter("path");
 
-            resp.getWriter().write(new NsbFormatter().filteredCar(json).toString());
-        } catch (IOException
-                | CarException
-                | NsbException e) {
-            log.error("Error max car", e);
-        }
-    }
+			JsonObject json = new CarServiceFileImpl(new PathBuilder().build(req)).replace(id, pathNewCar + ".txt");
+			resp.getWriter().write(new NsbFormatter().filteredCar(json).toString());
+		} catch (IOException | CarException | NsbException e) {
+			log.error("Error replacing car", e);
+		}
+	}
+
+	private void fullCar(HttpServletRequest req, HttpServletResponse resp) {
+		try {
+			int id = Integer.parseInt(req.getParameter("id"));
+			JsonObject json = new CarServiceFileImpl(new PathBuilder().build(req)).full(id);
+
+			resp.getWriter().write(new NsbFormatter().filteredCar(json).toString());
+		} catch (IOException | CarException | NsbException e) {
+			log.error("Error max car", e);
+		}
+	}
 
 }

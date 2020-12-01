@@ -1,17 +1,17 @@
 package com.naturalmotion.servlet;
 
-import com.naturalmotion.csr_api.api.EliteToken;
-import com.naturalmotion.csr_api.api.EliteTokenParam;
-import com.naturalmotion.csr_api.service.updater.ProfileUpdaterFileImpl;
+import java.io.StringReader;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.servlet.http.HttpServletRequest;
-import java.io.StringReader;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+
+import com.naturalmotion.csr_api.api.EliteToken;
+import com.naturalmotion.csr_api.api.EliteTokenParam;
 
 public class EliteTokenParamFactory {
 

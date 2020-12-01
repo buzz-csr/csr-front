@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.naturalmotion.csr_api.service.reader.ProfileReaderFileImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

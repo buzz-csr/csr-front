@@ -49,7 +49,7 @@ upModule.controller('upCtrl', [ '$scope', '$http', function($scope, $http) {
                 },
             }).then(function successCallback(response) {
                 // Store response data
-                $scope.response = response.data;
+                $scope.response = encodeURIComponent(response.data.token);
             });
         }
     }
