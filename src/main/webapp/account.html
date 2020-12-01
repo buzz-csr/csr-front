@@ -332,15 +332,24 @@
 </div>
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-5">
 		<form>
 		    <div class="form-group">
 		        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Recherche voiture dans le garage" ng-model="localSearch">
 		    </div>
 		</form>
     </div>
+    <div class="col-md-1">
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="Check1" ng-model="eliteFirst" >
+        <label class="form-check-label" for="Check1">Elite devant</label>
+      </div>    
+    </div>
     <div class="col-md-2">
-	    <button type="button" class="btn btn-secondary col-md-12" ng-click="sort()">Trier garage</button>
+	    <button type="button" class="btn btn-secondary col-md-12" ng-click="sort('BRAND')">Trier / marque</button>
+    </div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-secondary col-md-12" ng-click="sort('TIER')">Trier / tier</button>
     </div>
     <div class="col-md-2">
 	    <button type="button" data-toggle="modal" data-target="#collectionsModal" class="btn btn-secondary col-md-12" ng-click="addCar()">Ajouter voiture</button>

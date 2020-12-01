@@ -55,7 +55,8 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
     $scope.legendsRestorationQty = 10000;
     $scope.stage6car;
     $scope.hasLicenseFree;
-
+    $scope.eliteFirst = true;
+    
     $scope.matchSearch = function(carId) {
         return carId != -1 && ($scope.localSearch == undefined || $scope.carNames[$scope.fileEdited.caow[carId].crdb].toLowerCase().includes($scope.localSearch.toLowerCase()));
     }
@@ -342,15 +343,17 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
         $scope.editedCar = undefined;
     }
 
-    $scope.sort = function() {
+    $scope.sort = function(sorting) {
         $scope.loading = "load";
         $http({
             method: 'POST',
             url: '/csr-front/car',
             headers: { 'Content-type': 'application/json; charset=UTF-8' },
             params: {
-                token: token,
-                action: 'sort',
+                token       : token,
+                action      : 'sort',
+                sort        : sorting,
+                eliteFirst  : $scope.eliteFirst,
             }
         }).then(function(response) {
             $scope.fileEdited = response.data;

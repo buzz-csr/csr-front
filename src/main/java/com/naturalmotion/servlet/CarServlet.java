@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.naturalmotion.Configuration;
 import com.naturalmotion.csr_api.service.car.CarException;
 import com.naturalmotion.csr_api.service.car.CarServiceFileImpl;
+import com.naturalmotion.csr_api.service.car.comparator.ComparatorParameter;
 import com.naturalmotion.csr_api.service.io.NsbException;
 
 public class CarServlet extends HttpServlet {
@@ -56,7 +56,9 @@ public class CarServlet extends HttpServlet {
 	private void sort(HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			String path = new PathBuilder().build(req);
-			new CarServiceFileImpl(path).sort();
+			String sorting = req.getParameter("sort");
+			String eliteFirst = req.getParameter("eliteFirst");
+			new CarServiceFileImpl(path).sort(ComparatorParameter.valueOf(sorting), Boolean.valueOf(eliteFirst));
 			resp.getWriter().write(new NsbFormatter().getFileContent(path));
 		} catch (IOException | NsbException e) {
 			log.error("Error sorting cars", e);
