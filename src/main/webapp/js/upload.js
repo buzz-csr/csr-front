@@ -49,7 +49,8 @@ upModule.controller('upCtrl', [ '$scope', '$http', function($scope, $http) {
                 },
             }).then(function successCallback(response) {
                 // Store response data
-                $scope.response = encodeURIComponent(response.data.token);
+                $scope.responseNotEncoded = response.data.token;
+                $scope.response = encodeURIComponent($scope.responseNotEncoded);
             });
         }
     }
@@ -59,8 +60,7 @@ upModule.controller('upCtrl', [ '$scope', '$http', function($scope, $http) {
             method : 'post',
             url : '/csr-front/deban',
             params : {
-                user    : $scope.response.user,
-                dir     : $scope.response.timestamp,
+                token   : $scope.responseNotEncoded,
             },
             headers : {'Content-type' : 'application/json; charset=UTF-8'},
         }).then(function successCallback(response) {
@@ -75,9 +75,8 @@ upModule.controller('upCtrl', [ '$scope', '$http', function($scope, $http) {
             url: '/csr-front/pack',
             responseType: 'arraybuffer',
             params : {
-                user    : $scope.response.user,
-                dir     : $scope.response.timestamp,
-            }
+                token   : $scope.responseNotEncoded,
+           }
         }).then(function(data){
             var blob = new Blob([data.data], { type: 'application/octet-stream' });
             var downloadLink = document.createElement('a');
