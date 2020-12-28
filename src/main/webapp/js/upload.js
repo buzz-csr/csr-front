@@ -106,8 +106,7 @@ upModule.controller('upCtrl', [ '$scope', '$http', function($scope, $http) {
             url : '/csr-front/upload',
             data : fd,
             params : {
-                dir     : $scope.response.timestamp,
-                user    : $scope.user,
+                token   : $scope.responseNotEncoded,
                 tokens  : $scope.spentTokens,
             },
             headers : {
