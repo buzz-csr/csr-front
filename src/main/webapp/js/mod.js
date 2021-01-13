@@ -34,6 +34,12 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
         Red: 0,
         Yellow: 0,
     }
+    $scope.eliteTokensMax = {
+        Green: 0,
+        Blue: 0,
+        Red: 0,
+        Yellow: 0,
+    }
     $scope.legendsCars = [
         { name: "Ford_Mustang302_1970" },
         { name: "AstonMartin_DB5Classic_1964" },
@@ -84,7 +90,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
         $scope.expectedKeySilver = $scope.fileEdited.gsks * 0.7;
         $scope.expectedKeyGold = $scope.fileEdited.ggks * 0.7;
         $scope.loading = "hidden";
-        $scope.eliteTokens = response.data.afms;
+        $scope.eliteTokensMax = response.data.afms;
         $scope.hasLicenseFree = licenseFree();
     });
 
