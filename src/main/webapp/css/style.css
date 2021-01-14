@@ -116,3 +116,6 @@ h3{
 .hidden{
     display: none;
 }
+.reset-detail {
+	background-color:  #fdf2e9;
+}

@@ -26,20 +26,24 @@ public class ResourceServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 		resp.setContentType("application/json");
 		resp.setCharacterEncoding("UTF-8");
+		try {
+			String path = new PathBuilder().build(req);
 
-		String type = req.getParameter("type");
-		if ("cash".equals(type)) {
-			addCashOr(req, resp);
-		} else if ("elite".equals(type)) {
-			addEliteTokens(req, resp);
-		} else {
-			addKeys(req, resp);
+			String type = req.getParameter("type");
+			if ("cash".equals(type)) {
+				addCashOr(path, req, resp);
+			} else if ("elite".equals(type)) {
+				addEliteTokens(path, req, resp);
+			} else {
+				addKeys(path, req, resp);
+			}
+		} catch (IOException e) {
+			log.error("Error adding resources", e);
 		}
 	}
 
-	private void addEliteTokens(HttpServletRequest req, HttpServletResponse resp) {
+	private void addEliteTokens(String path, HttpServletRequest req, HttpServletResponse resp) {
 		try {
-			String path = new PathBuilder().build(req);
 			new ProfileUpdaterFileImpl(path).updateEliteTokens(new EliteTokenParamFactory().build(req));
 
 			resp.getWriter().write(new NsbFormatter().getFileContent(path));
@@ -48,12 +52,11 @@ public class ResourceServlet extends HttpServlet {
 		}
 	}
 
-	public void addKeys(HttpServletRequest req, HttpServletResponse resp) {
+	public void addKeys(String path, HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			String bronze = req.getParameter("bronze");
 			String gold = req.getParameter("gold");
 			String silver = req.getParameter("silver");
-			String path = new PathBuilder().build(req);
 
 			ProfileUpdater profileUpdater = new ProfileUpdaterFileImpl(path);
 			profileUpdater.updateResource(ResourceType.BRONZE_KEY, new BigDecimal(bronze));
@@ -66,11 +69,10 @@ public class ResourceServlet extends HttpServlet {
 		}
 	}
 
-	public void addCashOr(HttpServletRequest req, HttpServletResponse resp) {
+	public void addCashOr(String path, HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			String cash = req.getParameter("cash");
 			String gold = req.getParameter("gold");
-			String path = new PathBuilder().build(req);
 
 			ProfileUpdater profileUpdater = new ProfileUpdaterFileImpl(path);
 			profileUpdater.updateResource(ResourceType.CASH, new BigDecimal(cash));

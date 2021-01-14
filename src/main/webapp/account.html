@@ -174,13 +174,37 @@
     </div>
 </div>
 
+<div class="row reset-detail">
+    <div class="col-md-2 right">Gain</div>
+    <div class="col-md-2">{{eliteTokensMax.Green}}</div>
+    <div class="col-md-2">{{eliteTokensMax.Blue}}</div>
+    <div class="col-md-2">{{eliteTokensMax.Red}}</div>
+    <div class="col-md-2">{{eliteTokensMax.Yellow}}</div>
+    <div class="col-md-2"></div>    
+</div>
+<div class="row reset-detail">
+    <div class="col-md-2 right">Dépenses</div>
+    <div class="col-md-2">{{eliteTokensSpent.Green}}</div>
+    <div class="col-md-2">{{eliteTokensSpent.Blue}}</div>
+    <div class="col-md-2">{{eliteTokensSpent.Red}}</div>
+    <div class="col-md-2">{{eliteTokensSpent.Yellow}}</div>
+    <div class="col-md-2"></div>    
+</div>
+<div class="row reset-detail">
+    <div class="col-md-2 right">Total</div>
+    <div class="col-md-2">{{eliteTokensMax.Green-eliteTokensSpent.Green}}</div>
+    <div class="col-md-2">{{eliteTokensMax.Blue-eliteTokensSpent.Blue}}</div>
+    <div class="col-md-2">{{eliteTokensMax.Red-eliteTokensSpent.Red}}</div>
+    <div class="col-md-2">{{eliteTokensMax.Yellow-eliteTokensSpent.Yellow}}</div>
+    <div class="col-md-2"></div>    
+</div>
 <div class="row">
     <div class="col-md-2">Composants élite</div>
     <div class="col-md-2 form-group">
         <label class="sr-only" for="eliteGreen">Vert</label>
         <div class="input-group">
             <div class="input-group-prepend">
-                <div class="input-group-text"><img src="images/elite_vert.png" width="22px" />{{eliteTokensMax.Green}}</div>
+                <div class="input-group-text"><img src="images/elite_vert.png" width="22px" /></div>
             </div>
             <input type="text" class="form-control" id="eliteGreenReset" ng-model="eliteTokens.Green">
         </div>
@@ -189,7 +213,7 @@
         <label class="sr-only" for="eliteBlue">Bleu</label>
         <div class="input-group">
             <div class="input-group-prepend">
-                <div class="input-group-text"><img src="images/elite_bleu.png" width="22px" />{{eliteTokensMax.Blue}}</div>
+                <div class="input-group-text"><img src="images/elite_bleu.png" width="22px" /></div>
             </div>
             <input type="text" class="form-control" id="eliteBlueReset" ng-model="eliteTokens.Blue">
         </div>
@@ -198,7 +222,7 @@
         <label class="sr-only" for="eliteRed">Rouge</label>
         <div class="input-group">
             <div class="input-group-prepend">
-                <div class="input-group-text"><img src="images/elite_rouge.png" width="22px" />{{eliteTokensMax.Red}}</div>
+                <div class="input-group-text"><img src="images/elite_rouge.png" width="22px" /></div>
             </div>
             <input type="text" class="form-control" id="eliteRedReset" ng-model="eliteTokens.Red">
         </div>
@@ -207,7 +231,7 @@
         <label class="sr-only" for="eliteYellow">Jaune</label>
         <div class="input-group">
             <div class="input-group-prepend">
-                <div class="input-group-text"><img src="images/elite_jaune.png" width="22px" />{{eliteTokensMax.Yellow}}</div>
+                <div class="input-group-text"><img src="images/elite_jaune.png" width="22px" /></div>
             </div>
             <input type="text" class="form-control" id="eliteYellowReset" ng-model="eliteTokens.Yellow">
         </div>

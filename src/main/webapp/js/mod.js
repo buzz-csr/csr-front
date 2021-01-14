@@ -23,7 +23,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
     $scope.blueFusion = 8;
     $scope.redFusion = 6;
     $scope.onlyRedFusion = 20;
-    $scope.eliteGreen = 10000;
+    $scope.eliteGreen = 15000;
     $scope.eliteBlue = 10000;
     $scope.eliteRed = 5000;
     $scope.eliteYellow = 500;
@@ -40,6 +40,12 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
         Red: 0,
         Yellow: 0,
     }
+    $scope.eliteTokensSpent = {
+        Green: 0,
+        Blue: 0,
+        Red: 0,
+        Yellow: 0,
+    }    
     $scope.legendsCars = [
         { name: "Ford_Mustang302_1970" },
         { name: "AstonMartin_DB5Classic_1964" },
@@ -90,7 +96,8 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
         $scope.expectedKeySilver = $scope.fileEdited.gsks * 0.7;
         $scope.expectedKeyGold = $scope.fileEdited.ggks * 0.7;
         $scope.loading = "hidden";
-        $scope.eliteTokensMax = response.data.afms;
+        $scope.eliteTokensMax = response.data.afme;
+        $scope.eliteTokensSpent = response.data.afms;
         $scope.hasLicenseFree = licenseFree();
     });
 
@@ -466,8 +473,8 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
                 qty: $scope.legendsRestorationQty,
             }
         }).then(function(response) {
-            addActivity("Ajout " + $scope.legendsRestorationQty + " jetons restauration pour " + $scope.carNames[$scope.legendsCarSelected]);
             $scope.loading = "hidden";
+            addActivity("Ajout " + $scope.legendsRestorationQty + " jetons restauration pour " + $scope.carNames[$scope.legendsCarSelected]);
         });
     }
 
@@ -554,6 +561,13 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
             }
         }).then(function(response) {
             $scope.fileEdited = response.data;
+            $scope.eliteTokensSpent = response.data.afms;
+            $scope.eliteTokens = {
+                Green: 0,
+                Blue: 0,
+                Red: 0,
+                Yellow: 0,
+            }
             $scope.loading = "hidden";
             addActivity("Reset Composants elites");
         });
