@@ -79,6 +79,10 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
 
     var token = $location.search().token;
 
+    $scope.errorUrl = function() {
+        return '/csr-front/errors.html?token=' + encodeURIComponent(token);
+    }
+
     $http({
         method: 'GET',
         url: '/csr-front/GetFile',
@@ -99,6 +103,17 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
         $scope.eliteTokensMax = response.data.afme;
         $scope.eliteTokensSpent = response.data.afms;
         $scope.hasLicenseFree = licenseFree();
+    });
+
+    $http({
+        method: 'GET',
+        url: '/csr-front/check',
+        headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        params: {
+            token: token,
+        }
+    }).then(function(response) {
+        $scope.checkErrors = response.data;
     });
 
     $http({

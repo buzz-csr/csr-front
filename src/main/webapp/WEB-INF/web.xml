@@ -4,6 +4,10 @@
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
     <servlet>
+        <servlet-name>check</servlet-name>
+        <servlet-class>com.naturalmotion.servlet.CheckServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>deban</servlet-name>
         <servlet-class>com.naturalmotion.servlet.DebanServlet</servlet-class>
     </servlet>
@@ -31,6 +35,10 @@
         <servlet-name>GetFile</servlet-name>
         <servlet-class>com.naturalmotion.servlet.GetFile</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>check</servlet-name>
+        <url-pattern>/check</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>deban</servlet-name>
         <url-pattern>/deban</url-pattern>

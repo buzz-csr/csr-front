@@ -15,6 +15,10 @@
     <button type="button" class="btn btn-outline-success col-md-12 btn-lg" ng-click="downloadFile()">Télécharger fichiers</button>
 </div>
 
+<div class="alert alert-danger" role="alert" ng-show="checkErrors.length > 0">
+    {{checkErrors.length}} erreurs sont présentes dans les fichiers ! <a href="{{errorUrl()}}" target="_blank">détails</a>
+</div>
+
 <div class="row bottom">
     <div class="col-md-2">Essence</div>
     <div class="col-md-2">

@@ -1,0 +1,30 @@
+<html ng-app="errorModule">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/error.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-select.min.css">
+    <base href="/csr-front/" />
+</head>
+<body ng-controller="errorCtrl" class="container">
+    <div class="card" ng-repeat="group in checkErrors">
+      <div class="card-header bg-danger">
+        <span>{{group.name}}</span>
+        <button type="button" class="btn btn-secondary action-btn" ng-click="correct()">Corriger</button>
+      </div>
+      <div class="card-body">
+            <div ng-repeat="errorMessage in group.list track by $index">
+                {{errorMessage}}
+            </div>  
+      </div>
+    </div>
+    
+<div class="alert alert-success" role="alert" ng-show="checkErrors.length == 0">
+    Aucune erreur !
+</div>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+<script type="text/javascript" src="js/error.js"></script>
+<script type="text/javascript" src="js/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+</body>
+</html>
