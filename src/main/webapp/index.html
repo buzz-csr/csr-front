@@ -119,8 +119,16 @@
 </div>
 
 <div ng-show="eliteCars">
-    <div ng-repeat="car in eliteCars">
-        {{carNames[car.name]}} : {{car.level}}
+    
+    <div class="row">
+        <div class="col-md-6">Voiture</div>
+        <div class="col-md-3">Niveau</div>
+        <div class="col-md-3">Garage</div>
+    </div>
+    <div ng-repeat="car in eliteCars" class="row">
+        <div class="col-md-6">{{carNames[car.name]}}</div>
+        <div class="col-md-3">{{car.level}}</div>
+        <div class="col-md-3">{{car.garage}}</div>
     </div>
 </div>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>

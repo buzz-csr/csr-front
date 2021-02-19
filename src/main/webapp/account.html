@@ -387,7 +387,7 @@
 <div class="row car" ng-repeat="carId in fileEdited.cgpi track by $index" ng-show="matchSearch(carId)" ng-class="getGarageClass($index)">
     <div ng-show="isTop($index)" class="col-md-12 garage-head">{{getGarageNumber($index)}}</div>
     <div class="col-md-3 col-sm-3" title="{{getCarName(fileEdited.caow[carId].crdb)}}">{{carNames[fileEdited.caow[carId].crdb]}}</div>
-    <div class="col-md-1 col-sm-3">{{fileEdited.caow[carId].nupl.txt}}</div>
+    <div class="col-md-1 col-sm-3"><span ng-show="fileEdited.caow[carId].cmlv > 0">{{fileEdited.caow[carId].cmlv}}</span></div>
     <div class="col-md-1 col-sm-3">{{fileEdited.caow[carId].ctie}}</div>
     <div class="col-md-1 col-sm-3">({{fileEdited.caow[carId].cepi}})</div>
 

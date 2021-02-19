@@ -28,7 +28,7 @@ public class NsbFormatter {
     private static final List<String> ALLOW = Arrays.asList("name", "caow", "cgpi", "caea", "casp", "goea", "gosp",
             "gbke", "gbks", "gske", "gsks", "ggke", "ggks", "afms", "afme");
 
-    private static final List<String> CAOW_ALLOW = Arrays.asList("crdb", "nupl", "ctie", "cepi", "elcl", "unid");
+    private static final List<String> CAOW_ALLOW = Arrays.asList("crdb", "nupl", "ctie", "cepi", "elcl", "unid", "cmlv");
 
     public String getFileContent(String path) throws IOException, NsbException {
         String content = null;
