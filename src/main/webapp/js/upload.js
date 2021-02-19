@@ -17,6 +17,7 @@ upModule.controller('upCtrl', [ '$scope', '$http', function($scope, $http) {
     $scope.user;
     $scope.error;
     $scope.spentTokens;
+    $scope.eliteCars;
 
     $scope.upload = function() {
         $scope.error = undefined;
@@ -64,10 +65,22 @@ upModule.controller('upCtrl', [ '$scope', '$http', function($scope, $http) {
             },
             headers : {'Content-type' : 'application/json; charset=UTF-8'},
         }).then(function successCallback(response) {
-            $scope.spentTokens = response.data;
+            
+            $http({
+                method: 'GET',
+                url: '/csr-front/carNames.json',
+                headers: { 'Content-type': 'application/json; charset=UTF-8' }
+            }).then(function(response) {
+                $scope.carNames = response.data;
+            });
+
+            $scope.spentTokens  = response.data.eliteTokenSpent;
+            $scope.eliteCars    = response.data.eliteCars;
             download();
         });
     }
+
+    
     
     function download(){
         $http({
