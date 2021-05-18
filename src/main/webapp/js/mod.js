@@ -9,6 +9,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
     $scope.fileEdited;
     $scope.userId;
     $scope.editedCar;
+    $scope.carsId = [];
     $scope.collections;
     $scope.collectionsDir = [];
     $scope.selectDir;
@@ -128,6 +129,38 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
         $scope.userId = response.data;
     });
 
+    $http({
+        method: 'POST',
+        url: '/csr-front/car',
+        headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        params: {
+            token: token,
+            action: 'list',
+        }
+    }).then(function(response) {
+        $scope.carsId = response.data;
+        $scope.searchedIdCar = response.data;
+    });
+    
+    $scope.addCarId = function(carId){
+        $scope.loading = "load";
+       $http({
+            method: 'POST',
+            url: '/csr-front/car',
+            headers: { 'Content-type': 'application/json; charset=UTF-8' },
+            params: {
+                token   : token,
+                action  : 'addId',
+                id      : carId,
+            }
+        }).then(function(response) {
+            $scope.fileEdited = response.data;
+            addActivity("Ajout " + carId);
+            $scope.loading = "hidden";
+        });
+
+    }
+    
     $scope.fullCar = function(caowEdited) {
         $scope.loading = "load";
         $http({
@@ -331,7 +364,18 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
             downloadLink.click();
         });
     }
-
+    
+    $scope.searchId = function() {
+        $scope.searchedIdCar = [];
+        if ($scope.searchCarId != undefined && $scope.searchCarId.length >= 3) {
+            angular.forEach($scope.carsId, function(car) {
+                if (car.toLowerCase().includes($scope.searchCarId.toLowerCase())) {
+                    $scope.searchedIdCar.push(car);
+                }
+            });
+        }
+    }
+    
     $scope.search = function() {
         $scope.searchedCar = [];
         if ($scope.searchCar != undefined && $scope.searchCar.length >= 3) {

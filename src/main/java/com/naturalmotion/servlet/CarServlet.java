@@ -1,6 +1,7 @@
 package com.naturalmotion.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.json.JsonObject;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.naturalmotion.csr_api.service.car.CarException;
 import com.naturalmotion.csr_api.service.car.CarServiceFileImpl;
 import com.naturalmotion.csr_api.service.car.comparator.ComparatorParameter;
@@ -28,8 +30,12 @@ public class CarServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		if ("full".equals(action)) {
 			fullCar(req, resp);
+		} else if ("list".equals(action)) {
+			listAllCars(req, resp);
 		} else if ("add".equals(action)) {
 			addCar(req, resp);
+		} else if ("addId".equals(action)) {
+			addCarId(req, resp);
 		} else if ("elite".equals(action)) {
 			eliteCar(req, resp);
 		} else if ("remove-elite".equals(action)) {
@@ -38,6 +44,16 @@ public class CarServlet extends HttpServlet {
 			sort(req, resp);
 		} else {
 			replaceCar(req, resp);
+		}
+	}
+
+	private void listAllCars(HttpServletRequest req, HttpServletResponse resp) {
+		try {
+			String path = new PathBuilder().build(req);
+			List<String> listAll = new CarServiceFileImpl(path).listAll();
+			resp.getWriter().write(new ObjectMapper().writeValueAsString(listAll));
+		} catch (IOException | NsbException e) {
+			log.error("Error adding car", e);
 		}
 	}
 
@@ -74,6 +90,19 @@ public class CarServlet extends HttpServlet {
 			resp.getWriter().write(new NsbFormatter().filteredCar(json).toString());
 		} catch (IOException | CarException | NsbException e) {
 			log.error("Error adding elite on car", e);
+		}
+	}
+
+	public void addCarId(HttpServletRequest req, HttpServletResponse resp) {
+		try {
+			String carCrdb = req.getParameter("id");
+
+			String path = new PathBuilder().build(req);
+			new CarServiceFileImpl(path).addId(carCrdb);
+
+			resp.getWriter().write(new NsbFormatter().getFileContent(path));
+		} catch (IOException | CarException | NsbException e) {
+			log.error("Error adding car", e);
 		}
 	}
 

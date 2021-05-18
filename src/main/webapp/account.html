@@ -177,7 +177,6 @@
         <button type="button" class="btn btn-secondary add-fusion" ng-click="eliteTokensGift()">Cadeau</button>
     </div>
 </div>
-
 <div class="row reset-detail">
     <div class="col-md-2 right">Gain</div>
     <div class="col-md-2">{{eliteTokensMax.Green}}</div>
@@ -383,10 +382,16 @@
 	    <button type="button" data-toggle="modal" data-target="#collectionsModal" class="btn btn-secondary col-md-12" ng-click="addCar()">Ajouter voiture</button>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-10"></div>
+    <div class="col-md-2">
+        <button type="button" data-toggle="modal" data-target="#listCarsModal" class="btn btn-secondary col-md-12" ng-click="listCars()">Ajouter voiture new</button>
+    </div>
+</div>
 
 <div class="row car" ng-repeat="carId in fileEdited.cgpi track by $index" ng-show="matchSearch(carId)" ng-class="getGarageClass($index)">
     <div ng-show="isTop($index)" class="col-md-12 garage-head">{{getGarageNumber($index)}}</div>
-    <div class="col-md-3 col-sm-3" title="{{getCarName(fileEdited.caow[carId].crdb)}}">{{carNames[fileEdited.caow[carId].crdb]}}</div>
+    <div class="col-md-3 col-sm-3" title="{{getCarName(fileEdited.caow[carId].crdb)}}">{{carNames[fileEdited.caow[carId].crdb]}} <i>{{fileEdited.caow[carId].crdb}}</i></div>
     <div class="col-md-1 col-sm-3"><span ng-show="fileEdited.caow[carId].cmlv > 0">{{fileEdited.caow[carId].cmlv}}</span></div>
     <div class="col-md-1 col-sm-3">{{fileEdited.caow[carId].ctie}}</div>
     <div class="col-md-1 col-sm-3">({{fileEdited.caow[carId].cepi}})</div>
@@ -444,6 +449,40 @@
     </div>
 
 </div>
+
+<div class="modal fade" id="listCarsModal" tabindex="-1" role="dialog" aria-labelledby="listCarsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-collections" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="collectionsModalLabel">Liste des voitures full</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="collections-full">
+                <div class="container-fluid">
+                    <div class="row bottom form-group">
+                        <label for="searchCarList">Rechercher une voiture</label>
+                        <input id="searchCarList" class="form-control" type="text" ng-model="searchCarId" ng-change="searchId()" />
+                    </div>
+                    <div class="row margin" ng-repeat="carId in searchedIdCar track by $index">
+                        <div class="col-md-10 right">
+                            {{carId}}
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-secondary col-md-12" data-dismiss="modal" ng-click="addCarId(carId)">Ajouter</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="closeCollection()">Close</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 <div ng-class="loading"></div>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
 <script type="text/javascript" src="js/mod.js"></script>
