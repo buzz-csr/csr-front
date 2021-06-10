@@ -32,6 +32,10 @@
         <servlet-class>com.naturalmotion.servlet.Upload</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>GetFileV2</servlet-name>
+        <servlet-class>com.naturalmotion.servlet.GetFileV2</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>GetFile</servlet-name>
         <servlet-class>com.naturalmotion.servlet.GetFile</servlet-class>
     </servlet>
@@ -54,6 +58,10 @@
     <servlet-mapping>
         <servlet-name>pack</servlet-name>
         <url-pattern>/pack</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetFileV2</servlet-name>
+        <url-pattern>/GetFileV2</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>GetFile</servlet-name>

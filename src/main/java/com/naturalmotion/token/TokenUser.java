@@ -2,6 +2,8 @@ package com.naturalmotion.token;
 
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class TokenUser {
 
 	private Pattern pattern = Pattern.compile(":");
@@ -16,9 +18,11 @@ public class TokenUser {
 	}
 
 	public TokenUser(String string) {
-		String[] split = pattern.split(string);
-		user = split[0];
-		dir = split[1];
+		if (StringUtils.isNotBlank(string)) {
+			String[] split = pattern.split(string);
+			user = split[0];
+			dir = split[1];
+		}
 	}
 
 	public String getUser() {

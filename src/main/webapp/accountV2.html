@@ -1,0 +1,499 @@
+<html ng-app="modModule">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-select.min.css">
+    <base href="/csr-front/" />
+</head>
+<body ng-controller="modCtrl" class="container">
+
+<div class="row">
+    <div class="col-md-12"><h3>{{fileEdited.name}} <span ng-show="userId" class="userid"> - {{userId}}</span></h3></div>
+</div>
+<div class="row bottom">
+    <button type="button" class="btn btn-outline-success col-md-12 btn-lg" ng-click="updateProfile()">Mettre à jour</button>
+</div>
+
+<div ng-show="errorMessage" class="alert alert-danger">
+    {{errorMessage}}
+</div>
+
+<div ng-show="updateStatus == 'OK'" class="alert alert-success">
+    Mise à jour OK !
+</div>
+
+<div class="row bottom">
+    <div class="col-md-2">Essence</div>
+    <div class="col-md-2">
+        <input type="text" class="form-control" id="essence" ng-model="fuelNb">
+    </div>
+    <div class="col-md-6">&nbsp;</div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-secondary col-md-12" ng-click="fuel()">Essence</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">Amélioration n6</div>
+    <div class="col-md-4 form-group">
+        <form>
+            <select class="form-control stage6cars" data-live-search="true" ng-model="stage6car">
+                <option ng-repeat="(key, value) in carNames" ng-value="key">{{value}}</option>
+            </select>
+        </form>
+    </div>
+    <div class="col-md-4">&nbsp;</div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-secondary add-fusion" ng-click="stage6Gift()">Cadeau</button>
+    </div>    
+</div>
+
+<div class="row">
+    <div class="col-md-2">Jetons restauration</div>
+    <div class="col-md-2 form-group">
+        <form>
+            <select class="form-control" ng-model="legendsCarSelected">
+                <option ng-repeat="car in legendsCars" ng-value="car.name">{{carNames[car.name]}}</option>
+            </select>
+        </form>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="restoToken">Quantité</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Quantité</div>
+            </div>
+            <input type="text" class="form-control" id="restoToken" ng-model="legendsRestorationQty">
+        </div>
+    </div>
+    <div class="col-md-4">&nbsp;</div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-secondary add-fusion" ng-click="restoToken()">Cadeau</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">Fusions (3 couleurs)</div>
+    <div class="col-md-2 form-group">
+        <form>
+            <select class="form-control" ng-model="brand">
+                <option ng-repeat="brand in fileEdited.brands">{{brand}}</option>
+            </select>
+        </form>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="greenFusion">Verte</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Verte</div>
+            </div>
+            <input type="text" class="form-control" id="greenFusion" ng-model="greenFusion">
+        </div>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="blueFusion">Bleue</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Bleue</div>
+            </div>
+            <input type="text" class="form-control" id="blueFusion" ng-model="blueFusion">
+        </div>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="redFusion">Rouge</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Rouge</div>
+            </div>
+            <input type="text" class="form-control" id="redFusion" ng-model="redFusion">
+        </div>
+    </div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-secondary add-fusion" ng-click="fusionsThree()">Cadeau</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">Fusions rouge</div>
+    <div class="col-md-2 form-group">
+        <form>
+            <select class="form-control" ng-model="brand">
+                <option ng-repeat="brand in fileEdited.brands">{{brand}}</option>
+            </select>
+        </form>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="onlyRedFusion">Rouge</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Rouge</div>
+            </div>
+            <input type="text" class="form-control" id="onlyRedFusion" ng-model="onlyRedFusion">
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+    <div class="col-md-2"></div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-secondary add-fusion" ng-click="fusionsRed()">Cadeau</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">Composants élite</div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="eliteGreen">Vert</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><img src="images/elite_vert.png" width="22px" /></div>
+            </div>
+            <input type="text" class="form-control" id="eliteGreen" ng-model="eliteGreen">
+        </div>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="eliteBlue">Bleu</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><img src="images/elite_bleu.png" width="22px" /></div>
+            </div>
+            <input type="text" class="form-control" id="eliteBlue" ng-model="eliteBlue">
+        </div>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="eliteRed">Rouge</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><img src="images/elite_rouge.png" width="22px" /></div>
+            </div>
+            <input type="text" class="form-control" id="eliteRed" ng-model="eliteRed">
+        </div>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="eliteYellow">Jaune</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><img src="images/elite_jaune.png" width="22px" /></div>
+            </div>
+            <input type="text" class="form-control" id="eliteYellow" ng-model="eliteYellow">
+        </div>
+    </div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-secondary add-fusion" ng-click="eliteTokensGift()">Cadeau</button>
+    </div>
+</div>
+<div class="row reset-detail">
+    <div class="col-md-2 right">Gain</div>
+    <div class="col-md-2">{{eliteTokensMax.Green}}</div>
+    <div class="col-md-2">{{eliteTokensMax.Blue}}</div>
+    <div class="col-md-2">{{eliteTokensMax.Red}}</div>
+    <div class="col-md-2">{{eliteTokensMax.Yellow}}</div>
+    <div class="col-md-2"></div>    
+</div>
+<div class="row reset-detail">
+    <div class="col-md-2 right">Dépenses</div>
+    <div class="col-md-2">{{eliteTokensSpent.Green}}</div>
+    <div class="col-md-2">{{eliteTokensSpent.Blue}}</div>
+    <div class="col-md-2">{{eliteTokensSpent.Red}}</div>
+    <div class="col-md-2">{{eliteTokensSpent.Yellow}}</div>
+    <div class="col-md-2"></div>    
+</div>
+<div class="row reset-detail">
+    <div class="col-md-2 right">Total</div>
+    <div class="col-md-2">{{eliteTokensMax.Green-eliteTokensSpent.Green}}</div>
+    <div class="col-md-2">{{eliteTokensMax.Blue-eliteTokensSpent.Blue}}</div>
+    <div class="col-md-2">{{eliteTokensMax.Red-eliteTokensSpent.Red}}</div>
+    <div class="col-md-2">{{eliteTokensMax.Yellow-eliteTokensSpent.Yellow}}</div>
+    <div class="col-md-2"></div>    
+</div>
+<div class="row">
+    <div class="col-md-2">Composants élite</div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="eliteGreen">Vert</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><img src="images/elite_vert.png" width="22px" /></div>
+            </div>
+            <input type="text" class="form-control" id="eliteGreenReset" ng-model="eliteTokens.Green">
+        </div>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="eliteBlue">Bleu</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><img src="images/elite_bleu.png" width="22px" /></div>
+            </div>
+            <input type="text" class="form-control" id="eliteBlueReset" ng-model="eliteTokens.Blue">
+        </div>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="eliteRed">Rouge</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><img src="images/elite_rouge.png" width="22px" /></div>
+            </div>
+            <input type="text" class="form-control" id="eliteRedReset" ng-model="eliteTokens.Red">
+        </div>
+    </div>
+    <div class="col-md-2 form-group">
+        <label class="sr-only" for="eliteYellow">Jaune</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><img src="images/elite_jaune.png" width="22px" /></div>
+            </div>
+            <input type="text" class="form-control" id="eliteYellowReset" ng-model="eliteTokens.Yellow">
+        </div>
+    </div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-outline-secondary add-fusion" ng-click="eliteTokensReset()">Reset</button>
+    </div>
+</div>
+
+<div class="row bottom">
+    <div class="col-md-10">
+		<div class="row">
+		    <div class="col-md-3 v-center">
+		        <img src="/csr-front/images/dollars.png" width="40px">
+		    </div>
+		    <div class="col-md-3 v-center">
+		        {{fileEdited.caea - fileEdited.casp | number:0}}
+		    </div>
+		    <div class="col-md-3 v-center">
+		        {{expectedCash | number:0}}
+		    </div>
+		    <div class="col-md-3 v-center">
+		        {{fileEdited.caea - fileEdited.casp + expectedCash | number:0}}
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="col-md-12">
+		        <input type="range" class="custom-range" min="0" max="{{fileEdited.casp}}" ng-model="expectedCash">
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="col-md-3 v-center">
+		        <img src="/csr-front/images/or.jpg" width="40px">
+		    </div>
+		    <div class="col-md-3 v-center">
+		        {{fileEdited.goea - fileEdited.gosp | number:0}}
+		    </div>
+		    <div class="col-md-3 v-center">
+		        {{expectedGold | number:0}}
+		    </div>
+		    <div class="col-md-3 v-center">
+		        {{fileEdited.goea - fileEdited.gosp + expectedGold | number:0}}
+		    </div>
+		</div>
+		<div class="row bottom">
+		    <div class="col-md-12">
+		        <input type="range" class="custom-range" min="0" max="{{fileEdited.gosp}}" ng-model="expectedGold">
+		    </div>
+		</div>    
+    </div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-outline-secondary col-md-12" ng-click="resetCash()">Reset Cash et Or</button>
+    </div>    
+</div>
+
+<div class="row bottom">
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-3 v-center">
+                <img src="/csr-front/images/bronze.png" width="40px">
+            </div>
+            <div class="col-md-3 v-center">
+                {{fileEdited.gbke - fileEdited.gbks | number:0}}
+            </div>
+            <div class="col-md-3 v-center">
+                {{expectedKeyBronze | number:0}}
+            </div>
+            <div class="col-md-3 v-center">
+                {{fileEdited.gbke - fileEdited.gbks + expectedKeyBronze | number:0}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <input type="range" class="custom-range" min="0" max="{{fileEdited.gbks}}" ng-model="expectedKeyBronze">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 v-center">
+                <img src="/csr-front/images/silver.png" width="40px">
+            </div>
+            <div class="col-md-3 v-center">
+                {{fileEdited.gske - fileEdited.gsks | number:0}}
+            </div>
+            <div class="col-md-3 v-center">
+                {{expectedKeySilver | number:0}}
+            </div>
+            <div class="col-md-3 v-center">
+                {{fileEdited.gske - fileEdited.gsks + expectedKeySilver | number:0}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <input type="range" class="custom-range" min="0" max="{{fileEdited.gsks}}" ng-model="expectedKeySilver">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 v-center">
+                <img src="/csr-front/images/gold.png" width="40px">
+            </div>
+            <div class="col-md-3 v-center">
+                {{fileEdited.ggke - fileEdited.ggks | number:0}}
+            </div>
+            <div class="col-md-3 v-center">
+                {{expectedKeyGold | number:0}}
+            </div>
+            <div class="col-md-3 v-center">
+                {{fileEdited.ggke - fileEdited.ggks + expectedKeyGold | number:0}}
+            </div>
+        </div>
+		<div class="row">
+		    <div class="col-md-12">
+		        <input type="range" class="custom-range" min="0" max="{{fileEdited.ggks}}" ng-model="expectedKeyGold">
+		    </div>
+		</div>        
+    </div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-outline-secondary col-md-12" ng-click="resetKeys()">Reset Clés</button>
+    </div>
+</div>
+
+<div class="row bottom">
+</div>
+
+<div class="row">
+    <div class="col-md-5">
+		<form>
+		    <div class="form-group">
+		        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Recherche voiture dans le garage" ng-model="localSearch">
+		    </div>
+		</form>
+    </div>
+    <div class="col-md-1">
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="Check1" ng-model="eliteFirst" >
+        <label class="form-check-label" for="Check1">Elite devant</label>
+      </div>    
+    </div>
+    <div class="col-md-2">
+	    <button type="button" class="btn btn-secondary col-md-12" ng-click="sort('BRAND')">Trier / marque</button>
+    </div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-secondary col-md-12" ng-click="sort('TIER')">Trier / tier</button>
+    </div>
+    <div class="col-md-2">
+	    <button type="button" data-toggle="modal" data-target="#collectionsModal" class="btn btn-secondary col-md-12" ng-click="addCar()">Ajouter voiture</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-10"></div>
+    <div class="col-md-2">
+        <button type="button" data-toggle="modal" data-target="#listCarsModal" class="btn btn-secondary col-md-12" ng-click="listCars()">Ajouter voiture new</button>
+    </div>
+</div>
+
+<div class="row car" ng-repeat="carId in fileEdited.cgpi track by $index" ng-show="matchSearch(carId)" ng-class="getGarageClass($index)">
+    <div ng-show="isTop($index)" class="col-md-12 garage-head">{{getGarageNumber($index)}}</div>
+    <div class="col-md-3 col-sm-3" title="{{getCarName(fileEdited.caow[carId].crdb)}}">{{carNames[fileEdited.caow[carId].crdb]}} <i>{{fileEdited.caow[carId].crdb}}</i></div>
+    <div class="col-md-1 col-sm-3"><span ng-show="fileEdited.caow[carId].cmlv > 0">{{fileEdited.caow[carId].cmlv}}</span></div>
+    <div class="col-md-1 col-sm-3">{{fileEdited.caow[carId].ctie}}</div>
+    <div class="col-md-1 col-sm-3">({{fileEdited.caow[carId].cepi}})</div>
+
+    <button type="button" data-toggle="modal" data-target="#collectionsModal" ng-click="saveEditedCar(fileEdited.caow[carId])" class="btn btn btn-outline-secondary col-md-2 col-sm-4 btn-lg">Remplacer</button>
+    <button type="button" ng-click="fullCar(fileEdited.caow[carId])" class="btn btn btn-outline-secondary col-md-2 col-sm-4 btn-lg">Remplir</button>
+    <button type="button" ng-show="allowLicense(fileEdited.caow[carId])" ng-click="elite(fileEdited.caow[carId])" class="btn btn btn-outline-secondary col-md-2 col-sm-4 btn-lg">Permis</button>
+    <button type="button" ng-show="fileEdited.caow[carId].elcl != 0" ng-click="removeElite(fileEdited.caow[carId])" class="btn btn btn-outline-danger col-md-2 col-sm-4 btn-lg">Permis {{fileEdited.caow[carId].elcl}} X</button>
+</div>
+
+<div class="activities">
+    <div class="activity" ng-repeat="a in activities track by $index">{{a}}</div>
+</div>
+
+<div class="modal fade" id="collectionsModal" tabindex="-1" role="dialog" aria-labelledby="collectionsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-collections" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="collectionsModalLabel">Liste des voitures full</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="collections">
+                <div class="container-fluid">
+                    <div class="row bottom form-group">
+                        <label for="searchCar">Rechercher une voiture</label>
+                        <input id="searchCar" class="form-control" type="text" ng-model="searchCar" ng-change="search()" />
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 car-show" ng-repeat="car in searchedCar">
+                            <img ng-src="{{getCarImg(car.path,car.carName)}}" data-dismiss="modal" ng-click="replace(car.path,car.carName)" />
+                            {{car.carName}} / {{car.path}}
+                        </div>
+                    </div>
+                    <div class="row"><div class="col-md-12">Ou naviguer</div></div>
+                    <div class="row" ng-repeat="dir in collectionsDir">
+                        <select class="col-md-12" ng-model="selectDir" ng-change="addSelect(selectDir)">
+                            <option ng-repeat="subDir in dir" ng-value="subDir">{{subDir.directory}}</option>
+                        </select>
+                        <div class="row">
+                            <div class="col-md-3 car-show" ng-repeat="car in selectDir.cars">
+                                <img ng-src="{{getCarImg(selectDir.path,car)}}" data-dismiss="modal" ng-click="replace(selectDir.path,car)" />
+                                {{car}}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="closeCollection()">Close</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="listCarsModal" tabindex="-1" role="dialog" aria-labelledby="listCarsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-collections" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="collectionsModalLabel">Liste des voitures full</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="collections-full">
+                <div class="container-fluid">
+                    <div class="row bottom form-group">
+                        <label for="searchCarList">Rechercher une voiture</label>
+                        <input id="searchCarList" class="form-control" type="text" ng-model="searchCarId" ng-change="searchId()" />
+                    </div>
+                    <div class="row margin" ng-repeat="carId in searchedIdCar track by $index">
+                        <div class="col-md-10 right">
+                            {{carId}}
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-secondary col-md-12" data-dismiss="modal" ng-click="addCarId(carId)">Ajouter</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="closeCollection()">Close</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div ng-class="loading"></div>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+<script type="text/javascript" src="js/modV2.js"></script>
+<script type="text/javascript" src="js/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="bootstrap/js/popper.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="js/i18n/defaults-fr_FR.min.js"></script>
+</body>
+</html>
