@@ -135,6 +135,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
             url: '/csr-front/GetFileV2',
             headers: { 'Content-type': 'application/json; charset=UTF-8' },
             params: {
+                userId: userId,
                 token   : $scope.token,
             }
         }).then(function(response) {
