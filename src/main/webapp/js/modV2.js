@@ -427,7 +427,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
             url: '/csr-front/car',
             headers: { 'Content-type': 'application/json; charset=UTF-8' },
             params: {
-                token       : token,
+                token       : $scope.token,
                 action      : 'sort',
                 sort        : sorting,
                 eliteFirst  : $scope.eliteFirst,
