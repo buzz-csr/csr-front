@@ -3,6 +3,11 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+
+    <listener>
+        <listener-class>com.naturalmotion.listener.InitApplicationListener</listener-class>
+    </listener>
+
     <servlet>
         <servlet-name>check</servlet-name>
         <servlet-class>com.naturalmotion.servlet.CheckServlet</servlet-class>
