@@ -21,8 +21,6 @@ public class InitApplicationListener implements ServletContextListener {
 		try {
 			List<String> eliteCars = new CarServiceFileImpl(null).getEliteCars();
 			EliteCars.getInstance().setEliteCars(eliteCars);
-
-			new Thread(new AccountHistoryTask()).start();
 		} catch (NsbException e) {
 			log.error("Error initializing server", e);
 		}
