@@ -19,7 +19,7 @@ import com.naturalmotion.webservice.service.auth.AuthorizationFactory;
 
 public class AccountHistoryTask implements Runnable {
 
-	private static final int TIMEOUT = 1 * 60 * 1000; // 30 min
+	private static final int TIMEOUT = 30 * 60 * 1000; // 30 min
 
 	private final Logger log = Logger.getLogger(AccountHistoryTask.class);
 
