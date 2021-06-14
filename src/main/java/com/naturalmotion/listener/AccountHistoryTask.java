@@ -11,11 +11,13 @@ import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.naturalmotion.Configuration;
-import com.naturalmotion.listener.json.AccountHistory;
 import com.naturalmotion.webservice.api.CrewResources;
 import com.naturalmotion.webservice.api.Member;
+import com.naturalmotion.webservice.api.history.AccountHistory;
 import com.naturalmotion.webservice.service.auth.Authorization;
 import com.naturalmotion.webservice.service.auth.AuthorizationFactory;
+import com.naturalmotion.webservice.service.history.HistoryCleaner;
+import com.naturalmotion.webservice.service.history.HistoryUpdater;
 
 public class AccountHistoryTask implements Runnable {
 
