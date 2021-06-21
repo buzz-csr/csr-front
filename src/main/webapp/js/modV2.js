@@ -129,7 +129,8 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
     $scope.updateProfile = function() {
        $scope.updateStatus = "";
        $scope.errorMessage = "";
-        
+       $scope.loading = true;
+       
        $http({
             method: 'POST',
             url: '/csr-front/GetFileV2',
@@ -144,6 +145,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
             }else{
                 $scope.updateStatus = "ok";
             }
+            $scope.loading = false;
         });
     }
     
