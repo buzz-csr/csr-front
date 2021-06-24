@@ -129,7 +129,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
     $scope.updateProfile = function() {
        $scope.updateStatus = "";
        $scope.errorMessage = "";
-       $scope.loading = true;
+        $scope.loading = "load";
        
        $http({
             method: 'POST',
@@ -145,7 +145,7 @@ modModule.controller('modCtrl', ['$scope', '$http', '$location', function($scope
             }else{
                 $scope.updateStatus = "ok";
             }
-            $scope.loading = false;
+            $scope.loading = "hidden";
         });
     }
     
