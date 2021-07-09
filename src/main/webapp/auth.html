@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="authModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+</head>
+<body ng-controller="authCtrl" class="container upload">
+    <p>
+    <input type="text" ng-model="playerId" />
+    
+    <input type='button' value='Authorisation' id='auth' ng-click='getAuth()' >
+    </p>
+    <p>{{result}}</p>
+    
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script type="text/javascript" src="js/auth.js"></script>
+    <script type="text/javascript" src="js/jquery-3.5.1.js"></script>
+</body>
+</html>
