@@ -1,14 +1,14 @@
 package com.naturalmotion.servlet;
 
-import com.naturalmotion.webservice.configuration.Configuration;
+import com.naturalmotion.webservice.configuration.ConfigSession;
 
 import csr.Checksum;
 
 public class UserResolver {
 
-	private Configuration configuration;
+	private ConfigSession configuration;
 
-	public UserResolver(Configuration configuration) {
+	public UserResolver(ConfigSession configuration) {
 		this.configuration = configuration;
 	}
 

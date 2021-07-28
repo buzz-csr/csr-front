@@ -20,6 +20,7 @@ import com.naturalmotion.csr_api.service.io.NsbReader;
 import com.naturalmotion.csr_api.service.io.ScbReader;
 import com.naturalmotion.token.TokenManager;
 import com.naturalmotion.webservice.api.CrewResources;
+import com.naturalmotion.webservice.configuration.ConfigSession;
 import com.naturalmotion.webservice.configuration.Configuration;
 import com.naturalmotion.webservice.service.auth.Authorization;
 import com.naturalmotion.webservice.service.auth.AuthorizationFactory;
@@ -41,7 +42,7 @@ public class GetFileV2 extends HttpServlet {
 		resp.setContentType("application/json; charset=UTF-8");
 
 		String userId = req.getParameter("userId");
-		String resultUser = new UserResolver(configuration).findUserFromId(userId);
+		String resultUser = new UserResolver(new ConfigSession(configuration)).findUserFromId(userId);
 		if (resultUser == null) {
 			writeError(resp, "utilisateur inconnu");
 		} else {
@@ -83,7 +84,7 @@ public class GetFileV2 extends HttpServlet {
 		String error = null;
 		String userId = req.getParameter("userId");
 
-		String resultUser = new UserResolver(configuration).findUserFromId(userId);
+		String resultUser = new UserResolver(new ConfigSession(configuration)).findUserFromId(userId);
 		if (resultUser == null) {
 			error = "utilisateur inconnu";
 		} else {

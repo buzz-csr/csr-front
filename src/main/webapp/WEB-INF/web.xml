@@ -9,6 +9,10 @@
     </listener>
 
     <servlet>
+        <servlet-name>users</servlet-name>
+        <servlet-class>com.naturalmotion.servlet.UserServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>auth</servlet-name>
         <servlet-class>com.naturalmotion.servlet.AuthServlet</servlet-class>
     </servlet>
@@ -48,6 +52,10 @@
         <servlet-name>GetFile</servlet-name>
         <servlet-class>com.naturalmotion.servlet.GetFile</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>users</servlet-name>
+        <url-pattern>/users</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>auth</servlet-name>
         <url-pattern>/auth</url-pattern>
