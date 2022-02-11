@@ -2,4 +2,5 @@ target/
 csr-front.iml
 .classpath
 .project
+logs
 .settings/

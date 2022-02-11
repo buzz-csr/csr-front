@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.naturalmotion.webservice.configuration.ConfigSession;
 import com.naturalmotion.webservice.configuration.Configuration;
+import com.naturalmotion.webservice.configuration.json.Auth;
 
 import csr.Checksum;
 
@@ -27,11 +28,11 @@ public class UserServlet extends HttpServlet {
 
 		Map<String, String> result = new HashMap<>();
 
-		String list = configSession.getString("users.list");
-		String[] split = list.split(",");
+		Map<String, Auth> list = configSession.get();
+
 		Checksum checksum = new Checksum();
 		String computeHmac = null;
-		for (String user : split) {
+		for (String user : list.keySet()) {
 			computeHmac = checksum.computeHmac(user);
 			result.put(user, createUrl(computeHmac));
 		}
