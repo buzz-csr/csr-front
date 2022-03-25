@@ -118,24 +118,14 @@
             <id>linux</id>
             <properties>
                 <working.directory>/home/jerome/Documents/backup</working.directory>
+                <mod.url.value>https://mod.csr-lesnains.fr/csr-front/accountV2.html</mod.url.value>
             </properties>
         </profile>
         <profile>
             <id>linux-local</id>
             <properties>
                 <working.directory>/home/jerome/Documents/backupTest</working.directory>
-            </properties>
-        </profile>
-        <profile>
-            <id>windows</id>
-            <properties>
-                <working.directory>C:/Users/stephanie/Documents/Projets/backup</working.directory>
-            </properties>
-        </profile>
-        <profile>
-            <id>bureau</id>
-            <properties>
-                <working.directory>C:/Dev/Git/perso/backup</working.directory>
+                <mod.url.value>http://localhost:8889/csr-front/accountV2.html</mod.url.value>
             </properties>
         </profile>
     </profiles>

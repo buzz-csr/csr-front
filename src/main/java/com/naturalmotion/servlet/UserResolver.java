@@ -20,7 +20,7 @@ public class UserResolver {
 		Map<String, Auth> list = configuration.get();
 		Checksum checksum = new Checksum();
 		for (String user : list.keySet()) {
-			String computeHmac = checksum.computeHmac(user);
+			String computeHmac = checksum.computeHmac(list.get(user).getName());
 			if (computeHmac.equals(userId)) {
 				resultUser = user;
 			}

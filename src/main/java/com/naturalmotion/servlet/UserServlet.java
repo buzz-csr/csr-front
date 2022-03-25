@@ -33,8 +33,9 @@ public class UserServlet extends HttpServlet {
 		Checksum checksum = new Checksum();
 		String computeHmac = null;
 		for (String user : list.keySet()) {
-			computeHmac = checksum.computeHmac(user);
-			result.put(user, createUrl(computeHmac));
+			String name = list.get(user).getName();
+			computeHmac = checksum.computeHmac(name);
+			result.put(name, createUrl(computeHmac));
 		}
 
 		resp.getWriter().write(new ObjectMapper().writeValueAsString(result));
