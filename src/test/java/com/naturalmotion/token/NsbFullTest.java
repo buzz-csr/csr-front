@@ -36,26 +36,32 @@ public class NsbFullTest {
 		JsonArray caow = nsbFull.getJsonArray("caow");
 		for (int i = 0; i < caow.size(); i++) {
 			int nbFusion = 0;
+			boolean missingFsg = true;
 			JsonObject car = caow.getJsonObject(i);
 			JsonArray parts = car.getJsonArray("upst");
+			System.out.println(car.getString("crdb"));
 			for (int p = 0; p < parts.size(); p++) {
 				JsonObject part = parts.getJsonObject(p);
 				JsonArray partLevels = part.getJsonArray("lvls");
 				for (int l = 0; l < partLevels.size(); l++) {
 					JsonObject level = partLevels.getJsonObject(l);
-					JsonArray fusions = level.getJsonArray("fsg");
-					for (int f = 0; f < fusions.size(); f++) {
-						int fusion = fusions.getInt(f);
-						if (fusion > 0) {
-							nbFusion++;
+					if (level.containsKey("fsg")) {
+						JsonArray fusions = level.getJsonArray("fsg");
+						for (int f = 0; f < fusions.size(); f++) {
+							int fusion = fusions.getInt(f);
+							if (fusion > 0) {
+								nbFusion++;
+							}
 						}
+					} else {
+						missingFsg = false;
 					}
 				}
 			}
 			String tier = car.getString("ctie");
-			if (nbFusion < minFusions.get(tier)) {
+			if (!missingFsg && nbFusion < minFusions.get(tier)) {
 				carNotFull.add(car.getString("crdb") + " should have at least " + minFusions.get(tier)
-						+ " fusions but has only " + nbFusion);
+				        + " fusions but has only " + nbFusion);
 			}
 			// reset
 			nbFusion = 0;
