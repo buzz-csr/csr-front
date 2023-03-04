@@ -118,7 +118,7 @@
             <id>linux</id>
             <properties>
                 <working.directory>/home/jerome/Documents/backup</working.directory>
-                <mod.url.value>https://mod.csr-lesnains.fr/csr-front/accountV2.html</mod.url.value>
+                <mod.url.value>http://lesnains-admin.ddns.net:8080/csr-front/accountV2.html</mod.url.value>
             </properties>
         </profile>
         <profile>
